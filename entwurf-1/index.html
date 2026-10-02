@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="VKF Wiesloch – Entwurf 1">
+<meta name="robots" content="noindex">
+<title>VKF Wiesloch – Entwurf 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800&family=Source+Sans+3:wght@400;600;700&family=Caveat:wght@600;700&display=swap">
+<style>
+/* Layout: sticky full-screen SVG scene driven by scroll (one day, dawn to night), then calm info sections on tent-canvas paper. */
+:root{
+  --ember:#d9124a;      /* VKF red */
+  --night:#0f2a4a;      /* VKF navy */
+  --moss:#8b9c1c;       /* VKF olive */
+  --flame:#f29a2e;
+  --canvas:#f8f4ea;     /* tent canvas */
+  --ink:#1c2431;
+  --muted:#5a6272;
+  --card:#ffffff;
+  --line:#e3dccb;
+  --bg:var(--canvas);
+  --fg:var(--ink);
+  --f-display:"Bitter", Georgia, "Times New Roman", serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-hand:"Caveat", "Comic Sans MS", cursive;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --canvas:#101b2b; --ink:#ece6d8; --muted:#a8b0bf; --card:#172538; --line:#26364d;
+    --ember:#ff4d78; --moss:#b5c63c; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --canvas:#101b2b; --ink:#ece6d8; --muted:#a8b0bf; --card:#172538; --line:#26364d;
+  --ember:#ff4d78; --moss:#b5c63c; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:18px;line-height:1.55;margin:0}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--flame);outline-offset:3px;border-radius:4px}
+
+/* Header */
+.top{position:fixed;z-index:20;top:calc(env(safe-area-inset-top,0px) + 12px);left:12px;right:12px;display:flex;align-items:center;gap:12px;
+  padding:8px 8px 8px 14px;border-radius:999px;background:rgba(248,244,234,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:#1c2431;box-shadow:0 4px 18px rgba(10,20,40,.12);max-width:1100px;margin-inline:auto}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:800;font-size:17px;white-space:nowrap}
+.brand small{display:block;font-family:var(--f-hand);font-weight:600;font-size:16px;color:#8a6a2c;margin-top:-4px}
+.top nav{display:flex;gap:4px;margin-left:auto}
+.top nav a{text-decoration:none;font-weight:600;font-size:15px;padding:8px 12px;border-radius:999px}
+.top nav a:hover{background:rgba(15,42,74,.08)}
+.cta{background:#d9124a;color:#fff !important;text-decoration:none;font-weight:700;font-size:15px;padding:10px 18px;border-radius:999px;white-space:nowrap}
+.cta:hover{background:#b80e3e}
+@media (max-width:820px){.top nav{display:none}.top .cta{margin-left:auto}}
+
+/* Story */
+#story{position:relative;height:1000vh;background:#0a1330}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+#scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+/* Captions: centered in the sky, big type, only the body text sits on a card. Opacity + drift are driven by scroll (see render()). */
+.caps{position:absolute;left:50%;top:clamp(92px,12vh,140px);width:min(1080px,calc(100% - 32px));transform:translateX(-50%);pointer-events:none;
+  --cap-ink:#fff;--cap-accent:#ffd9a0;--cap-glow:rgba(0,0,0,.3)}
+.cap{position:absolute;inset:0 0 auto 0;text-align:center;opacity:0;will-change:opacity,transform}
+.cap .time{font-family:var(--f-hand);font-weight:700;font-size:clamp(30px,3.6vw,44px);color:var(--cap-accent);line-height:1;text-shadow:0 1px 14px var(--cap-glow)}
+.cap h2{font-size:clamp(38px,5.6vw,80px);font-weight:800;letter-spacing:-.01em;margin:6px 0 18px;color:var(--cap-ink);text-shadow:0 2px 26px var(--cap-glow)}
+.cap p{display:inline-block;margin:0;max-width:46ch;font-size:clamp(16px,1.5vw,19px);color:#2c3443;background:rgba(250,246,238,.93);
+  padding:14px 20px;border-radius:16px;box-shadow:0 10px 30px rgba(5,10,30,.16);text-wrap:pretty}
+.hint{display:flex;justify-content:center;gap:8px;align-items:center;margin-top:22px;font-weight:700;color:var(--cap-ink);font-size:15px;letter-spacing:.06em;text-transform:uppercase;text-shadow:0 1px 10px var(--cap-glow)}
+.hint span{display:inline-block;animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(6px)}}
+@media (max-width:640px){
+  .caps{top:max(calc(env(safe-area-inset-top,0px) + 92px),17vh)}
+  .cap h2{margin-bottom:14px}
+  .cap p{padding:12px 16px;font-size:15.5px}
+}
+
+/* Day clock */
+.clock{position:absolute;left:clamp(16px,5vw,72px);right:clamp(16px,5vw,72px);bottom:calc(env(safe-area-inset-bottom,0px) + 18px);height:34px}
+.track{position:absolute;left:0;right:0;top:15px;height:4px;border-radius:4px;background:rgba(255,255,255,.35)}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:#ffd07a;width:0}
+.tick{position:absolute;top:0;transform:translateX(-50%);background:none;border:0;padding:0;cursor:pointer;color:#fff;font:700 13px/1 var(--f-body);
+  display:flex;flex-direction:column;align-items:center;gap:6px;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.tick i{width:12px;height:12px;margin-top:11px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(0,0,0,.12)}
+.tick.done i{background:#ffd07a}
+.tick b{font-weight:700;opacity:.9;white-space:nowrap}
+@media (max-width:760px){.tick b{display:none}}
+
+/* SVG animation bits */
+.flame{transform-box:fill-box;transform-origin:50% 100%;animation:flick 0.9s ease-in-out infinite alternate}
+.flame.f2{animation-duration:.7s;animation-delay:-.3s}
+.flame.f3{animation-duration:1.1s;animation-delay:-.6s}
+@keyframes flick{0%{transform:scale(1,1) skewX(0)}40%{transform:scale(.94,1.08) skewX(3deg)}100%{transform:scale(1.04,.92) skewX(-3deg)}}
+.spark{animation:rise 2.6s linear infinite;opacity:0}
+@keyframes rise{0%{transform:translate(0,0);opacity:0}10%{opacity:1}100%{transform:translate(var(--dx,10px),-190px);opacity:0}}
+.note{animation:float 4s ease-in infinite;opacity:0;font-family:Georgia,serif}
+@keyframes float{0%{transform:translate(0,0);opacity:0}15%{opacity:.95}100%{transform:translate(var(--dx,20px),-150px);opacity:0}}
+.twinkle{animation:tw 3s ease-in-out infinite alternate}
+@keyframes tw{from{opacity:.25}to{opacity:1}}
+.kflick{animation:kf 2.3s steps(1) infinite}
+@keyframes kf{0%{opacity:1}12%{opacity:.82}15%{opacity:1}47%{opacity:.9}52%{opacity:1}78%{opacity:.78}81%{opacity:.96}}
+.shadowmove{animation:cook 6s ease-in-out infinite alternate}
+@keyframes cook{from{transform:translateX(0)}to{transform:translateX(42px)}}
+.bob{animation:bob .5s ease-in-out infinite alternate}
+@keyframes bob{to{transform:translateY(-3px)}}
+.steam{animation:steam 2.4s ease-in-out infinite;opacity:0}
+@keyframes steam{0%{transform:translateY(0);opacity:0}30%{opacity:.8}100%{transform:translateY(-34px);opacity:0}}
+.sitter{transition:opacity .8s ease}
+#runde.sleep .sitter{opacity:0}
+#runde.sleep .note{display:none}
+@media (prefers-reduced-motion: reduce){
+  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span{animation:none}
+  .spark,.note,.steam{opacity:0}
+}
+
+/* Info sections */
+main{padding-inline:16px}
+.wrap{max-width:1060px;margin-inline:auto}
+section.info{padding-block:clamp(56px,9vw,110px);border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--f-hand);font-weight:700;font-size:26px;color:var(--ember);line-height:1}
+section.info h2{font-size:clamp(30px,4.2vw,46px);margin:6px 0 16px}
+.lead{font-size:20px;max-width:62ch;color:var(--fg)}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:36px 0 0;padding:0}
+.facts div{border-top:3px solid var(--moss);padding-top:12px}
+.facts dt{font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.facts dd{margin:4px 0 0;font-family:var(--f-display);font-weight:700;font-size:21px;line-height:1.3}
+@media (max-width:720px){.facts{grid-template-columns:1fr}}
+
+.roles{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:32px}
+.role{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;min-width:0}
+.role svg{flex:none;width:40px;height:40px}
+.role h3{font-size:18px;margin-bottom:2px}
+.role p{margin:0;font-size:15.5px;color:var(--muted)}
+.join{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+
+.steps{list-style:none;margin:36px 0 0;padding:0;display:grid;gap:0;counter-reset:s;max-width:760px}
+.steps li{position:relative;padding:0 0 28px 64px;counter-increment:s}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:42px;height:42px;border-radius:50%;background:var(--night);color:#fff;
+  font:800 19px/42px var(--f-display);text-align:center}
+.steps li::after{content:"";position:absolute;left:20px;top:46px;bottom:4px;width:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+.steps .when{font-family:var(--f-hand);font-weight:700;font-size:22px;color:var(--ember);line-height:1}
+.steps h3{font-size:21px;margin:2px 0 4px}
+.steps p{margin:0;color:var(--muted);max-width:60ch}
+.tip{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;max-width:760px}
+.tip h3{font-size:19px;margin-bottom:6px}
+.tip ul{margin:0;padding-left:20px}
+.mail{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:22px}
+.mail code{font:600 17px/1 var(--f-body);background:var(--card);border:1px solid var(--line);padding:10px 14px;border-radius:10px;user-select:all}
+button.ghost{font:700 15px/1 var(--f-body);background:transparent;color:var(--fg);border:2px solid var(--line);padding:10px 16px;border-radius:999px;cursor:pointer}
+button.ghost:hover{border-color:var(--fg)}
+
+.pack{margin-top:44px}
+.pack h3{font-size:22px;display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.pack h3::after{content:"";flex:1;height:2px;background:var(--line)}
+.items{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.items li{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 12px 14px;display:flex;flex-direction:column;align-items:center;gap:10px;
+  text-align:center;font-size:16px;font-weight:600;line-height:1.3;min-width:0}
+.items svg{width:72px;height:72px;flex:none;overflow:visible}
+@media (max-width:520px){.items{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.items li{font-size:15px;padding:14px 8px 12px}.items svg{width:60px;height:60px}}
+
+footer{background:#6f7d12;color:#f6f3e6;padding:48px 16px calc(48px + env(safe-area-inset-bottom,0px))}
+footer .wrap{display:flex;flex-wrap:wrap;gap:24px 48px;align-items:flex-start;justify-content:space-between}
+footer h3{font-size:20px;margin-bottom:6px}
+footer p{margin:0;max-width:44ch}
+footer nav{display:flex;gap:18px;flex-wrap:wrap}
+footer .proto{width:100%;font-size:14px;opacity:.8;border-top:1px solid rgba(255,255,255,.25);padding-top:16px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#story" aria-label="VKF Wiesloch, zum Anfang">
+    <svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="20" r="18.5" fill="#0f2a4a"/>
+      <path d="M8 29 L20 11 L32 29 Z" fill="#f3e7c3"/><path d="M20 29 L17 29 L20 21 L23 29 Z" fill="#0f2a4a"/>
+      <path d="M27 9 a4 4 0 1 0 4 5 a3.2 3.2 0 1 1 -4 -5z" fill="#ffd36a"/>
+      <path d="M5 29 H35" stroke="#8b9c1c" stroke-width="2.5"/>
+    </svg>
+    <span>VKF Wiesloch<small>Väter-Kinder-Freizeit</small></span>
+  </a>
+  <nav aria-label="Seitenbereiche">
+    <a href="#ueber">Über uns</a><a href="#team">Team</a><a href="#packliste">Packliste</a>
+  </nav>
+  <a class="cta" href="#anmeldung">Anmeldung</a>
+</header>
+
+<section id="story" aria-label="Ein Tag im Lager">
+  <div class="stage">
+    <svg id="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax meet" role="img" aria-label="Illustration eines Tages im Zeltlager, vom Sonnenaufgang bis zur Nacht">
+      <defs>
+        <linearGradient id="sky" gradientUnits="userSpaceOnUse" x1="0" y1="-500" x2="0" y2="620">
+          <stop id="skyTop" offset="0" stop-color="#1c2a55"/><stop id="skyBot" offset="1" stop-color="#f2a07b"/>
+        </linearGradient>
+        <radialGradient id="sunGlow"><stop offset="0" stop-color="#fff3c4" stop-opacity=".9"/><stop offset="1" stop-color="#fff3c4" stop-opacity="0"/></radialGradient>
+        <radialGradient id="fireGlow"><stop offset="0" stop-color="#ffb347" stop-opacity=".75"/><stop offset=".45" stop-color="#ff8a2a" stop-opacity=".28"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></radialGradient>
+        <radialGradient id="kGlow"><stop offset="0" stop-color="#ffd27a" stop-opacity=".7"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient>
+        <pattern id="check" width="14" height="14" patternUnits="userSpaceOnUse">
+          <rect width="14" height="14" fill="#fbf6ec"/><rect width="7" height="7" fill="#e24a6e"/><rect x="7" y="7" width="7" height="7" fill="#e24a6e"/>
+          <rect x="7" width="7" height="7" fill="#f2b3c3"/><rect y="7" width="7" height="7" fill="#f2b3c3"/>
+        </pattern>
+        <mask id="moonMask"><circle r="42" fill="#fff"/><circle cx="18" cy="-12" r="38" fill="#000"/></mask>
+        <!-- standing person, feet at 0,0 -->
+        <g id="pp">
+          <rect x="-7" y="-26" width="6" height="26" rx="3" fill="#39405a"/><rect x="1" y="-26" width="6" height="26" rx="3" fill="#39405a"/>
+          <rect x="-17" y="-51" width="6" height="24" rx="3"/><rect x="11" y="-51" width="6" height="24" rx="3"/>
+          <path d="M-12,-24 V-44 Q-12,-54 0,-54 Q12,-54 12,-44 V-24 Z"/>
+          <circle cy="-64" r="10" style="fill:var(--skin,#f0c49c)"/>
+          <path d="M-10,-66 Q-9,-77 0,-77 Q9,-77 10,-66 Q6,-72 0,-72 Q-6,-72 -10,-66Z" style="fill:var(--hair,#4a3526)"/>
+        </g>
+        <!-- seated person, seat at y -12 -->
+        <g id="ps">
+          <rect x="-8" y="-14" width="6" height="14" rx="3" fill="#39405a"/><rect x="2" y="-14" width="6" height="14" rx="3" fill="#39405a"/>
+          <rect x="-16" y="-40" width="6" height="20" rx="3"/><rect x="10" y="-40" width="6" height="20" rx="3"/>
+          <path d="M-12,-12 V-33 Q-12,-43 0,-43 Q12,-43 12,-33 V-12 Z"/>
+          <circle cy="-53" r="10" style="fill:var(--skin,#f0c49c)"/>
+          <path d="M-10,-55 Q-9,-66 0,-66 Q9,-66 10,-55 Q6,-61 0,-61 Q-6,-61 -10,-55Z" style="fill:var(--hair,#4a3526)"/>
+        </g>
+        <g id="pine"><rect x="-4" y="-18" width="8" height="18" fill="#5b4330"/><path d="M-26,-14 L0,-90 L26,-14 Z" fill="#2f5e3a"/><path d="M-20,-44 L0,-104 L20,-44Z" fill="#3a6d43"/></g>
+      </defs>
+
+      <rect x="-1600" y="-2600" width="4800" height="3300" fill="url(#sky)"/>
+      <g id="stars"></g>
+      <g id="sun"><circle r="120" fill="url(#sunGlow)"/><circle r="46" fill="#ffd35c"/></g>
+      <g id="moon" opacity="0"><circle r="90" fill="url(#sunGlow)" opacity=".35"/><circle r="42" fill="#f6efcf" mask="url(#moonMask)"/></g>
+
+      <path d="M-1600,560 C-1200,470 -900,520 -600,480 C-300,440 -100,520 200,470 C450,430 650,500 900,455 C1150,415 1350,490 1650,450 C1950,410 2300,480 3200,460 V900 H-1600 Z" fill="#9db779"/>
+      <g id="forest"></g>
+      <path d="M-1600,610 C-1100,560 -700,600 -300,575 C100,550 400,600 800,572 C1200,545 1500,600 1900,570 C2300,545 2700,590 3200,575 V900 H-1600 Z" fill="#7da046"/>
+      <rect x="-1600" y="600" width="4800" height="900" fill="#8db34b"/>
+      <path d="M-1600,606 C-1100,570 -700,604 -300,585 C100,566 400,606 800,586 C1200,566 1500,606 1900,584 C2300,566 2700,600 3200,588 V640 H-1600Z" fill="#8db34b"/>
+
+      <g id="camp"></g>
+      <g id="kitchen"></g>
+      <g id="edgeTrees"></g>
+
+      <g id="vigs"></g>
+
+      <rect id="dusk" x="-1600" y="-2600" width="4800" height="3800" fill="#ff7a3d" opacity="0"/>
+      <rect id="dark" x="-1600" y="-2600" width="4800" height="3800" fill="#0a1433" opacity=".35"/>
+
+      <g id="klight" opacity="0"></g>
+
+      <g id="runde" opacity="0"></g>
+    </svg>
+
+    <div class="caps" id="caps" aria-live="polite"></div>
+    <div class="clock" id="clock"><div class="track"><div class="fill" id="fill"></div></div></div>
+  </div>
+</section>
+
+<main>
+  <section class="info" id="ueber">
+    <div class="wrap">
+      <div class="eyebrow">Das ist die VKF</div>
+      <h2>Eine Woche Zeltlager für Papas und ihre Kinder</h2>
+      <p class="lead">Die Väter-Kinder-Freizeit Wiesloch ist ein Zeltlager für Väter mit ihren Kindern zwischen 4 und 12 Jahren. Eine Woche lang wohnen wir zusammen in großen Gruppenzelten, essen an langen Bierbänken, spielen, wandern, baden und singen abends am Lagerfeuer. Die VKF gehört zur KjG Wiesloch.</p>
+      <dl class="facts">
+        <div><dt>Wann</dt><dd>3. Woche der Sommerferien in Baden-Württemberg, Samstag bis Samstag</dd></div>
+        <div><dt>Für wen</dt><dd>Papas mit Kindern von 4 bis 12 Jahren</dd></div>
+        <div><dt>Plätze</dt><dd>Rund 95 Personen, Väter und Kinder zusammen</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="info" id="team">
+    <div class="wrap">
+      <div class="eyebrow">Hinter den Kulissen</div>
+      <h2>Rund 30 Ehrenamtliche machen die VKF möglich</h2>
+      <p class="lead">Damit Papas und Kinder eine unbeschwerte Woche haben, packt ein ganzer Betreuerstab mit an. Jede und jeder hat eine eigene Aufgabe.</p>
+      <div class="roles">
+        <div class="role"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#0f2a4a"/><path d="M13 27 L20 11 L27 27Z" fill="#f3e7c3"/><path d="M20 11 V6 L27 8 L20 10" fill="#d9124a"/></svg><div><h3>Lagerleitung</h3><p>Hält die Fäden zusammen und ist für alle ansprechbar.</p></div></div>
+        <div class="role"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#d9124a"/><circle cx="20" cy="20" r="8" fill="#fff"/><path d="M20 12 L23 17 L20 20 L17 17Z" fill="#1c2431"/></svg><div><h3>Programm</h3><p>Plant Spiele, Ausflüge und die Lagerrunde am Abend.</p></div></div>
+        <div class="role"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#f29a2e"/><rect x="11" y="18" width="18" height="11" rx="2" fill="#fff"/><path d="M15 15 q2-4 0-7 M20 15 q2-4 0-7 M25 15 q2-4 0-7" stroke="#fff" stroke-width="2" fill="none"/></svg><div><h3>Küche</h3><p>Kocht dreimal am Tag für das ganze Lager.</p></div></div>
+        <div class="role"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#8b9c1c"/><path d="M11 14 H14 L17 25 H27 L29 17 H15" stroke="#fff" stroke-width="2.4" fill="none" stroke-linejoin="round"/><circle cx="18" cy="29" r="2" fill="#fff"/><circle cx="26" cy="29" r="2" fill="#fff"/></svg><div><h3>Einkauf</h3><p>Sorgt dafür, dass Vorräte und Material nie ausgehen.</p></div></div>
+        <div class="role"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#3b8fd0"/><path d="M22 9 L13 22 H20 L18 31 L27 18 H20Z" fill="#fff"/></svg><div><h3>Technik</h3><p>Kümmert sich um Strom, Licht, Zelte und Aufbau.</p></div></div>
+      </div>
+      <div class="join"><strong>Lust, Teil des Teams zu werden?</strong><span>Schreib uns an <b>info@vkf-wiesloch.de</b></span></div>
+    </div>
+  </section>
+
+  <section class="info" id="anmeldung">
+    <div class="wrap">
+      <div class="eyebrow">Anmeldung &amp; Platzvergabe</div>
+      <h2>So kommt ihr ins Lager</h2>
+      <p class="lead">Die Nachfrage ist groß, deshalb gibt es keine Warteliste. Stattdessen bekundet ihr jedes Jahr neu euer Interesse.</p>
+      <ol class="steps">
+        <li><div class="when">Januar bis Ende März</div><h3>Interesse bekunden</h3><p>Jedes Jahr gibt es eine eigene Interessenten-Phase. Das Interesse muss jedes Jahr neu bekundet werden.</p></li>
+        <li><div class="when">zuerst</div><h3>Vorbuchungsrecht für Familien, die schon dabei waren</h3><p>Wer in den vergangenen Jahren teilgenommen hat, kann zuerst buchen. Danach ist klar, wie viele Plätze frei bleiben.</p></li>
+        <li><div class="when">danach</div><h3>Die Teamleitung vergibt die freien Plätze</h3><p>Nicht nach dem Prinzip „wer zuerst klickt, gewinnt“, sondern so, dass die Gruppe gut zusammenpasst und neue Familien gut ankommen.</p></li>
+        <li><div class="when">Februar bis März</div><h3>Rückmeldung</h3><p>Ihr bekommt eine Zu- oder Absage, sobald die Buchungen der bisherigen Teilnehmer abgeschlossen sind. Eine Interessensbekundung ist leider keine Platzgarantie.</p></li>
+      </ol>
+      <div class="tip">
+        <h3>Was eure Chancen erhöht</h3>
+        <ul><li>ein kurzer Einblick, wer ihr seid und warum ihr dabei sein möchtet</li><li>eure Motivation und was ihr euch von der VKF wünscht</li><li>eine Empfehlung durch eine teilnehmende Familie oder jemanden aus dem Team, falls vorhanden</li></ul>
+      </div>
+      <div class="mail"><span>Anfrage per E-Mail an</span><code id="mailaddr">info@vkf-wiesloch.de</code><button class="ghost" id="copyMail" type="button">Adresse kopieren</button></div>
+    </div>
+  </section>
+
+  <section class="info" id="packliste">
+    <div class="wrap">
+      <div class="eyebrow">Ich packe meinen Rucksack …</div>
+      <h2>Was mit ins Lager muss</h2>
+      <div id="packs"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><h3>Förderverein „Freunde der VKF Wiesloch“</h3><p>Seit 2023 unterstützt der Förderverein die VKF, zum Beispiel mit zusätzlichen Mitteln für Material und Programm.</p></div>
+    <div><h3>Kontakt</h3><p>info@vkf-wiesloch.de</p></div>
+    <nav aria-label="Rechtliches"><a href="#">Impressum</a><a href="#">Datenschutz</a></nav>
+    <div class="proto">Prototyp für den Relaunch von vkf-wiesloch.de. Illustrationen, Uhrzeiten und Teamtexte sind Platzhalter.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+const NS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+const svg=$('scene');
+let seed=7;function rnd(){seed=(seed*16807)%2147483647;return (seed-1)/2147483646}
+const SH=['#d9124a','#1f4a7a','#8b9c1c','#f08a24','#3b8fd0','#f2c230','#7a4fa0','#2f8f7a','#e8e2d2'];
+const SK=['#f2c9a0','#e8b48a','#c98d62','#9a6440','#f5d4b3'];
+const HR=['#4a3526','#2b2019','#8a5a2b','#d6a24a','#6b4a2a','#1c1c1c'];
+const pick=a=>a[Math.floor(rnd()*a.length)];
+function P(x,y,o){o=o||{};const s=(o.kid?.64:1)*(o.s||1);const id=o.seat?'ps':'pp';
+  return `<use class="${o.cls||''}" href="#${id}" transform="translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${o.f?-s:s},${s})" fill="${o.c||pick(SH)}" style="--skin:${o.skin||pick(SK)};--hair:${o.hair||pick(HR)}"/>`}
+
+/* stars */
+let st='';for(let i=0;i<170;i++){const x=-1500+rnd()*4600,y=-2400+rnd()*2850,r=rnd()<.12?2.6:1.3+rnd();
+  st+=`<circle class="twinkle" cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${r.toFixed(1)}" fill="#fff" style="animation-delay:${(-rnd()*3).toFixed(2)}s"/>`}
+$('stars').innerHTML=st;
+
+/* forest on far hills */
+let fo='';for(let x=-1500;x<3200;x+=26+rnd()*30){if(x>250&&x<1350&&rnd()<.55)continue;const y=500+Math.sin(x/190)*22+rnd()*18,s=.35+rnd()*.35;
+  fo+=`<use href="#pine" transform="translate(${x.toFixed(0)},${y.toFixed(0)}) scale(${s.toFixed(2)})"/>`}
+$('forest').innerHTML=fo;
+
+/* camp tents (back row) */
+/* tents: 3/4 view ridge tents (Hauszelte). Side wall drawn in a skewed frame. */
+function tentSVG(o){const {x0,y0,W,H,R,D,k}=o,cx=x0+W/2,xs=x0+W,sk=(-Math.atan(k)*180/Math.PI).toFixed(2),f=n=>n.toFixed(1);
+  const C1='#f1e8d6',C2='#e2d6bd',C3='#f7f0e2',SK='#a19e95',LN='#cbbd9f';
+  let h=`<g>`;
+  // roof side plane
+  h+=`<path d="M${f(cx)},${f(y0-R)} L${f(xs)},${f(y0-H)} L${f(xs+D)},${f(y0-H-D*k)} L${f(cx+D)},${f(y0-R-D*k)}Z" fill="${C3}" stroke="${LN}" stroke-width="1.5" stroke-linejoin="round"/>`;
+  // side wall (skewed frame)
+  h+=`<g transform="translate(${f(xs)},${y0}) skewY(${sk})"><rect x="0" y="${-H}" width="${D}" height="${H}" fill="${C1}" stroke="${LN}" stroke-width="1.5"/><rect x="0" y="-9" width="${D}" height="9" fill="${SK}"/>`;
+  (o.wins||[]).forEach(u=>{const x=u*D-o.ww/2;h+=`<rect x="${x}" y="-40" width="${o.ww}" height="18" fill="#8d7a62"/><line x1="${x+o.ww/2}" y1="-40" x2="${x+o.ww/2}" y2="-22" stroke="${C1}" stroke-width="1.6"/><line x1="${x}" y1="-31" x2="${x+o.ww}" y2="-31" stroke="${C1}" stroke-width="1.6"/><rect x="${x-3}" y="-46" width="${o.ww+6}" height="4" rx="2" fill="${C2}"/>`});
+  if(o.sign)h+=`<rect x="${o.sign*D-36}" y="-48" width="72" height="20" rx="3" fill="#0f2a4a"/><text x="${o.sign*D}" y="-33.5" text-anchor="middle" font-family="Bitter,Georgia,serif" font-weight="800" font-size="13" fill="#fff" letter-spacing="2">KÜCHE</text>`;
+  h+=`</g>`;
+  // gable front
+  h+=`<path d="M${x0},${y0} V${y0-H} L${f(cx)},${y0-R} L${xs},${y0-H} V${y0} Z" fill="${C2}" stroke="${LN}" stroke-width="1.5" stroke-linejoin="round"/><rect x="${x0}" y="${y0-9}" width="${W}" height="9" fill="${SK}"/>`;
+  if(o.door==='rect')h+=`<rect x="${f(cx-12)}" y="${y0-38}" width="24" height="38" fill="#b9a883"/>`;
+  else h+=`<path d="M${f(cx-15)},${y0} L${f(cx)},${y0-R+12} L${f(cx+15)},${y0}Z" fill="#c4b38f"/><path d="M${f(cx-15)},${y0} L${f(cx)},${y0-R+12} L${f(cx-22)},${y0-4}Z" fill="${C1}" stroke="${LN}" stroke-width="1"/><path d="M${f(cx+15)},${y0} L${f(cx)},${y0-R+12} L${f(cx+22)},${y0-4}Z" fill="${C1}" stroke="${LN}" stroke-width="1"/><rect x="${f(cx-6)}" y="${y0-R+34}" width="12" height="9" fill="#fff6dc" opacity=".8"/>`;
+  return h+`</g>`}
+const TP={W:60,H:44,R:72,D:92,k:.12,wins:[.4],ww:20};
+const TB={W:70,H:54,R:88,D:184,k:.12,ww:24};
+let camp='';
+[-640,-465,-290,-115,[60,'big'],310,485,660,1320,1495,1670,1845].forEach(x=>{const big=Array.isArray(x);
+  camp+=tentSVG(big?{...TB,x0:x[0],y0:628,wins:[.2,.5,.8]}:{...TP,x0:x,y0:628})});
+$('camp').innerHTML=camp;
+const KT={...TB,x0:1000,y0:640,wins:[.18,.46],sign:.78,door:'rect'};
+$('kitchen').innerHTML=tentSVG(KT);
+(function(){const {x0,y0,W,H,D,k}=KT,xs=x0+W,cx=x0+W/2,sk=(-Math.atan(k)*180/Math.PI).toFixed(2);
+  let w='';KT.wins.forEach((u,i)=>{const x=u*D-KT.ww/2;w+=`<rect x="${x}" y="-40" width="${KT.ww}" height="18" fill="#ffd27a"/>`;
+    if(i===0)w+=`<clipPath id="kWin"><rect x="${x}" y="-40" width="${KT.ww}" height="18"/></clipPath><g clip-path="url(#kWin)"><g class="shadowmove"><use href="#pp" transform="translate(${x-8},6) scale(.55)" fill="#9a5f2c" style="--skin:#9a5f2c;--hair:#9a5f2c" opacity=".6"/></g></g>`;
+    w+=`<line x1="${x+KT.ww/2}" y1="-40" x2="${x+KT.ww/2}" y2="-22" stroke="#e8b85a" stroke-width="1.6"/><line x1="${x}" y1="-31" x2="${x+KT.ww}" y2="-31" stroke="#e8b85a" stroke-width="1.6"/>`});
+  $('klight').innerHTML=`<ellipse cx="${xs+D/2}" cy="${y0+4-D*k/2}" rx="190" ry="34" fill="url(#kGlow)"/><ellipse cx="${cx}" cy="${y0+8}" rx="60" ry="16" fill="url(#kGlow)"/>
+   <g class="kflick"><g transform="translate(${xs},${y0}) skewY(${sk})">${w}</g><rect x="${cx-12}" y="${y0-38}" width="24" height="38" fill="#ffc45c" opacity=".92"/></g>`})();
+$('edgeTrees').innerHTML=[[-60,905,1.9],[40,890,1.5],[1660,905,1.9],[1560,892,1.4],[-300,900,1.7],[1880,900,1.7]].map(t=>`<use href="#pine" transform="translate(${t[0]},${t[1]}) scale(${t[2]})"/>`).join('');
+
+/* vignettes */
+const V=[];
+function vig(id,a,b,html){const g=document.createElementNS(NS,'g');g.id=id;g.innerHTML=html;g.style.opacity=0;$('vigs').appendChild(g);V.push({g,a,b});return g}
+
+function table(x0,x1,y,items){let h='';
+  for(let x=x0+34,i=0;x<x1-20;x+=62,i++)h+=P(x,y+14,{seat:1,kid:i%2==1});
+  h+=`<rect x="${x0}" y="${y-4}" width="${x1-x0}" height="10" rx="3" fill="#b98050"/>`;
+  h+=`<rect x="${x0+6}" y="${y+6}" width="${x1-x0-12}" height="26" fill="url(#check)"/>`;
+  h+=`<rect x="${x0+24}" y="${y+30}" width="7" height="44" fill="#8a5a33"/><rect x="${x1-31}" y="${y+30}" width="7" height="44" fill="#8a5a33"/>`;
+  h+=items;
+  for(let x=x0+50,i=0;x<x1-30;x+=74,i++)h+=P(x,y+104,{seat:1,kid:i%2==0});
+  h+=`<rect x="${x0-6}" y="${y+88}" width="${x1-x0+12}" height="9" rx="3" fill="#b98050"/><rect x="${x0+20}" y="${y+97}" width="6" height="18" fill="#8a5a33"/><rect x="${x1-26}" y="${y+97}" width="6" height="18" fill="#8a5a33"/>`;
+  return h}
+function mugs(x0,x1,y){let h='';for(let x=x0;x<x1;x+=62)h+=`<rect x="${x}" y="${y-16}" width="10" height="12" rx="2" fill="${pick(['#fff','#3b8fd0','#f2c230','#d9124a'])}"/>`;return h}
+const steam=(x,y)=>[0,1,2].map(i=>`<path class="steam" style="animation-delay:${-i*.8}s" d="M${x+i*10-10},${y} q-6,-10 0,-18 q6,-8 0,-16" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>`).join('');
+
+vig('fruehstueck',.10,.20, table(560,1040,700,
+  mugs(595,1020,700)+`<path d="M770,697 h60 l-8,-16 h-44z" fill="#c8913e"/><circle cx="785" cy="680" r="7" fill="#e6b36a"/><circle cx="800" cy="677" r="7" fill="#e6b36a"/><circle cx="815" cy="680" r="7" fill="#e6b36a"/>
+  <rect x="890" y="672" width="18" height="25" rx="4" fill="#6b4a2a"/>${steam(899,668)}`));
+
+(function(){const C=[800,770],items=[];
+  for(let i=0;i<16;i++){const t=i/16*Math.PI*2+.2;items.push({y:C[1]+72*Math.sin(t),h:P(C[0]+255*Math.cos(t),C[1]+72*Math.sin(t),{kid:i%2==0})})}
+  items.push({y:C[1],h:P(800,770,{c:'#d9124a'})});
+  items.sort((a,b)=>a.y-b.y);
+  vig('kreis',.20,.29, items.map(o=>o.h).join('')+
+   `<g transform="translate(812,612)"><rect x="-8" y="-46" width="250" height="44" rx="14" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
+   <text x="117" y="-17" text-anchor="middle" font-family="Caveat,cursive" font-weight="700" font-size="24" fill="#0f2a4a">Heute: Fußball &amp; Freibad!</text></g>`)})();
+
+vig('spiele',.29,.40,
+  `<g><rect x="530" y="690" width="100" height="66" fill="none" stroke="#fff" stroke-width="6"/><path d="M533,693 L545,705 V756 M627,693 L615,705 V756 M545,705 H615" stroke="#fff" stroke-width="2" opacity=".7" fill="none"/>
+   <g opacity=".45" stroke="#fff" stroke-width="1">${Array.from({length:9},(_,i)=>`<line x1="${538+i*10}" y1="693" x2="${538+i*10}" y2="756"/>`).join('')}</g></g>`+
+  P(580,760,{c:'#f2c230'})+P(700,772,{kid:1,f:1,c:'#d9124a'})+P(760,780,{kid:1,f:1,c:'#1f4a7a'})+P(650,790,{c:'#3b8fd0'})+
+  `<g id="ball"><circle r="8" fill="#fff" stroke="#1c2431" stroke-width="2"/><path d="M-3,-3 l3,-2 3,2 -1,4 h-4z" fill="#1c2431"/></g>`+
+  P(1023,770,{kid:1,c:'#8b9c1c'})+
+  `<rect x="990" y="650" width="22" height="115" fill="#6b4a2a"/><circle cx="1001" cy="620" r="58" fill="#3f7a3a"/><circle cx="960" cy="645" r="38" fill="#4b8a41"/><circle cx="1042" cy="642" r="40" fill="#4b8a41"/>`+
+  P(900,770,{c:'#7a4fa0'})+`<rect x="886" y="-2" width="28" height="9" rx="4" transform="translate(0,706)" fill="#7a4fa0"/>`+
+  `<text x="880" y="680" text-anchor="middle" font-family="Caveat,cursive" font-weight="700" font-size="26" fill="#fff">… 8, 9, 10!</text>`+
+  `<rect x="1122" y="742" width="56" height="26" rx="3" fill="#8a5a33"/><path d="M1122,742 L1116,720 L1172,716 L1178,742Z" fill="#a8703f"/><rect x="1132" y="734" width="10" height="10" fill="#d9124a"/><rect x="1150" y="732" width="12" height="12" fill="#3b8fd0"/>`+
+  `<path d="M1086,742 L1100,724 L1114,742 L1118,790 L1082,790Z" fill="#d9124a"/>`+P(1100,790,{kid:1,c:'#f2c230'})+`<path d="M1093,742 l2,-9 4,5 3,-7 3,7 4,-5 2,9z" fill="#f2c230" stroke="#b8860b" stroke-width="1"/>`+
+  P(1205,784,{kid:1,f:1,c:'#fff'})+`<path d="M1192,738 Q1205,722 1218,738 Z" fill="#1c1c1c"/><circle cx="1205" cy="733" r="2.4" fill="#fff"/><rect x="1196" y="745" width="10" height="4" fill="#1c1c1c"/>`
+);
+
+vig('mittag',.40,.48, table(560,1040,700,
+  mugs(595,1020,700)+`<rect x="770" y="664" width="64" height="34" rx="6" fill="#8e98a8"/><rect x="762" y="662" width="80" height="7" rx="3" fill="#6f7888"/>${steam(802,656)}`)+
+  P(1090,780,{c:'#fff'})+`<rect x="1080" y="740" width="20" height="30" fill="#fff" stroke="#ddd"/><line x1="1106" y1="738" x2="1122" y2="706" stroke="#8e98a8" stroke-width="4" stroke-linecap="round"/>`);
+
+(function(){let w='';for(let i=0;i<8;i++){const kid=i%2==1,x=-i*56,s=kid?.64:1;
+  w+=`<g transform="translate(${x},${(i%3)*6})"><g class="bob" style="animation-delay:${-i*.13}s">${P(0,0,{kid})}<rect x="${-20*s}" y="${-50*s}" width="${10*s}" height="${22*s}" rx="3" fill="${pick(['#f08a24','#1f4a7a','#2f8f7a','#d9124a'])}"/></g></g>`}
+  vig('ausflug',.48,.60,
+   `<path d="M300,800 C520,760 700,810 900,770 C1060,738 1200,770 1350,745" stroke="#d7c79a" stroke-width="26" fill="none" stroke-linecap="round" opacity=".8"/>
+    <g transform="translate(1210,760)"><rect x="-4" y="-80" width="8" height="84" fill="#6b4a2a"/>
+    <path d="M-6,-78 H70 L84,-66 L70,-54 H-6Z" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><text x="36" y="-60" text-anchor="middle" font-family="Bitter,Georgia,serif" font-weight="700" font-size="14" fill="#0f2a4a">Freibad</text>
+    <path d="M6,-48 H-70 L-84,-36 L-70,-24 H6Z" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><text x="-38" y="-30" text-anchor="middle" font-family="Bitter,Georgia,serif" font-weight="700" font-size="14" fill="#0f2a4a">Wanderweg</text></g>
+    <g id="walkers" transform="translate(600,790)">${w}</g>`)})();
+
+vig('abend',.60,.68, table(560,1040,700,
+  mugs(595,1020,700)+`<g transform="translate(800,697)"><rect x="-9" y="-30" width="18" height="30" rx="3" fill="#2b3346"/><rect x="-6" y="-26" width="12" height="20" fill="#ffd27a"/><path d="M-9,-30 Q0,-42 9,-30" stroke="#2b3346" stroke-width="3" fill="none"/></g>
+  <ellipse cx="700" cy="696" rx="20" ry="5" fill="#fff"/><ellipse cx="900" cy="696" rx="20" ry="5" fill="#fff"/>`));
+
+/* Lagerrunde */
+const R=$('runde');const C=[800,768],RX=340,RY=100;
+let back='',front='';
+const benches=[];for(let i=0;i<10;i++){const t=-Math.PI/2+i*Math.PI*2/10+Math.PI/10;if(Math.abs(t-Math.PI/2)<.35)continue;benches.push(t)}
+benches.sort((a,b)=>Math.sin(a)-Math.sin(b)).forEach((t,bi)=>{
+  const bx=C[0]+RX*Math.cos(t),by=C[1]+RY*Math.sin(t),ang=Math.atan2(RY*Math.cos(t),-RX*Math.sin(t))*180/Math.PI;
+  const a=((ang%180)+180)%180,aa=(a>90?a-180:a)*.45,rad=aa*Math.PI/180,L=Math.round(116*(.5+.5*Math.abs(Math.sin(t))));
+  const bench=`<g transform="translate(${bx.toFixed(1)},${by.toFixed(1)}) rotate(${aa.toFixed(1)})"><rect x="${-L/2}" y="-3" width="${L}" height="9" rx="3" fill="#a8703f"/><rect x="${-L/2+8}" y="6" width="6" height="12" fill="#6b4a2a"/><rect x="${L/2-14}" y="6" width="6" height="12" fill="#6b4a2a"/></g>`;
+  const offs=L>90?[-38,0,38]:[-L*.25,L*.25];
+  let ppl='';offs.forEach((o,k)=>{ppl+=P(bx+Math.cos(rad)*o,by+Math.sin(rad)*o+10,{seat:1,kid:(bi+k)%2==0,cls:'sitter'})});
+  const html=Math.sin(t)<0?bench+ppl:ppl+bench;
+  if(Math.sin(t)<0)back+=html;else front+=html;
+});
+let sparks='';for(let i=0;i<10;i++)sparks+=`<circle class="spark" cx="${C[0]-18+rnd()*36}" cy="${C[1]-40}" r="${1.5+rnd()*1.5}" fill="#ffd27a" style="--dx:${(rnd()*60-30).toFixed(0)}px;animation-delay:${(-rnd()*2.6).toFixed(2)}s"/>`;
+let notes='';['♪','♫','♪','♬','♫'].forEach((n,i)=>{notes+=`<text class="note sitter" x="${C[0]-150+i*72}" y="${C[1]-70}" font-size="30" fill="#fff4d6" style="--dx:${i%2?-24:24}px;animation-delay:${-i*.8}s">${n}</text>`});
+R.innerHTML=`<ellipse cx="${C[0]}" cy="${C[1]}" rx="520" ry="200" fill="url(#fireGlow)" id="glow"/>
+ <ellipse cx="${C[0]}" cy="${C[1]+2}" rx="${RX+40}" ry="${RY+26}" fill="#6a8a3a" opacity=".35"/>
+ <g>${back}</g><g id="gBehind"></g>
+ <g id="fire" transform="translate(${C[0]},${C[1]})">
+   <ellipse cx="0" cy="6" rx="46" ry="11" fill="#5a5048"/>
+   <rect x="-40" y="-6" width="80" height="12" rx="6" fill="#6b4a2a" transform="rotate(14)"/><rect x="-40" y="-6" width="80" height="12" rx="6" fill="#7d5733" transform="rotate(-14)"/>
+   <g id="flames"><path class="flame" d="M-34,0 C-40,-40 -12,-58 0,-120 C12,-58 40,-40 34,0Z" fill="#f2702e"/>
+   <path class="flame f2" d="M-22,0 C-26,-30 -6,-44 2,-86 C10,-44 26,-30 22,0Z" fill="#f7a531"/>
+   <path class="flame f3" d="M-12,0 C-14,-18 -2,-28 2,-52 C8,-28 14,-18 12,0Z" fill="#ffe27a"/></g>
+ </g>
+ ${sparks}<g id="gFront"></g><g>${front}</g>${notes}`;
+
+const guitars=[0,1,2].map(i=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','sitter');
+  g.innerHTML=`<g class="gflip">${P(0,0,{c:['#1f4a7a','#d9124a','#2f8f7a'][i]})}<g transform="translate(0,-36)"><line x1="-4" y1="2" x2="-30" y2="-16" stroke="#5b3a1e" stroke-width="4" stroke-linecap="round"/><ellipse cx="4" cy="6" rx="13" ry="10" fill="#c27b3a"/><circle cx="2" cy="5" r="3.5" fill="#3a2414"/></g></g>`;
+  return {g,off:i*Math.PI*2/3}});
+
+/* captions */
+const S=[
+ {a:0,b:.05,t:'VKF Wiesloch',h:'Ein Tag in der VKF',d:'Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel.',intro:1},
+ {a:.05,b:.11,t:'6:45 Uhr',h:'Die Sonne geht auf',d:'Über den Hügeln wird es hell. Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.'},
+ {a:.11,b:.20,t:'8:00 Uhr',h:'Frühstück',d:'Papas und Kinder sitzen zusammen an den Bierbänken. Kakao, Brötchen und die ersten Pläne für den Tag.'},
+ {a:.20,b:.29,t:'9:30 Uhr',h:'Morgenkreis',d:'Alle kommen im großen Kreis zusammen. Die Lagerleitung erzählt, was heute ansteht.'},
+ {a:.29,b:.40,t:'10:00 Uhr',h:'Fußball, Verstecken, Verkleiden',d:'Auf der Wiese rollt der Ball, hinter dem Baum wird gezählt, und aus der Verkleidekiste kommen Piraten und Könige.'},
+ {a:.40,b:.48,t:'12:30 Uhr',h:'Mittagessen',d:'Das Küchenteam tischt auf. Wer Nachschlag möchte, stellt sich einfach noch einmal an.'},
+ {a:.48,b:.60,t:'14:00 Uhr',h:'Ab ins Freibad oder auf Tour',d:'Nachmittags ziehen alle gemeinsam los: ins Schwimmbad, in den Wald oder auf eine Wanderung.'},
+ {a:.60,b:.68,t:'18:00 Uhr',h:'Abendessen',d:'Die Sonne steht schon tief. Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.'},
+ {a:.68,b:.87,t:'20:00 Uhr',h:'Lagerrunde',d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer. Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.'},
+ {a:.87,b:1.01,t:'22:30 Uhr',h:'Gute Nacht, VKF',d:'Mond und Sterne stehen über den Zelten. Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.'}
+];
+const caps=$('caps');
+S.forEach((s,i)=>{const d=document.createElement('div');d.className='cap'+(s.intro?' intro':'');
+  d.innerHTML=`<div class="time">${s.t}</div><h2>${s.h}</h2><p>${s.d}</p>`+(s.intro?'<div class="hint">Scrollen <span aria-hidden="true">↓</span></div>':'');
+  caps.appendChild(d);s.el=d});
+const clock=$('clock');
+S.slice(1).forEach(s=>{const b=document.createElement('button');b.className='tick';b.type='button';b.style.left=(s.a*100/ .93).toFixed(2)+'%';
+  b.innerHTML=`<i></i><b>${s.t.replace(' Uhr','')}</b>`;b.setAttribute('aria-label',s.h+', '+s.t);
+  b.addEventListener('click',()=>jump(s.a+.012));clock.appendChild(b);s.tick=b});
+S.slice(1).forEach(s=>{s.tick.style.left=((s.a-.05)/.9*100).toFixed(2)+'%'});
+
+/* helpers */
+const story=$('story');
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+const ss=t=>t*t*(3-2*t);
+function kf(p,k){if(p<=k[0][0])return k[0][1];for(let i=1;i<k.length;i++){if(p<=k[i][0]){const t=ss((p-k[i-1][0])/(k[i][0]-k[i-1][0]));return k[i-1][1]+(k[i][1]-k[i-1][1])*t}}return k[k.length-1][1]}
+const hex=h=>[1,3,5].map(i=>parseInt(h.substr(i,2),16));
+function kc(p,k){if(p<=k[0][0])return k[0][1];for(let i=1;i<k.length;i++){if(p<=k[i][0]){const t=ss((p-k[i-1][0])/(k[i][0]-k[i-1][0])),A=hex(k[i-1][1]),B=hex(k[i][1]);
+  return 'rgb('+A.map((v,j)=>Math.round(v+(B[j]-v)*t)).join(',')+')'}}return k[k.length-1][1]}
+const SKYT=[[0,'#1c2a55'],[.06,'#4f7fc4'],[.14,'#69addf'],[.6,'#5ea6de'],[.68,'#6b7fbf'],[.76,'#4b3f7a'],[.84,'#1d2350'],[.92,'#0a1330'],[1,'#070e26']];
+const SKYB=[[0,'#f2a07b'],[.06,'#f7d2a4'],[.14,'#cfe8f3'],[.6,'#d6ecf5'],[.68,'#f5c08a'],[.76,'#f08a5d'],[.84,'#7a4a6a'],[.92,'#17264d'],[1,'#122044']];
+/* caption colours: light on dawn/dusk/night sky, navy on the bright day sky. GLOW 0 = light halo, 1 = dark shadow */
+const CINK=[[0,'#ffffff'],[.08,'#ffffff'],[.12,'#0f2a4a'],[.64,'#0f2a4a'],[.7,'#ffffff'],[1,'#ffffff']];
+const CACC=[[0,'#ffd9a0'],[.08,'#ffd9a0'],[.12,'#d9124a'],[.64,'#d9124a'],[.7,'#ffd07a'],[1,'#ffd07a']];
+const GLOW=[[0,1],[.08,1],[.12,0],[.64,0],[.7,1],[1,1]];
+function jump(p){const top=story.offsetTop,len=story.offsetHeight-innerHeight;window.scrollTo({top:top+p*len,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
+
+function fit(){const r=svg.getBoundingClientRect(),a=r.width/Math.max(1,r.height);let h=800,w=h*a;if(w<920){w=920;h=w/a}
+  svg.setAttribute('viewBox',`${(800-w/2).toFixed(1)} ${(945-h).toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`)}
+
+let P0=0,active=-1;
+function progress(){const top=story.offsetTop,len=story.offsetHeight-innerHeight;return clamp((scrollY-top)/len,0,1)}
+function render(){
+  const p=progress();P0=p;
+  $('skyTop').setAttribute('stop-color',kc(p,SKYT));$('skyBot').setAttribute('stop-color',kc(p,SKYB));
+  const t=p/.84,sun=$('sun');
+  if(t<=1.02){const x=150+t*1300,y=650-Math.sin(Math.PI*clamp(t,0,1))*520;sun.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)})`);sun.style.opacity=1}else sun.style.opacity=0;
+  const mt=clamp((p-.83)/.17,0,1);$('moon').setAttribute('transform',`translate(${(1330-mt*120).toFixed(1)},${(640-ss(mt)*470).toFixed(1)})`);$('moon').setAttribute('opacity',clamp(mt*3,0,1));
+  $('stars').setAttribute('opacity',kf(p,[[0,.5],[.07,0],[.78,0],[.9,1]]));
+  $('dark').setAttribute('opacity',kf(p,[[0,.38],[.1,0],[.66,0],[.78,.3],[.88,.58],[1,.64]]));
+  $('dusk').setAttribute('opacity',kf(p,[[0,.14],[.1,0],[.62,0],[.72,.2],[.82,.06],[.9,0]]));
+  $('klight').setAttribute('opacity',kf(p,[[.74,0],[.88,1]]));
+  V.forEach(v=>{const f=.018;let o=0;if(p>v.a-f&&p<v.b+f)o=Math.min(clamp((p-(v.a-f))/(2*f),0,1),clamp(((v.b+f)-p)/(2*f),0,1));
+    if(v.a<.02)o=1;v.g.style.opacity=o;v.g.style.display=o>0?'':'none';v.g.style.transform=`translateY(${((1-o)*16).toFixed(1)}px)`;
+    if(o>0){const lp=clamp((p-v.a)/(v.b-v.a),0,1);
+      if(v.g.id==='spiele'){const l=(lp*2)%1,b=$('ball');b.setAttribute('transform',`translate(${(740-l*150).toFixed(1)},${(772-Math.abs(Math.sin(l*Math.PI*2.5))*46-l*12).toFixed(1)}) rotate(${(-l*720).toFixed(0)})`)}
+      if(v.g.id==='ausflug')$('walkers').setAttribute('transform',`translate(${(560+lp*520).toFixed(1)},${(792-lp*30).toFixed(1)})`);
+    }});
+  const ro=kf(p,[[.66,0],[.7,1]]);R.setAttribute('opacity',ro);R.style.display=ro>0?'':'none';
+  $('glow').setAttribute('opacity',kf(p,[[.68,.3],[.8,1],[.95,.75]]));
+  $('flames').setAttribute('transform',`scale(${kf(p,[[.9,1],[.99,.45]]).toFixed(3)})`);
+  R.classList.toggle('sleep',p>.94);
+  /* captions: colour follows the sky, each one fades in, drifts upward and fades out with the scroll */
+  caps.style.setProperty('--cap-ink',kc(p,CINK));caps.style.setProperty('--cap-accent',kc(p,CACC));
+  caps.style.setProperty('--cap-glow',`rgba(${kf(p,GLOW)<.5?'255,255,255':'0,0,0'},${(.25+Math.abs(kf(p,GLOW)-.5)*.3).toFixed(2)})`);
+  S.forEach((s,i)=>{const f=.012,last=i===S.length-1;
+    let o=Math.min(i===0?1:clamp((p-s.a)/f,0,1), last?1:clamp((s.b-p)/f,0,1));
+    const lp=clamp((p-s.a)/(s.b-s.a),0,1),dy=reduce?0:(i===0?-lp*60:(.5-lp)*56)+(1-o)*24;
+    s.el.style.opacity=o.toFixed(3);s.el.style.visibility=o>0?'visible':'hidden';
+    s.el.style.transform=`translateY(${dy.toFixed(1)}px) scale(${reduce?1:(.97+.03*o).toFixed(3)})`;
+    if(o>.5&&active!==i){active=i}});
+  $('fill').style.width=(clamp((p-.05)/.9,0,1)*100).toFixed(2)+'%';
+  S.slice(1).forEach(s=>s.tick.classList.toggle('done',p>=s.a));
+}
+let tick=false;function onScroll(){if(!tick){tick=true;requestAnimationFrame(()=>{tick=false;render()})}}
+addEventListener('scroll',onScroll,{passive:true});
+addEventListener('resize',()=>{fit();render()});
+
+/* guitarists orbit the fire */
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function orbit(ts){
+  if(P0>.66&&P0<1.01){const base=(reduce?0:ts/1000*.32)+P0*14;
+    guitars.forEach(q=>{const a=base+q.off,x=C[0]+175*Math.cos(a),y=C[1]+50*Math.sin(a);
+      q.g.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)})`);
+      q.g.firstChild.setAttribute('transform',`scale(${Math.sin(a)>0?-1:1},1)`);
+      const host=Math.sin(a)<0?$('gBehind'):$('gFront');if(q.g.parentNode!==host)host.appendChild(q.g)})}
+  requestAnimationFrame(orbit)}
+requestAnimationFrame(orbit);
+
+fit();render();
+
+/* copy mail */
+$('copyMail').addEventListener('click',e=>{const btn=e.currentTarget,addr='info@vkf-wiesloch.de';
+  const sel=()=>{const r=document.createRange();r.selectNodeContents($('mailaddr'));const s=getSelection();s.removeAllRanges();s.addRange(r)};
+  try{navigator.clipboard.writeText(addr).then(()=>{btn.textContent='Kopiert';setTimeout(()=>btn.textContent='Adresse kopieren',1800)},()=>{sel();btn.textContent='Markiert, jetzt kopieren'})}catch(_){sel()}});
+
+/* packing list: flat icons, thick dark outline, one shared style */
+const O='stroke="#161616" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"';
+const L='stroke="#161616" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"';
+const HI='fill="#fff" opacity=".38"', SHD='fill="#000" opacity=".16"';
+const dbl=(d,c,w)=>`<path d="${d}" fill="none" stroke="#161616" stroke-width="${w+3.4}" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+const SHIRT='M22,12 L12,16 L4,26 L12,32 L16,28 V54 H48 V28 L52,32 L60,26 L52,16 L42,12 C40,17 36,19 32,19 C28,19 24,17 22,12Z';
+const ICON={
+ schlafsack:`<rect x="6" y="20" width="44" height="26" rx="13" fill="#3b8fd0" ${O}/><rect x="11" y="23.5" width="30" height="5" rx="2.5" ${HI}/><path d="M20,21.6v22.8M31,21.6v22.8" stroke="#161616" stroke-width="2.4"/><path d="M8,40 C20,44 34,44 44,40" fill="none" stroke="#1f6aa5" stroke-width="2.4" opacity=".7"/><ellipse cx="47" cy="33" rx="9" ry="13" fill="#6cb7ea" ${O}/><path d="M47,33 m-1,-6 a6,6 0 1 1 -5,7 a3.5,3.5 0 1 1 5,-3" ${L}/>`,
+ isomatte:`<rect x="6" y="18" width="52" height="28" rx="4" fill="#3b8fd0" ${O}/><path d="M17,19.6v24.8M28,19.6v24.8M39,19.6v24.8" stroke="#161616" stroke-width="2"/><rect x="9" y="21" width="5" height="22" rx="2.5" ${HI}/><path d="M42,46 C48,40 52,30 58,22 V42 a4,4 0 0 1 -4,4Z" fill="#e6e6e6" ${O}/><path d="M45,44 C50,38 53,32 56,27" ${L} opacity=".5"/>`,
+ feldbett:`<path d="M14,34 L26,52 M26,34 L14,52 M38,34 L50,52 M50,34 L38,52" stroke="#161616" stroke-width="3.6" stroke-linecap="round"/><rect x="6" y="24" width="52" height="11" rx="4" fill="#8b9c1c" ${O}/><rect x="10" y="26.5" width="44" height="3" rx="1.5" ${HI}/><rect x="9" y="16" width="16" height="9" rx="4.5" fill="#fff" ${O}/>`,
+ decke:`<rect x="8" y="34" width="48" height="16" rx="4" fill="#d9124a" ${O}/><path d="M20,35.6v12.8M44,35.6v12.8" stroke="#f2c230" stroke-width="3"/><rect x="10" y="18" width="44" height="16" rx="4" fill="#f2c230" ${O}/><path d="M22,19.6v12.8M42,19.6v12.8M11.6,26h40.8" stroke="#d9124a" stroke-width="3" opacity=".75"/><path d="M14,50 v5 M20,50 v5 M26,50 v5 M32,50 v5 M38,50 v5 M44,50 v5 M50,50 v5" stroke="#161616" stroke-width="2" stroke-linecap="round"/>`,
+ lampe:`<path d="M24,4 L14,-2 M40,4 L50,-2 M32,3 V-4" stroke="#f2c230" stroke-width="3" stroke-linecap="round"/><path d="M22,8 h20 v12 l-5,8 v26 a3,3 0 0 1 -3,3 h-4 a3,3 0 0 1 -3,-3 v-26 l-5,-8z" fill="#e0144f" ${O}/><path d="M23.6,13h16.8" stroke="#7a0a2a" stroke-width="2.6"/><rect x="25" y="16" width="3" height="5" rx="1.5" ${HI}/><rect x="29.5" y="34" width="5" height="11" rx="1.5" fill="#333" stroke="#161616" stroke-width="1.4"/><path d="M30.5,37h3M30.5,40h3M30.5,43h3" stroke="#999" stroke-width="1"/>`,
+ batterien:`<rect x="16.5" y="10" width="7" height="6" rx="1.5" fill="#c9c9c9" ${O}/><rect x="11" y="15" width="18" height="40" rx="3" fill="#f2c230" ${O}/><path d="M12.6,36 h14.8 v16 a1.5,1.5 0 0 1 -1.5,1.5 h-11.8 a1.5,1.5 0 0 1 -1.5,-1.5z" fill="#2b2b2b"/><path d="M20,21v8M16,25h8" stroke="#161616" stroke-width="2.4" stroke-linecap="round"/><rect x="40.5" y="10" width="7" height="6" rx="1.5" fill="#c9c9c9" ${O}/><rect x="35" y="15" width="18" height="40" rx="3" fill="#3b8fd0" ${O}/><path d="M36.6,36 h14.8 v16 a1.5,1.5 0 0 1 -1.5,1.5 h-11.8 a1.5,1.5 0 0 1 -1.5,-1.5z" fill="#2b2b2b"/><path d="M44,21v8M40,25h8" stroke="#161616" stroke-width="2.4" stroke-linecap="round"/>`,
+ tshirt:`<path d="${SHIRT}" fill="#d9124a" ${O}/><path d="M23,13.5 C25,19 29,21.5 32,21.5 C35,21.5 39,19 41,13.5" ${L}/><path d="M42,30 V52 H46.4 V29Z" ${SHD}/><path d="M16,28 L12,32 M48,28 L52,32" ${L}/><rect x="19" y="26" width="4" height="12" rx="2" ${HI}/>`,
+ socke:`<path d="M26,6 H42 V40 C42,50 38,56 30,56 H16 C10,56 8,50 12,46 C15,43 22,42 26,38Z" fill="#3b8fd0" ${O}/><path d="M27.6,11h12.8M27.6,16h12.8" stroke="#fff" stroke-width="3"/><path d="M16,56 C10,56 8,50 12,46 C14,44.5 17,44 19,45 C17,49 18,53 22,56Z" fill="#1f4a7a" ${O}/><path d="M42,44 C41,51 37,56 30,56 C33,52 34,48 34,44Z" fill="#1f4a7a"/><path d="M42,40 C42,50 38,56 30,56 H16" fill="none" ${O}/>`,
+ pullover:`<path d="M22,10 L12,14 C8,16 6,20 6,26 V50 H14 V30 H16 V54 H48 V30 H50 V50 H58 V26 C58,20 56,16 52,14 L42,10 C40,14 36,16 32,16 C28,16 24,14 22,10Z" fill="#8b9c1c" ${O}/><path d="M23,11 C25,15 28,17.5 32,17.5 C36,17.5 39,15 41,11" ${L}/><path d="M18,33 l4,4 4,-4 4,4 4,-4 4,4 4,-4 4,4 4,-4" stroke="#f2c230" stroke-width="2.6" fill="none" stroke-linejoin="round" stroke-linecap="round"/><path d="M17.6,48 H46.4 M7.6,45 H14 M50,45 H56.4" ${L}/><path d="M16,30 V40 M48,30 V40" ${L}/>`,
+ regenjacke:`<path d="M24,15 C23,6 41,6 40,15 L52,18 C56,20 58,24 58,28 V50 H50 V32 H48 V56 H16 V32 H14 V50 H6 V28 C6,24 8,20 12,18Z" fill="#f2c230" ${O}/><path d="M26.5,16 C26.5,10.5 37.5,10.5 37.5,16 C36,20 28,20 26.5,16Z" fill="#b8860b" ${O}/><path d="M32,20 V56" ${L}/><path d="M20,44 h7 M37,44 h7 M16,32 L14,32 M48,32 H50" ${L}/><circle cx="35" cy="28" r="1.6" fill="#161616"/><circle cx="35" cy="36" r="1.6" fill="#161616"/><rect x="19" y="24" width="4" height="14" rx="2" ${HI}/>`,
+ windjacke:`<path d="M24,10 L25,4 H39 L40,10 L52,14 C56,16 58,20 58,26 V50 H50 V30 H48 V56 H16 V30 H14 V50 H6 V26 C6,20 8,16 12,14Z" fill="#3b8fd0" ${O}/><path d="M16,28 H48 V35 H16Z" fill="#d9124a"/><path d="M6.6,28 H14 V35 H6.6Z M50,28 H57.4 V35 H50Z" fill="#d9124a"/><path d="M32,5 V56" ${L}/><rect x="33.5" y="13" width="3.5" height="7" rx="1.5" fill="#d9d9d9" stroke="#161616" stroke-width="1.5"/><path d="M16,30 V50 M48,30 V50" ${L}/>`,
+ hosen:`<path d="M8,8 H34 L36,56 H25 L21,24 L17,56 H6Z" fill="#a8835a" ${O}/><path d="M8.6,14 H33.4" ${L}/><path d="M21,14 V24" ${L}/><path d="M36,24 H58 L60,46 H50 L47,34 L44,46 H34Z" fill="#3b8fd0" ${O}/><path d="M36.3,29 H57.7" ${L}/><path d="M47,29 V34" ${L}/><rect x="10" y="17" width="3.5" height="16" rx="1.75" ${HI}/>`,
+ kappe:`<path d="M38,38 H58 C60,38 61,42 58,44 C54,46 46,46 40,44Z" fill="#a50e38" ${O}/><path d="M8,40 C8,24 18,14 31,14 C44,14 52,24 52,40Z" fill="#d9124a" ${O}/><path d="M31,14 C27,22 25,31 25,40 M31,14 C37,22 40,31 41,40" ${L}/><circle cx="31" cy="13.5" r="3" fill="#d9124a" ${O}/><rect x="13" y="26" width="4" height="10" rx="2" ${HI}/>`,
+ wanderschuh:`<path d="M12,10 H32 C33,18 37,24 44,28 C53,30 58,35 58,42 V46 H8 V40 C8,34 10,28 12,24Z" fill="#a87458" ${O}/><path d="M12.6,11.6 H31 L31.6,17 H12.6Z" fill="#6b3a1c"/><path d="M8.6,40 C14,40 18,38 22,36" ${L} opacity=".4"/><path d="M30,20 h6 M32,25 h7 M36,30 h7" stroke="#ff7a1a" stroke-width="3.2" stroke-linecap="round"/><path d="M8,46 H58 V52 a2,2 0 0 1 -2,2 H10 a2,2 0 0 1 -2,-2Z" fill="#6b3a1c" ${O}/><path d="M16,50v4M24,50v4M32,50v4M40,50v4M48,50v4" stroke="#161616" stroke-width="2"/>`,
+ sportschuh:`<path d="M6,44 C6,36 10,30 16,28 L26,25 C30,31 38,33 46,33 C54,33 58,37 58,44Z" fill="#3b8fd0" ${O}/><path d="M17,41 C26,41 34,37 42,34" stroke="#f2c230" stroke-width="3.6" fill="none" stroke-linecap="round"/><path d="M27,28 l4,-3 M31,30 l4,-3 M35,31 l4,-3" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><rect x="5" y="43" width="54" height="9" rx="4.5" fill="#fff" ${O}/><path d="M9,47.5 H55" stroke="#c9c9c9" stroke-width="2"/>`,
+ sandale:`${dbl('M17,42 C17,28 31,28 31,42','#d9124a',4.6)}${dbl('M39,42 C39,31 51,31 51,42','#ff7a1a',4.6)}<path d="M6,46 C6,42 10,40 16,40 H52 C56,40 58,42 58,46 C58,50 56,52 52,52 H12 C8,52 6,50 6,46Z" fill="#a87458" ${O}/><path d="M10,49 H54" stroke="#6b3a1c" stroke-width="2.4" stroke-linecap="round"/>`,
+ gummistiefel:`<path d="M18,6 H36 V34 C44,36 54,39 56,45 V50 H14 C14,44 16,40 18,34Z" fill="#3a9a4a" ${O}/><path d="M19.6,7.6 H34.4 V13 H19.6Z" fill="#256b31"/><path d="M14,48 H56 V52 a2,2 0 0 1 -2,2 H16 a2,2 0 0 1 -2,-2Z" fill="#2b2b2b" ${O}/><rect x="22" y="16" width="4" height="16" rx="2" ${HI}/>`,
+ badehose:`<path d="M10,14 H54 L58,48 C50,50 42,48 36,46 L32,30 L28,46 C22,48 14,50 6,48Z" fill="#3b8fd0" ${O}/><path d="M10,14 H54 L54.8,21 H9.2Z" fill="#f2c230" ${O}/><path d="M30,21 l-2,8 M34,21 l2,8" ${L}/><path d="M13,25 L10,45 M17,25 L14.5,46" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>`,
+ bademantel:`<path d="M22,6 L10,12 L4,30 L12,34 L16,26 V58 H48 V26 L52,34 L60,30 L54,12 L42,6 L32,22Z" fill="#2f8f7a" ${O}/><path d="M22,6 L32,22 L27,38 M42,6 L32,22" ${L}/><path d="M22,6 L32,22 L42,6Z" fill="#fff" ${O}/><rect x="15" y="36" width="34" height="5" fill="#f2c230" ${O}/><path d="M34,41 l-3,9 M37,41 l4,8" stroke="#161616" stroke-width="3.6" stroke-linecap="round"/><path d="M34,41 l-3,9 M37,41 l4,8" stroke="#f2c230" stroke-width="1.6" stroke-linecap="round"/><path d="M12,34 L16,26" ${L}/><path d="M52,34 L48,26" ${L}/>`,
+ handtuecher:`<rect x="8" y="40" width="48" height="13" rx="4" fill="#d9124a" ${O}/><path d="M9.6,46.5 H54.4" stroke="#fff" stroke-width="2.6"/><rect x="10" y="27" width="44" height="13" rx="4" fill="#f2c230" ${O}/><path d="M11.6,33.5 H52.4" stroke="#fff" stroke-width="2.6"/><rect x="12" y="14" width="40" height="13" rx="4" fill="#3b8fd0" ${O}/><path d="M13.6,20.5 H50.4" stroke="#fff" stroke-width="2.6"/><path d="M20,15.6 v9.8 M18,28.6 v9.8 M16,41.6 v9.8" stroke="#000" stroke-width="2" opacity=".2"/>`,
+ fluegel:`<rect x="5" y="14" width="24" height="38" rx="11" fill="#ff7a1a" ${O}/><path d="M6.6,33 H27.4" ${L}/><rect x="9" y="19" width="4" height="10" rx="2" ${HI}/><rect x="20" y="37" width="6" height="7" rx="2" fill="#fff" stroke="#161616" stroke-width="1.8"/><rect x="35" y="14" width="24" height="38" rx="11" fill="#f2c230" ${O}/><path d="M36.6,33 H57.4" ${L}/><rect x="39" y="19" width="4" height="10" rx="2" ${HI}/><rect x="50" y="37" width="6" height="7" rx="2" fill="#fff" stroke="#161616" stroke-width="1.8"/>`,
+ brille:`${dbl('M4,33 C4,25 8,24 12,26 M52,26 C56,24 60,25 60,33','#d9124a',4)}<rect x="10" y="20" width="21" height="22" rx="9" fill="#2b2b2b" ${O}/><rect x="33" y="20" width="21" height="22" rx="9" fill="#2b2b2b" ${O}/><rect x="13.5" y="23.5" width="14" height="15" rx="6" fill="#8fd6ff"/><rect x="36.5" y="23.5" width="14" height="15" rx="6" fill="#8fd6ff"/><path d="M16,27 l4,-1.5 M39,27 l4,-1.5" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path d="M30,31 h4" stroke="#161616" stroke-width="3.2"/>`,
+ sonnencreme:`<rect x="24" y="5" width="16" height="12" rx="2" fill="#fff" ${O}/><rect x="18" y="16" width="28" height="42" rx="7" fill="#ff7a1a" ${O}/><circle cx="32" cy="38" r="7" fill="#f2c230" stroke="#161616" stroke-width="2"/><path d="M32,26v-3M32,50v3M20,38h3M41,38h3M23.5,29.5l2,2M38.5,44.5l2,2M40.5,29.5l-2,2M25.5,44.5l-2,2" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="21.5" y="20" width="4" height="10" rx="2" ${HI}/>`,
+ waschzeug:`${dbl('M28,32 L42,8','#f2c230',3.6)}<path d="M40.5,4.5 l6.5,4" stroke="#161616" stroke-width="7" stroke-linecap="round"/><path d="M40.5,4.5 l6.5,4" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><path d="M12,28 H36 L33,56 H15Z" fill="#3b8fd0" ${O}/><rect x="15.5" y="31" width="3.5" height="16" rx="1.75" ${HI}/><path d="M42,56 V36 l4,-5 h6 l4,5 V56Z" fill="#fff" ${O}/><rect x="45" y="27" width="8" height="5" rx="1" fill="#d9124a" ${O}/><path d="M43.6,44 H54.4" stroke="#d9124a" stroke-width="4"/>`,
+ geschirr:`<circle cx="40" cy="30" r="20" fill="#3b8fd0" ${O}/><circle cx="40" cy="30" r="12" fill="#5fb0ea" stroke="#161616" stroke-width="2"/><circle cx="31" cy="15" r="1.4" fill="#fff"/><circle cx="54" cy="38" r="1.4" fill="#fff"/><path d="M30,36 h4 a6,6 0 0 1 0,12 h-4" fill="none" stroke="#161616" stroke-width="7" stroke-linecap="round"/><path d="M30,36 h4 a6,6 0 0 1 0,12 h-4" fill="none" stroke="#d9124a" stroke-width="3.2" stroke-linecap="round"/><path d="M6,30 H31 V53 a4,4 0 0 1 -4,4 H10 a4,4 0 0 1 -4,-4Z" fill="#d9124a" ${O}/><path d="M7.6,33.5 H29.4" stroke="#fff" stroke-width="3"/><circle cx="14" cy="45" r="1.4" fill="#fff"/><circle cx="23" cy="50" r="1.2" fill="#fff"/><path d="M12,40 v10" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".4"/>`,
+ flasche:`<circle cx="40" cy="9" r="4" fill="none" stroke="#161616" stroke-width="2.6"/><rect x="25" y="5" width="14" height="10" rx="2.5" fill="#555" ${O}/><path d="M26,14 H38 V18 C42,20 44,24 44,28 V54 a4,4 0 0 1 -4,4 H24 a4,4 0 0 1 -4,-4 V28 C20,24 22,20 26,18Z" fill="#d9124a" ${O}/><path d="M21.6,34 H42.4 V44 H21.6Z" fill="#fff"/><path d="M27,39 h10" stroke="#8b9c1c" stroke-width="3" stroke-linecap="round"/><rect x="24" y="24" width="3.5" height="8" rx="1.75" ${HI}/><rect x="24" y="46" width="3.5" height="8" rx="1.75" ${HI}/>`,
+ rucksack:`<path d="M16,54 v6 M48,54 v6" stroke="#161616" stroke-width="4" stroke-linecap="round"/><path d="M14,16 H50 C54,16 56,20 56,24 V46 H8 V24 C8,20 10,16 14,16Z" fill="#e0281f" ${O}/><rect x="14" y="4" width="36" height="13" rx="6.5" fill="#3b8fd0" ${O}/><path d="M24,4.5v12M40,4.5v12" stroke="#161616" stroke-width="2.4"/><path d="M14,16 H50 V31 C50,33 48,35 46,35 H18 C16,35 14,33 14,31Z" fill="#f2502a" ${O}/><path d="M24,22 v14 M40,22 v14" stroke="#161616" stroke-width="2.4"/><rect x="21.5" y="31" width="5" height="5" rx="1" fill="#f2c230" stroke="#161616" stroke-width="1.6"/><rect x="37.5" y="31" width="5" height="5" rx="1" fill="#f2c230" stroke="#161616" stroke-width="1.6"/><rect x="11" y="44" width="42" height="13" rx="6.5" fill="#8b9c1c" ${O}/><path d="M24,44.5v12M40,44.5v12" stroke="#161616" stroke-width="2.4"/><path d="M14,49 H50" stroke="#000" stroke-width="2" opacity=".18"/>`,
+ liegetuch:`<rect x="6" y="22" width="48" height="22" rx="11" fill="#fff" ${O}/><path d="M18,23.6v18.8M30,23.6v18.8M42,23.6v18.8" stroke="#d9124a" stroke-width="4.5"/><path d="M24,23.6v18.8M36,23.6v18.8" stroke="#3b8fd0" stroke-width="4.5"/><ellipse cx="50" cy="33" rx="6.5" ry="11" fill="#f2c230" ${O}/><path d="M50,33 m0,-4 a4,4 0 1 1 -3,4 a2.4,2.4 0 1 1 3,-2" ${L}/>`,
+ mueckenschutz:`<circle cx="50" cy="12" r="1.8" fill="#9fc6e8"/><circle cx="55" cy="16" r="1.6" fill="#9fc6e8"/><circle cx="56" cy="9" r="1.5" fill="#9fc6e8"/><circle cx="60" cy="13" r="1.3" fill="#9fc6e8"/><path d="M22,20 V12 a4,4 0 0 1 4,-4 h10 a4,4 0 0 1 4,4 V20Z" fill="#fff" ${O}/><rect x="40" y="11" width="6" height="4.5" rx="1" fill="#161616"/><rect x="20" y="20" width="22" height="38" rx="4" fill="#8b9c1c" ${O}/><circle cx="31" cy="38" r="7.5" fill="#fff" stroke="#d9124a" stroke-width="2.6"/><path d="M28,35.5 l6,5" stroke="#161616" stroke-width="2.4" stroke-linecap="round"/><path d="M29.5,36 l-2,-3 M32.5,38.5 l3,-2.5" stroke="#161616" stroke-width="1.3" stroke-linecap="round"/><path d="M25.7,32.7 L36.3,43.3" stroke="#d9124a" stroke-width="2.6" stroke-linecap="round"/><rect x="23.5" y="23" width="3.5" height="8" rx="1.75" ${HI}/>`,
+ erstehilfe:`<path d="M24,18 V12 a3,3 0 0 1 3,-3 h10 a3,3 0 0 1 3,3 V18" fill="none" stroke="#161616" stroke-width="3.6"/><rect x="8" y="18" width="48" height="36" rx="6" fill="#2f9e5a" ${O}/><path d="M28,26 H36 V32 H42 V40 H36 V46 H28 V40 H22 V32 H28Z" fill="#fff"/><rect x="11.5" y="21.5" width="4" height="12" rx="2" ${HI}/>`,
+ karte:`<rect x="6" y="16" width="52" height="34" rx="5" fill="#3b8fd0" ${O}/><rect x="12" y="25" width="11" height="9" rx="2" fill="#f2c230" stroke="#161616" stroke-width="1.8"/><path d="M14,29.5h7M17.5,25v9" stroke="#b8860b" stroke-width="1.2"/><path d="M29,26 h22 M29,32 h15 M12,42 h30" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M7.6,20 H56.4" stroke="#8b9c1c" stroke-width="3"/>`,
+ impfpass:`<rect x="14" y="8" width="36" height="48" rx="4" fill="#f2c230" ${O}/><path d="M20,9.6 V54.4" stroke="#161616" stroke-width="2"/><path d="M27,41 L40,28" stroke="#0f2a4a" stroke-width="6" stroke-linecap="round"/><path d="M27,41 L40,28" stroke="#9fd0f0" stroke-width="2.4" stroke-linecap="round"/><path d="M40,28 l4,-4 M42,22 l4,4 M27,41 l-4,4" stroke="#0f2a4a" stroke-width="2.4" stroke-linecap="round"/><path d="M27,16 h17" stroke="#0f2a4a" stroke-width="2.6" stroke-linecap="round"/>`,
+ ausweis:`<rect x="6" y="16" width="52" height="34" rx="5" fill="#f1d9c8" ${O}/><rect x="12" y="23" width="15" height="20" rx="2" fill="#9fc6e8" stroke="#161616" stroke-width="1.8"/><circle cx="19.5" cy="30" r="3.6" fill="#0f2a4a"/><path d="M13,42 C13,36 26,36 26,42Z" fill="#0f2a4a"/><path d="M33,26 h18 M33,32 h13 M33,38 h16" stroke="#8a6a5a" stroke-width="3" stroke-linecap="round"/><path d="M12,45.5 h40" stroke="#d9124a" stroke-width="2" opacity=".6"/>`,
+ batik:`<clipPath id="cpBatik"><path d="${SHIRT}"/></clipPath><path d="${SHIRT}" fill="#fff"/><g clip-path="url(#cpBatik)" fill="none" stroke-width="4.5" opacity=".9"><circle cx="32" cy="36" r="5" stroke="#d9124a"/><circle cx="32" cy="36" r="11" stroke="#f2c230"/><circle cx="32" cy="36" r="17" stroke="#3b8fd0"/><circle cx="32" cy="36" r="23" stroke="#8b9c1c"/><circle cx="32" cy="36" r="29" stroke="#ff7a1a"/></g><path d="${SHIRT}" fill="none" ${O}/><path d="M23,13.5 C25,19 29,21.5 32,21.5 C35,21.5 39,19 41,13.5" ${L}/>`
+};
+const PACK=[
+ ['Schlafen',[['schlafsack','Schlafsack'],['isomatte','Isomatte'],['feldbett','Luftmatratze oder Feldbett'],['decke','Decke'],['lampe','Taschenlampe'],['batterien','Ersatzbatterien']]],
+ ['Kleidung',[['tshirt','Genug T-Shirts'],['socke','Unterwäsche und Socken'],['pullover','Warme Pullover'],['regenjacke','Regenjacke'],['windjacke','Windjacke'],['hosen','Lange und kurze Hosen'],['kappe','Kopfbedeckung gegen die Sonne'],['wanderschuh','Feste Wanderschuhe'],['sportschuh','Sportschuhe'],['sandale','Offene Schuhe'],['gummistiefel','Gummistiefel']]],
+ ['Baden',[['badehose','Badehose und Badesachen'],['bademantel','Bademantel'],['handtuecher','Handtücher'],['fluegel','Schwimmflügel'],['brille','Taucherbrille'],['sonnencreme','Sonnencreme']]],
+ ['Sonstiges',[['waschzeug','Waschzeug'],['geschirr','Campinggeschirr: Tasse, Teller, Besteck'],['flasche','Trinkflasche'],['rucksack','Rucksack'],['liegetuch','Liegetuch'],['mueckenschutz','Mückenschutz'],['erstehilfe','Notwendige Medikamente'],['karte','Gesundheitskarte'],['impfpass','Impfpass'],['ausweis','Personalausweis'],['batik','Weißes Baumwoll-T-Shirt zum Batiken']]]];
+$('packs').innerHTML=PACK.map(([g,items])=>`<div class="pack"><h3>${g}</h3><ul class="items">${items.map(([k,t])=>`<li><svg viewBox="0 0 64 64" aria-hidden="true">${ICON[k]}</svg><span>${t}</span></li>`).join('')}</ul></div>`).join('');
+})();
+</script>
+</body>
+</html>
