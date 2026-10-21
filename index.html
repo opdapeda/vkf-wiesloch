@@ -139,6 +139,20 @@ a{color:inherit}
 .pv-card h3{margin:0 0 4px;font:800 26px/1.15 'Baloo 2',system-ui,sans-serif}
 .pv-card p{margin:0;font-size:18px;line-height:1.45;font-weight:600;max-width:62ch;text-wrap:pretty}
 .pv-card.port figcaption{max-width:min(100%,520px)}
+.vcard{position:absolute;z-index:5;right:clamp(16px,6vw,110px);top:clamp(100px,17vh,170px);width:clamp(150px,15vw,220px);margin:0;padding:9px 9px 0;border:0;border-radius:6px;background:#fffdf8;color:#2a1f3d;text-align:center;font:inherit;cursor:pointer;
+  box-shadow:0 14px 34px rgba(10,6,30,.45);transform:rotate(3.5deg);transition:transform .25s,box-shadow .25s,opacity .3s}
+.vcard:hover,.vcard:focus-visible{transform:rotate(0) translateY(-4px) scale(1.04);box-shadow:0 20px 42px rgba(10,6,30,.5)}
+.vcard:focus-visible{outline:4px solid #ffc93a;outline-offset:4px}
+.vcard img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;background:#e9e2f2}
+.vcard .tape{position:absolute;left:50%;top:-11px;width:64px;height:22px;margin-left:-32px;background:rgba(255,201,58,.78);transform:rotate(-4deg);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.vcard .play{position:absolute;left:9px;right:9px;top:9px;aspect-ratio:4/3;display:grid;place-items:center}
+.vcard .play i{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 3px 10px rgba(0,0,0,.35);display:grid;place-items:center}
+.vcard .play i::before{content:"";margin-left:4px;border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #e8890c}
+.vcard .lbl{display:block;padding:9px 2px 26px;font:800 19px/1.1 'Baloo 2',system-ui,sans-serif}
+.vcard .go{position:absolute;left:50%;bottom:-17px;transform:translateX(-50%);white-space:nowrap;padding:7px 16px;border-radius:999px;background:#ffc93a;color:#2a1f3d;font:800 16px/1.1 'Baloo 2',system-ui,sans-serif;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+@media (max-width:700px){.vcard{width:92px;right:8px;top:calc(env(safe-area-inset-top,0px) + 88px);padding:5px 5px 0}.vcard .play{left:5px;right:5px;top:5px}.vcard .play i{width:28px;height:28px}.vcard .play i::before{border-width:5px 0 5px 9px;margin-left:2px}.vcard .tape{width:44px;height:16px;margin-left:-22px;top:-8px}
+  .vcard .lbl{font-size:12px;padding:5px 0 18px}.vcard .go{font-size:12px;padding:4px 9px;bottom:-12px}}
+@media (prefers-reduced-motion: reduce){.vcard{transition:none}}
 .ib.vd .dsk{stroke:#e8890c}
 .ib.vd .halo{stroke:#ffe2a8}
 .ib.vd:hover .dsk,.ib.vd:focus-visible .dsk{fill:#fff0cf}
@@ -358,6 +372,9 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
       <g id="infos"></g>
     </svg>
 
+    <button class="vcard" id="vcard" type="button" aria-label="Video abspielen: Das Lager von oben"><span class="tape"></span>
+      <img src="video/drohne-vorschau.jpg" alt="Luftbild des Zeltlagers aus dem Drohnenvideo" width="480" height="270"><span class="play" aria-hidden="true"><i></i></span>
+      <span class="lbl">Das Lager von oben</span><span class="go">▶ Video abspielen</span></button>
     <div class="caps" id="caps" aria-live="polite"></div>
     <nav class="dots" id="dots" aria-label="Szenen des Tages"></nav>
     <p class="pop" id="pop" role="tooltip"></p>
@@ -660,7 +677,7 @@ const FOTO={
  wanderung:{l:'Wanderung',items:[{src:'fotos/wanderung-1.jpg',alt:'Gruppe wandert auf einem Weg zwischen Bauernhöfen',t:'Manchmal gibt es auch einen längeren Spaziergang oder eine kleine Wanderung. Gerade im Schwarzwald kommt man immer wieder an wunderschönen Bauernhöfen vorbei.'}]},
  rutsche:{l:'Wasserrutsche',items:[{src:'fotos/rutsche-1.jpg',alt:'Kind rutscht auf einer langen weißen Plane über die Wiese',t:'Eine Wasserrutsche auf einer Spargelplane. Auch so kann man sich zwischendurch abkühlen.'}]}};
 const S=[
- {a:0,b:.05,stop:0,l:'Start',h:'Ein Tag in der VKF',d:'Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel.',intro:1,info:[{x:800,y:800,photo:'drohne'}]},
+ {a:0,b:.05,stop:0,l:'Start',h:'Ein Tag in der VKF',d:'Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel.',intro:1},
  {a:.05,b:.11,stop:.085,l:'Sonnenaufgang',h:'Die Sonne geht auf',d:'Über den Bergen wird es hell. Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.',info:[
    {f:'sun',d:'Über den Bergen wird es hell.'},
    {x:1090,y:546,d:'Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.'},
@@ -733,7 +750,7 @@ function hidePop(){if(openIB)openIB.classList.remove('open');openIB=null;pinned=
 const pv=$('pv'),pvCard=$('pvCard'),pvImg=$('pvImg');let phOpen=false,phFrom=null,phSpot=null,phIdx=0;
 function showPhoto(i){const f=phSpot,n=f.items.length;phIdx=(i+n)%n;const it=f.items[phIdx];
   pvCard.classList.toggle('multi',n>1);pvCard.classList.remove('empty');
-  const pvVid=$('pvVid'),isV=!!it.video;pvCard.classList.toggle('vid',isV);$('pvEmpty').textContent=isV?'Hier kommt bald ein Video hin.':'Hier kommt bald ein Foto hin.';
+  const pvVid=$('pvVid'),isV=!!it.video;pvCard.classList.toggle('vid',isV);$('pvEmpty').textContent=isV?'Das Video konnte nicht geladen werden.':'Hier kommt bald ein Foto hin.';
   pvImg.alt=it.alt||f.l;$('pvT').textContent=f.l;$('pvP').textContent=it.t||f.t||'';
   $('pvDots').innerHTML=n>1?f.items.map((_,k)=>`<i${k===phIdx?' class="on"':''}></i>`).join(''):'';
   const fit=()=>{pvCard.classList.remove('land','port','empty');pvCard.classList.add(pvImg.naturalHeight>pvImg.naturalWidth?'port':'land')};
@@ -743,7 +760,7 @@ function showPhoto(i){const f=phSpot,n=f.items.length;phIdx=(i+n)%n;const it=f.i
   pvVid.pause();pvVid.removeAttribute('src');pvVid.load();
   if(it.src){pvImg.src=it.src;if(pvImg.complete&&pvImg.naturalWidth)fit()}else{pvCard.classList.remove('port');pvCard.classList.add('land','empty')}
   if(n>1){const nx=f.items[(phIdx+1)%n];if(nx.src)new Image().src=nx.src}}
-function openPhoto(f,g){const r=g.querySelector('.dsk').getBoundingClientRect();
+function openPhoto(f,g){const r=(g.querySelector('.dsk')||g).getBoundingClientRect();
   pvCard.style.transformOrigin=`${(r.left+r.width/2).toFixed(0)}px ${(r.top+r.height/2).toFixed(0)}px`;
   phSpot=f;phFrom=g;phOpen=true;showPhoto(0);pv.classList.add('on');pv.setAttribute('aria-hidden','false');setTimeout(()=>$('pvX').focus(),50)}
 function closePhoto(){if(!phOpen)return;phOpen=false;$('pvVid').pause();pv.classList.remove('on');pv.setAttribute('aria-hidden','true');if(phFrom)phFrom.focus({preventScroll:true})}
@@ -751,6 +768,7 @@ $('pvPrev').addEventListener('click',()=>showPhoto(phIdx-1));$('pvNext').addEven
 let swX=null;pvCard.addEventListener('touchstart',e=>{swX=e.touches.length===1?e.touches[0].clientX:null},{passive:true});
 pvCard.addEventListener('touchend',e=>{if(swX===null||phSpot.items.length<2)return;const dx=e.changedTouches[0].clientX-swX;swX=null;if(Math.abs(dx)>50)showPhoto(phIdx+(dx<0?1:-1))});
 $('pvX').addEventListener('click',closePhoto);
+$('vcard').addEventListener('click',()=>{hidePop();openPhoto(FOTO.drohne,$('vcard'))});
 pv.addEventListener('click',e=>{if(!e.target.closest('.pv-card'))closePhoto()});
 addEventListener('pointerdown',e=>{if(openIB&&!e.target.closest('.ib'))hidePop()});
 addEventListener('keydown',e=>{if(e.key==='Escape'){hidePop();closePhoto()}});
@@ -823,6 +841,7 @@ function render(){
     const lp=clamp((p-s.a)/(s.b-s.a),0,1),dy=reduce?0:(i===0?-lp*60:(.5-lp)*56)+(1-o)*24;
     s.el.style.opacity=o.toFixed(3);s.el.style.visibility=o>0?'visible':'hidden';
     s.el.style.transform=`translateY(${dy.toFixed(1)}px) scale(${reduce?1:(.97+.03*o).toFixed(3)})`});
+  const vo=clamp((S[0].b-p)/.012,0,1),vc=$('vcard');vc.style.opacity=vo.toFixed(3);vc.style.visibility=vo>0?'visible':'hidden';
   let act=0;S.forEach((s,i)=>{if(p>=s.a)act=i});
   S.forEach((s,i)=>{s.dot.classList.toggle('on',i===act);if(i===act)s.dot.setAttribute('aria-current','true');else s.dot.removeAttribute('aria-current')});
   syncKeys();
