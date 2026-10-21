@@ -139,6 +139,14 @@ a{color:inherit}
 .pv-card h3{margin:0 0 4px;font:800 26px/1.15 'Baloo 2',system-ui,sans-serif}
 .pv-card p{margin:0;font-size:18px;line-height:1.45;font-weight:600;max-width:62ch;text-wrap:pretty}
 .pv-card.port figcaption{max-width:min(100%,520px)}
+.pv-img{position:relative;line-height:0}
+.pv-n{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.92);color:#2a1f3d;font:800 32px/1 'Baloo 2',system-ui,sans-serif;padding:0 0 4px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.pv-n.prev{left:12px}.pv-n.next{right:12px}
+.pv-n:hover{background:#ffe9a8}.pv-n:focus-visible{outline:4px solid #0f8f9b;outline-offset:2px}
+.pv-dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:8px}
+.pv-dots i{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.55);box-shadow:0 1px 4px rgba(0,0,0,.45)}
+.pv-dots i.on{background:#fff;transform:scale(1.25)}
+.pv-card:not(.multi) .pv-n,.pv-card:not(.multi) .pv-dots{display:none}
 .pv-x{position:absolute;top:12px;right:12px;width:48px;height:48px;border:0;border-radius:50%;background:#fff;color:#2a1f3d;font:800 30px/1 'Baloo 2',system-ui,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35)}
 .pv-x:hover{background:#ffe9a8}.pv-x:focus-visible{outline:4px solid #0f8f9b;outline-offset:2px}
 @media (max-width:700px){.pv-card.land{width:100%}.pv-card h3{font-size:22px}}
@@ -346,14 +354,6 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
     <div class="caps" id="caps" aria-live="polite"></div>
     <nav class="dots" id="dots" aria-label="Szenen des Tages"></nav>
     <p class="pop" id="pop" role="tooltip"></p>
-    <div class="pv" id="pv" role="dialog" aria-modal="true" aria-labelledby="pvT" aria-hidden="true">
-      <figure class="pv-card" id="pvCard" style="margin:0">
-        <button class="pv-x" id="pvX" type="button" aria-label="Foto schließen">×</button>
-        <img id="pvImg" alt="">
-        <div class="none">Hier kommt bald ein Foto hin.</div>
-        <figcaption><h3 id="pvT"></h3><p id="pvP"></p></figcaption>
-      </figure>
-    </div>
   </div>
 </section>
 
@@ -444,6 +444,18 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
     </div>
   </div>
 </footer>
+    <div class="pv" id="pv" role="dialog" aria-modal="true" aria-labelledby="pvT" aria-hidden="true">
+  <figure class="pv-card" id="pvCard" style="margin:0">
+    <button class="pv-x" id="pvX" type="button" aria-label="Foto schließen">×</button>
+    <div class="pv-img"><img id="pvImg" alt="">
+      <div class="none">Hier kommt bald ein Foto hin.</div>
+      <button class="pv-n prev" id="pvPrev" type="button" aria-label="Vorheriges Foto">‹</button>
+      <button class="pv-n next" id="pvNext" type="button" aria-label="Nächstes Foto">›</button>
+      <div class="pv-dots" id="pvDots" aria-hidden="true"></div>
+    </div>
+    <figcaption><h3 id="pvT"></h3><p id="pvP"></p></figcaption>
+  </figure>
+</div>
 <script>
 (function(){
 const NS='http://www.w3.org/2000/svg';
@@ -626,15 +638,19 @@ const guitars=[0,1,2].map(i=>{const g=document.createElementNS(NS,'g');g.setAttr
   return {g,off:i*Math.PI*2/3}});
 
 /* captions: headline on the scene, info text lives in the round buttons (info: x/y in scene units, or f for sun/moon) */
-/* photo spots: replace src with the real file (portrait or landscape both work), t = short caption */
+/* photo spots: items = one or more photos (blättern), t = caption of the spot, an item can bring its own t */
 const FOTO={
- zelte:{l:'Die Zelte',src:'fotos/beispiel-hoch.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'},
- kueche:{l:'Das Küchenzelt',src:'fotos/beispiel-quer.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'},
- tisch:{l:'Am Tisch',src:'fotos/beispiel-quer.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'},
- wiese:{l:'Auf der Wiese',src:'fotos/beispiel-hoch.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'},
- tor:{l:'Am Tor',src:'fotos/beispiel-quer.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'},
- essen:{l:'Beim Essen',src:'fotos/beispiel-hoch.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'},
- feuer:{l:'Am Lagerfeuer',src:'fotos/beispiel-quer.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'}};
+ zelte:{l:'Ankunft',items:[{src:'fotos/zelte-1.jpg',alt:'Kinder sitzen auf einer Bank, dahinter die Zeltreihe',t:'Die Kinder sind gerade auf dem Platz angekommen. Sie reisen mit zwei Reisebussen an und sind schon ganz gespannt darauf, bald in die Zelte einzuziehen.'}]},
+ kueche:{l:'Küche und Grillbereich',items:[{src:'fotos/kueche-1.jpg',alt:'Küchenzelt mit Spülstation, dahinter das Vorratszelt',t:'Der Grillbereich mit dem Küchenzelt, im Hintergrund das Vorratszelt. Hier wird für das leibliche Wohl gesorgt: Es wird gebacken, gekocht und gebraten.'}]},
+ laternen:{l:'Öllampen',items:[{src:'fotos/laternen-1.jpg',alt:'Öllampen auf einem Tisch am Abend',t:'Unsere Öllampen sorgen abends für ganz besondere Stimmung. Wir haben kein oder nur selten elektrischen Strom, deshalb ergänzen sie nachts die Beleuchtung.'}]},
+ morgenkreis:{l:'Morgenkreis',t:'Im Morgenkreis verkündet die Lagerleitung in der Mitte das Programm.',items:[{src:'fotos/morgenkreis-1.jpg',alt:'Morgenkreis auf der Wiese vor den Zelten'},{src:'fotos/morgenkreis-2.jpg',alt:'Morgenkreis mit Bierbänken vor Zelten und Wald'}]},
+ fussball:{l:'Fußball',items:[{src:'fotos/fussball-1.jpg',alt:'Kinder und Teamer spielen Fußball auf der Wiese',t:'Kinder und Teamer beim Fußballspielen.'}]},
+ essen:{l:'Essenspavillon',items:[{src:'fotos/essen-1.jpg',alt:'Essenspavillon auf einer Wiese vor Bergkulisse',t:'Der Essenspavillon vor wunderschöner Kulisse. Wir sind oft auf Plätzen, die eigentlich Futterwiesen von Bauern sind. Die Bauern überlassen uns diese Wiesen.'}]},
+ lagerfeuer:{l:'Lagerrunde',t:'Auch hier wird gemeinsam gesungen. Es gibt ein paar kleinere Spiele, und die Schlachtrufe dürfen natürlich nicht fehlen.',items:[{src:'fotos/lagerfeuer-1.jpg',alt:'Teamerin mit Gitarre als Silhouette vor dem Lagerfeuer',t:'Die abendliche Lagerrunde: Im Dunkeln im Hintergrund sieht man das Lagerfeuer, vorne unsere Teamerin mit der Gitarre. Es wird gemeinsam gesungen, es gibt ein paar kleinere Spiele, und die Schlachtrufe dürfen natürlich nicht fehlen.'},{src:'fotos/lagerfeuer-2.jpg',alt:'Gruppe sitzt am Lagerfeuer, Funken fliegen'},{src:'fotos/lagerfeuer-3.jpg',alt:'Silhouetten am Lagerfeuer vor dunkelblauem Himmel'}]},
+ landschaft:{l:'Landschaft',items:[{src:'fotos/landschaft-1.jpg',alt:'Gewitterwolken im Abendlicht über Tannen',t:'Ein Blick auf die unglaubliche Landschaft.'}]},
+ freibad:{l:'Ausflug ins Freibad',items:[{src:'fotos/freibad-1.jpg',alt:'Freibad mit Becken und Stufen',t:'Ab und zu muss auch mal ein Ausflug sein. Hier sind wir an einem Dienstag den ganzen Tag ins Freibad gegangen, einfach um mal richtig sauber zu werden.'}]},
+ wanderung:{l:'Wanderung',items:[{src:'fotos/wanderung-1.jpg',alt:'Gruppe wandert auf einem Weg zwischen Bauernhöfen',t:'Manchmal gibt es auch einen längeren Spaziergang oder eine kleine Wanderung. Gerade im Schwarzwald kommt man immer wieder an wunderschönen Bauernhöfen vorbei.'}]},
+ rutsche:{l:'Wasserrutsche',items:[{src:'fotos/rutsche-1.jpg',alt:'Kind rutscht auf einer langen weißen Plane über die Wiese',t:'Eine Wasserrutsche auf einer Spargelplane. Auch so kann man sich zwischendurch abkühlen.'}]}};
 const S=[
  {a:0,b:.05,stop:0,l:'Start',h:'Ein Tag in der VKF',d:'Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel.',intro:1},
  {a:.05,b:.11,stop:.085,l:'Sonnenaufgang',h:'Die Sonne geht auf',d:'Über den Bergen wird es hell. Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.',info:[
@@ -643,32 +659,32 @@ const S=[
    {x:515,y:512,photo:'zelte'},{x:1030,y:604,photo:'kueche'}]},
  {a:.11,b:.20,stop:.177,l:'Frühstück',h:'Frühstück',d:'Papas und Kinder sitzen zusammen an den Bierbänken. Kakao, Brötchen und die ersten Pläne für den Tag.',info:[
    {x:612,y:636,d:'Papas und Kinder sitzen zusammen an den Bierbänken.'},
-   {x:800,y:630,d:'Kakao, Brötchen und die ersten Pläne für den Tag.'},
-   {x:960,y:676,photo:'tisch'}]},
+   {x:800,y:630,d:'Kakao, Brötchen und die ersten Pläne für den Tag.'}]},
  {a:.20,b:.29,stop:.268,l:'Morgenkreis',h:'Morgenkreis',d:'Alle kommen im großen Kreis zusammen. Die Lagerleitung erzählt, was heute ansteht.',info:[
    {x:520,y:700,d:'Alle kommen im großen Kreis zusammen.'},
    {x:800,y:672,d:'Die Lagerleitung erzählt, was heute ansteht.'},
-   {x:1175,y:776,photo:'wiese'}]},
+   {x:1175,y:776,photo:'morgenkreis'}]},
  {a:.29,b:.40,stop:.377,l:'Fußball, Verstecken, Verkleiden',h:'Fußball, Verstecken, Verkleiden',d:'Auf der Wiese rollt der Ball, hinter dem Baum wird gezählt, und aus der Verkleidekiste kommen Piraten und Könige.',info:[
    {x:580,y:650,d:'Auf der Wiese rollt der Ball.'},
    {x:1001,y:540,d:'Hinter dem Baum wird gezählt.'},
    {x:1150,y:690,d:'Aus der Verkleidekiste kommen Piraten und Könige.'},
-   {x:488,y:722,photo:'tor'}]},
+   {x:488,y:722,photo:'fussball'},{x:850,y:735,photo:'rutsche'}]},
  {a:.40,b:.48,stop:.457,l:'Mittagessen',h:'Mittagessen',d:'Das Küchenteam tischt auf. Wer Nachschlag möchte, stellt sich einfach noch einmal an.',info:[
    {x:1090,y:682,d:'Das Küchenteam tischt auf.'},
    {x:800,y:630,d:'Wer Nachschlag möchte, stellt sich einfach noch einmal an.'},
    {x:700,y:692,photo:'essen'}]},
  {a:.48,b:.60,stop:.577,l:'Freibad oder Tour',h:'Ab ins Freibad oder auf Tour',d:'Nachmittags ziehen alle gemeinsam los: ins Schwimmbad, in den Wald oder auf eine Wanderung.',info:[
    {x:850,y:690,d:'Nachmittags ziehen alle gemeinsam los.'},
-   {x:1210,y:640,d:'Ins Schwimmbad, in den Wald oder auf eine Wanderung.'}]},
+   {x:1210,y:640,d:'Ins Schwimmbad, in den Wald oder auf eine Wanderung.'},
+   {x:1120,y:735,photo:'freibad'},{x:560,y:745,photo:'wanderung'}]},
  {a:.60,b:.68,stop:.657,l:'Abendessen',h:'Abendessen',d:'Die Sonne steht schon tief. Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.',info:[
    {f:'sun',d:'Die Sonne steht schon tief.'},
    {x:800,y:630,d:'Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.'},
-   {x:1000,y:690,photo:'tisch'}]},
+   {x:1000,y:690,photo:'laternen'},{x:1190,y:470,photo:'landschaft'}]},
  {a:.68,b:.87,stop:.83,l:'Lagerrunde',h:'Lagerrunde',d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer. Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.',info:[
    {x:800,y:596,d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer.'},
    {x:1190,y:730,d:'Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.'},
-   {x:915,y:700,photo:'feuer'}]},
+   {x:915,y:700,photo:'lagerfeuer'}]},
  {a:.87,b:1.01,stop:.96,l:'Gute Nacht',h:'Gute Nacht, VKF',d:'Mond und Sterne stehen über den Zelten. Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.',info:[
    {f:'moon',d:'Mond und Sterne stehen über den Zelten.'},
    {x:1100,y:546,d:'Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.'}]}
@@ -706,15 +722,22 @@ function showPop(g,txt){if(openIB&&openIB!==g)openIB.classList.remove('open');op
   pop.style.left=clamp(r.left+r.width/2-w/2,12,innerWidth-w-12)+'px';pop.style.top=(above>76?above:r.bottom+14)+'px'}
 function hidePop(){if(openIB)openIB.classList.remove('open');openIB=null;pinned=false;pop.classList.remove('on')}
 /* photo viewer: opens from the clicked button, closes with x, backdrop, Escape; the story stays put while it is open */
-const pv=$('pv'),pvCard=$('pvCard'),pvImg=$('pvImg');let phOpen=false,phFrom=null;
+const pv=$('pv'),pvCard=$('pvCard'),pvImg=$('pvImg');let phOpen=false,phFrom=null,phSpot=null,phIdx=0;
+function showPhoto(i){const f=phSpot,n=f.items.length;phIdx=(i+n)%n;const it=f.items[phIdx];
+  pvCard.classList.toggle('multi',n>1);pvCard.classList.remove('empty');
+  pvImg.alt=it.alt||f.l;$('pvT').textContent=f.l;$('pvP').textContent=it.t||f.t||'';
+  $('pvDots').innerHTML=n>1?f.items.map((_,k)=>`<i${k===phIdx?' class="on"':''}></i>`).join(''):'';
+  const fit=()=>{pvCard.classList.remove('land','port','empty');pvCard.classList.add(pvImg.naturalHeight>pvImg.naturalWidth?'port':'land')};
+  pvImg.onload=fit;pvImg.onerror=()=>{pvCard.classList.remove('port');pvCard.classList.add('land','empty')};
+  if(it.src){pvImg.src=it.src;if(pvImg.complete&&pvImg.naturalWidth)fit()}else{pvCard.classList.remove('port');pvCard.classList.add('land','empty')}
+  if(n>1){const nx=f.items[(phIdx+1)%n];if(nx.src)new Image().src=nx.src}}
 function openPhoto(f,g){const r=g.querySelector('.dsk').getBoundingClientRect();
   pvCard.style.transformOrigin=`${(r.left+r.width/2).toFixed(0)}px ${(r.top+r.height/2).toFixed(0)}px`;
-  pvCard.className='pv-card land';pvImg.alt=f.l;$('pvT').textContent=f.l;$('pvP').textContent=f.t||'';
-  const fit=()=>pvCard.className='pv-card '+(pvImg.naturalHeight>pvImg.naturalWidth?'port':'land');
-  pvImg.onload=fit;pvImg.onerror=()=>{pvCard.className='pv-card land empty'};
-  if(f.src){pvImg.src=f.src;if(pvImg.complete&&pvImg.naturalWidth)fit()}else pvCard.className='pv-card land empty';
-  phFrom=g;phOpen=true;pv.classList.add('on');pv.setAttribute('aria-hidden','false');setTimeout(()=>$('pvX').focus(),50)}
+  phSpot=f;phFrom=g;phOpen=true;showPhoto(0);pv.classList.add('on');pv.setAttribute('aria-hidden','false');setTimeout(()=>$('pvX').focus(),50)}
 function closePhoto(){if(!phOpen)return;phOpen=false;pv.classList.remove('on');pv.setAttribute('aria-hidden','true');if(phFrom)phFrom.focus({preventScroll:true})}
+$('pvPrev').addEventListener('click',()=>showPhoto(phIdx-1));$('pvNext').addEventListener('click',()=>showPhoto(phIdx+1));
+let swX=null;pvCard.addEventListener('touchstart',e=>{swX=e.touches.length===1?e.touches[0].clientX:null},{passive:true});
+pvCard.addEventListener('touchend',e=>{if(swX===null||phSpot.items.length<2)return;const dx=e.changedTouches[0].clientX-swX;swX=null;if(Math.abs(dx)>50)showPhoto(phIdx+(dx<0?1:-1))});
 $('pvX').addEventListener('click',closePhoto);
 pv.addEventListener('click',e=>{if(!e.target.closest('.pv-card'))closePhoto()});
 addEventListener('pointerdown',e=>{if(openIB&&!e.target.closest('.ib'))hidePop()});
@@ -835,7 +858,7 @@ addEventListener('wheel',e=>{if(phOpen){e.preventDefault();return}if(e.ctrlKey||
   const now=performance.now(),quiet=now-lastInput>180;lastInput=now;
   if(busy||!quiet||e.deltaY===0)return;
   step(e.deltaY>0?1:-1)},{passive:false});
-addEventListener('keydown',e=>{if(phOpen){if(e.key==='Tab'){e.preventDefault();$('pvX').focus()}else if(!e.target.closest('button'))e.preventDefault();return}
+addEventListener('keydown',e=>{if(phOpen){if(e.key==='ArrowLeft'&&phSpot.items.length>1){e.preventDefault();showPhoto(phIdx-1);return}if(e.key==='ArrowRight'&&phSpot.items.length>1){e.preventDefault();showPhoto(phIdx+1);return}if(e.key==='Tab'){e.preventDefault();const l=[$('pvX')].concat(phSpot.items.length>1?[$('pvPrev'),$('pvNext')]:[]),k=l.indexOf(document.activeElement);l[(k+(e.shiftKey?l.length-1:1))%l.length].focus()}else if(!e.target.closest('button'))e.preventDefault();return}
   if(e.altKey||e.ctrlKey||e.metaKey||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.target.closest&&e.target.closest('button,.ib,a')&&(e.key===' '||e.key==='Enter'))return;
   const dn=['ArrowDown','PageDown'].includes(e.key)||(e.key===' '&&!e.shiftKey),up=['ArrowUp','PageUp'].includes(e.key)||(e.key===' '&&e.shiftKey);
   if(!(dn||up)||!inRange())return;
