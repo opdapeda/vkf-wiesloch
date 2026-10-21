@@ -194,8 +194,6 @@ a{color:inherit}
 .shadowmove{animation:cook 6s ease-in-out infinite alternate}
 @keyframes cook{from{transform:translateX(0)}to{transform:translateX(42px)}}
 .bob{animation:bob .5s ease-in-out infinite alternate}
-.sweat{animation:sweat 1.3s ease-in infinite;opacity:0}
-@keyframes sweat{0%{transform:translateY(0);opacity:0}25%{opacity:.95}100%{transform:translateY(16px);opacity:0}}
 @keyframes bob{to{transform:translateY(-3px)}}
 .steam{animation:steam 2.4s ease-in-out infinite;opacity:0}
 @keyframes steam{0%{transform:translateY(0);opacity:0}30%{opacity:.8}100%{transform:translateY(-34px);opacity:0}}
@@ -213,9 +211,8 @@ a{color:inherit}
 .zz{transform-box:fill-box;transform-origin:center;animation:zz 4.5s ease-out infinite;opacity:0;font:800 24px 'Baloo 2',system-ui,sans-serif}
 @keyframes zz{0%{transform:translate(0,0) scale(.6);opacity:0}20%{opacity:.9}100%{transform:translate(26px,-80px) scale(1.2);opacity:0}}
 @media (prefers-reduced-motion: reduce){
-  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.sweat,.hint span,.ib .halo,.hop,.sway,.peek,.ksteam,.zz{animation:none}
+  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span,.ib .halo,.hop,.sway,.peek,.ksteam,.zz{animation:none}
   .spark,.note,.steam,.ksteam,.zz{opacity:0}
-  .sweat{animation:none;opacity:.9}
 }
 
 /* Info bands: each band rises out of the one above with its own hill silhouette */
@@ -369,7 +366,7 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
       <g id="kitchen"></g>
       <g id="kfx"></g>
       <g id="edgeTrees"></g>
-      <g id="arrival"><g id="luggage"></g><g id="dads"></g><g id="bus"></g></g>
+      <g id="arrival"><g id="luggage"></g><g id="bus"></g></g>
 
       <g id="vigs"></g>
 
@@ -567,20 +564,24 @@ $('edgeTrees').innerHTML=[[-60,905,1.9],[40,890,1.5],[1660,905,1.9],[1560,892,1.
 /* Ankunft: Reisebus am rechten Bildrand, Gepäckhaufen und schwitzende Papas. Alles hängt am rechten Rand des Ausschnitts, der Bus fährt beim ersten Scrollen nach rechts hinaus. */
 (function(){const s0=seed;
   const sk=['#f2c9a0','#e8b48a','#c98d62'],hr=['#4a3526','#2b2019','#8a5a2b','#1c1c1c'];
-  let b=`<ellipse cx="-170" cy="2" rx="360" ry="9" fill="#1a1030" opacity=".22"/>
-  <clipPath id="busClip"><rect x="-480" y="-158" width="640" height="130" rx="28"/></clipPath>
-  <g clip-path="url(#busClip)"><rect x="-480" y="-158" width="640" height="130" fill="#f6efe2"/>
-   <path d="M-480,-62 H160 V-26 H-480Z" fill="#ef3a62"/><path d="M-480,-62 C-380,-74 -300,-50 -200,-62 S0,-74 160,-60 V-52 C0,-66 -100,-42 -200,-54 S-380,-66 -480,-54Z" fill="#ffc93a"/>
-   <rect x="-480" y="-38" width="640" height="12" fill="#3a3358" opacity=".5"/>
-   <rect x="-480" y="-158" width="640" height="14" fill="#fff" opacity=".5"/></g>
-  <rect x="-466" y="-176" width="610" height="22" rx="11" fill="#e3d8c6"/><rect x="-330" y="-190" width="120" height="18" rx="8" fill="#cfc4b2"/>
-  <rect x="-458" y="-138" width="596" height="54" rx="12" fill="#2c4a78"/>`;
-  for(let k=0;k<6;k++){const cx=-410+k*98;b+=`<rect x="${cx-16}" y="-92" width="32" height="12" rx="6" fill="${pick(['#ef3a62','#3a7bd5','#ff8a2a','#20a68a','#9b5bd4'])}"/><circle cx="${cx}" cy="-103" r="${k%2?9:12}" fill="${pick(sk)}"/><path d="M${cx-12},${k%2?-108:-111} Q${cx},${k%2?-122:-126} ${cx+12},${k%2?-108:-111}Z" fill="${pick(hr)}"/>`}
-  for(let k=0;k<7;k++)b+=`<rect x="${-462+k*98}" y="-140" width="9" height="58" fill="#f6efe2"/>`;
-  b+=`<path d="M-440,-136 L-340,-136 L-400,-86 L-440,-86Z" fill="#fff" opacity=".13"/><path d="M-150,-136 L-60,-136 L-120,-86 L-150,-86Z" fill="#fff" opacity=".13"/>
-  <rect x="48" y="-142" width="60" height="112" rx="8" fill="#223c66"/><rect x="77" y="-142" width="3" height="112" fill="#f6efe2"/><rect x="54" y="-136" width="20" height="60" rx="5" fill="#fff" opacity=".14"/>
-  <rect x="-482" y="-82" width="10" height="16" rx="4" fill="#d9124a"/>`;
-  [[-370,'spin1'],[-70,'spin2']].forEach(([x,id])=>{b+=`<circle cx="${x}" cy="-34" r="44" fill="#14101f"/><g transform="translate(${x},-34)"><circle r="34" fill="#1f1b2e"/><g id="${id}"><circle r="18" fill="#b8bcc8"/><circle r="6" fill="#7a8090"/><rect x="-2" y="-18" width="4" height="36" fill="#7a8090"/><rect x="-18" y="-2" width="36" height="4" fill="#7a8090"/></g></g>`});
+  let b=`<ellipse cx="-170" cy="2" rx="370" ry="9" fill="#1a1030" opacity=".22"/>
+  <clipPath id="busClip"><rect x="-500" y="-186" width="660" height="160" rx="26"/></clipPath>
+  <g clip-path="url(#busClip)"><rect x="-500" y="-186" width="660" height="160" fill="#f6efe2"/>
+   <path d="M-500,-104 H160 V-26 H-500Z" fill="#e9dfcd"/>
+   <path d="M-500,-86 C-380,-100 -280,-70 -150,-84 S60,-98 160,-82 V-70 C60,-86 -60,-72 -150,-72 S-380,-88 -500,-74Z" fill="#ef3a62"/>
+   <path d="M-500,-72 C-380,-86 -280,-56 -150,-70 S60,-84 160,-68 V-62 C60,-78 -60,-64 -150,-64 S-380,-80 -500,-66Z" fill="#ffc93a"/>
+   <rect x="-500" y="-34" width="660" height="10" fill="#3a3358" opacity=".55"/></g>
+  <rect x="-488" y="-176" width="640" height="82" rx="14" fill="#1f3558"/>
+  <path d="M-470,-170 L-360,-170 L-430,-100 L-470,-100Z M-250,-170 L-150,-170 L-220,-100 L-250,-100Z M-20,-170 L60,-170 L-10,-100 L-20,-100Z" fill="#fff" opacity=".13"/>`;
+  for(let k=0;k<6;k++)b+=`<rect x="${-400+k*102}" y="-176" width="7" height="82" fill="#f6efe2"/>`;
+  b+=`<rect x="-492" y="-194" width="648" height="22" rx="11" fill="#e3d8c6"/><rect x="-330" y="-206" width="150" height="16" rx="8" fill="#cfc4b2"/><rect x="-120" y="-204" width="60" height="14" rx="7" fill="#cfc4b2"/>
+  <rect x="-475" y="-90" width="56" height="44" rx="6" fill="#d8ccb8"/>${[0,1,2,3,4,5,6,7].map(i=>`<rect x="${-468}" y="${-86+i*5}" width="42" height="2.4" rx="1" fill="#a89c88"/>`).join('')}
+  <rect x="-396" y="-92" width="110" height="52" rx="8" fill="#d8ccb8"/><rect x="-352" y="-72" width="24" height="5" rx="2.5" fill="#8f8473"/>
+  <rect x="-262" y="-92" width="110" height="52" rx="8" fill="#d8ccb8"/><rect x="-218" y="-72" width="24" height="5" rx="2.5" fill="#8f8473"/>
+  <rect x="-12" y="-176" width="66" height="148" rx="8" fill="#16294a"/><rect x="21" y="-176" width="3" height="148" fill="#f6efe2"/><rect x="-6" y="-170" width="20" height="70" rx="5" fill="#fff" opacity=".14"/>
+  <rect x="-502" y="-84" width="9" height="14" rx="4" fill="#d9124a"/>
+  <rect x="140" y="-166" width="14" height="28" rx="4" fill="#3a3358"/>`;
+  [-390,-330,70].forEach((x,k)=>{const id='spin'+(k+1);b+=`<circle cx="${x}" cy="-26" r="31" fill="#14101f"/><g transform="translate(${x},-24)"><circle r="23" fill="#1f1b2e"/><g id="${id}"><circle r="12" fill="#b8bcc8"/><circle r="4" fill="#7a8090"/><rect x="-1.5" y="-12" width="3" height="24" fill="#7a8090"/><rect x="-12" y="-1.5" width="24" height="3" fill="#7a8090"/></g></g>`});
   $('bus').innerHTML=b;
 
   const case_=(x,y,w,h,c,roll)=>`<g><rect x="${x}" y="${y-h}" width="${w}" height="${h}" rx="7" fill="${c}"/><rect x="${x+w*.18}" y="${y-h}" width="5" height="${h}" fill="#000" opacity=".12"/><rect x="${x+w*.72}" y="${y-h}" width="5" height="${h}" fill="#000" opacity=".12"/><rect x="${x}" y="${y-h}" width="${w}" height="7" rx="3.5" fill="#fff" opacity=".22"/><path d="M${x+w/2-10},${y-h} v-8 h20 v8" stroke="#2a2438" stroke-width="4" fill="none" stroke-linejoin="round"/></g>`;
@@ -592,13 +593,6 @@ $('edgeTrees').innerHTML=[[-60,905,1.9],[40,890,1.5],[1660,905,1.9],[1560,892,1.
    +mat(-692,-70,104,'#9b5bd4')+case_(-640,-44,50,54,'#ffc93a');
   $('luggage').innerHTML=L;
 
-  const drop=(x,y,d)=>`<path class="sweat" style="animation-delay:${d}s" d="M${x},${y-4} q-7,11 0,14 q7,-3 0,-14z" fill="#8fd6ff"/>`;
-  const dad=(x,y,o)=>{const sc=o.kid?.64:1,dir=-1,hx=x+dir*10*sc;
-    return `<g transform="translate(0,${o.dy||0})"><g class="bob" style="animation-delay:${-Math.abs(x)%7*.1}s">${P(x,y,{f:1,kid:o.kid,c:o.c,skin:pick(sk),hair:pick(hr)})}${o.extra||''}${drop(hx-6*sc,y-84*sc,0)+drop(hx+14*sc,y-80*sc,.5)+(o.kid?'':drop(hx+2,y-90,.9))}</g></g>`};
-  const hand=(x,y,w,h,c)=>case_(x,y,w,h,c);
-  $('dads').innerHTML=
-    dad(-700,36,{c:'#3a7bd5',extra:hand(-50-700,32,36,56,'#ef3a62')})+
-    dad(-800,44,{c:'#8cbf26',extra:duffel(-68-800,32,60,36,'#ff8a2a')});
   seed=s0})();
 
 /* vignettes */
@@ -873,9 +867,8 @@ function render(){
   const tc=kc(p,TREE);$('forest').setAttribute('fill',tc);$('edgeTrees').setAttribute('fill',tc);$('birds').setAttribute('stroke',tc);
   const ar=$('arrival');ar.style.display=p<.095?'':'none';
   if(p<.095){const dv=clamp(p/.07,0,1),drive=dv*dv*1100,rt=VB.x+VB.w,lo=1-clamp((p-.04)/.04,0,1),A=n=>`translate(${(rt+n).toFixed(1)},806)`,B=90;
-    $('bus').setAttribute('transform',A(B+drive));['spin1','spin2'].forEach(i=>$(i).setAttribute('transform',`rotate(${(drive/34*57.3).toFixed(1)})`));
-    $('luggage').setAttribute('transform',A(-30)+' scale(.55)');$('luggage').setAttribute('opacity',lo.toFixed(3));
-    $('dads').setAttribute('transform',A(reduce?0:dv*-150)+' scale(.8)');$('dads').setAttribute('opacity',lo.toFixed(3))}
+    $('bus').setAttribute('transform',A(B+drive));['spin1','spin2','spin3'].forEach(i=>$(i).setAttribute('transform',`rotate(${(drive/24*57.3).toFixed(1)})`));
+    $('luggage').setAttribute('transform',A(-82)+' scale(.65)');$('luggage').setAttribute('opacity',lo.toFixed(3));}
   const t=p/.84,sun=$('sun');
   if(t<=1.02){const [x,y]=sunPos(p);sun.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)})`);sun.style.opacity=1}else sun.style.opacity=0;
   const mt=clamp((p-.83)/.17,0,1),[mx,my]=moonPos(p);$('moon').setAttribute('transform',`translate(${mx.toFixed(1)},${my.toFixed(1)})`);$('moon').setAttribute('opacity',clamp(mt*3,0,1));
