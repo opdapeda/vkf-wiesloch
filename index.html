@@ -118,6 +118,39 @@ a{color:inherit}
 .pop{position:fixed;z-index:6;max-width:min(340px,calc(100vw - 24px));margin:0;font-size:18px;line-height:1.4;font-weight:600;color:#2a1f3d;background:rgba(255,255,255,.96);
   padding:14px 20px;border-radius:24px;box-shadow:0 14px 38px rgba(20,16,43,.32);pointer-events:none;transition:opacity .15s;text-wrap:pretty}
 .pop:not(.on){opacity:0;visibility:hidden}
+/* photo spots: teal camera buttons, photo opens in a card from the button */
+.ib.ph .dsk{stroke:#0f8f9b}
+.ib.ph .halo{stroke:#bff3f0}
+.ib.ph:hover .dsk,.ib.ph:focus-visible .dsk{fill:#d4f7f3}
+.ib.ph .cam{fill:#0f8f9b;pointer-events:none}
+.ib.ph .cam .lens{fill:#fff}
+.pv{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:16px;background:rgba(20,16,43,.58);transition:opacity .25s,visibility .25s}
+.pv:not(.on){opacity:0;visibility:hidden;pointer-events:none}
+.pv-card{position:relative;box-sizing:border-box;max-width:min(920px,100%);max-height:100%;overflow:auto;background:#fff;color:#2a1f3d;border-radius:28px;box-shadow:0 24px 70px rgba(10,6,30,.5);
+  transform:scale(.3);opacity:0;transition:transform .38s cubic-bezier(.2,.9,.3,1.15),opacity .25s}
+.pv.on .pv-card{transform:none;opacity:1}
+.pv-card.land{width:max(480px,50vw)}
+.pv-card.port{width:fit-content}
+.pv-card img{display:block;width:100%;height:auto;max-height:62vh;object-fit:cover;border-radius:28px 28px 0 0;background:#e9e2f2}
+.pv-card.port img{width:auto;max-width:100%;max-height:66vh;margin-inline:auto}
+.pv-card .none{display:none;place-items:center;min-height:240px;padding:24px;text-align:center;font:800 24px/1.2 'Baloo 2',system-ui,sans-serif;background:#e9e2f2;border-radius:28px 28px 0 0}
+.pv-card.empty img{display:none}.pv-card.empty .none{display:grid}
+.pv-card figcaption{padding:16px 24px 20px}
+.pv-card h3{margin:0 0 4px;font:800 26px/1.15 'Baloo 2',system-ui,sans-serif}
+.pv-card p{margin:0;font-size:18px;line-height:1.45;font-weight:600;max-width:62ch;text-wrap:pretty}
+.pv-card.port figcaption{max-width:min(100%,520px)}
+.pv-img{position:relative;line-height:0}
+.pv-n{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.92);color:#2a1f3d;font:800 32px/1 'Baloo 2',system-ui,sans-serif;padding:0 0 4px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.pv-n.prev{left:12px}.pv-n.next{right:12px}
+.pv-n:hover{background:#ffe9a8}.pv-n:focus-visible{outline:4px solid #0f8f9b;outline-offset:2px}
+.pv-dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:8px}
+.pv-dots i{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.55);box-shadow:0 1px 4px rgba(0,0,0,.45)}
+.pv-dots i.on{background:#fff;transform:scale(1.25)}
+.pv-card:not(.multi) .pv-n,.pv-card:not(.multi) .pv-dots{display:none}
+.pv-x{position:absolute;top:12px;right:12px;width:48px;height:48px;border:0;border-radius:50%;background:#fff;color:#2a1f3d;font:800 30px/1 'Baloo 2',system-ui,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.pv-x:hover{background:#ffe9a8}.pv-x:focus-visible{outline:4px solid #0f8f9b;outline-offset:2px}
+@media (max-width:700px){.pv-card.land{width:100%}.pv-card h3{font-size:22px}}
+@media (prefers-reduced-motion: reduce){.pv,.pv-card{transition:none}.pv-card{transform:none}}
 
 /* SVG animation bits */
 .flame{transform-box:fill-box;transform-origin:50% 100%;animation:flick .9s ease-in-out infinite alternate}
@@ -140,9 +173,19 @@ a{color:inherit}
 .sitter{transition:opacity .8s ease}
 #runde.sleep .sitter{opacity:0}
 #runde.sleep .note{display:none}
+.hop{animation:hop .9s ease-in-out infinite}
+@keyframes hop{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-13px)}}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 2.4s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.peek{animation:peek 3.6s ease-in-out infinite}
+@keyframes peek{0%,45%,100%{transform:translateX(0)}60%,85%{transform:translateX(-9px)}}
+.ksteam{transform-box:fill-box;transform-origin:center;animation:ksteam 3.2s ease-out infinite;opacity:0}
+@keyframes ksteam{0%{transform:translate(0,0) scale(.5);opacity:0}25%{opacity:.6}100%{transform:translate(20px,-76px) scale(1.7);opacity:0}}
+.zz{transform-box:fill-box;transform-origin:center;animation:zz 4.5s ease-out infinite;opacity:0;font:800 24px 'Baloo 2',system-ui,sans-serif}
+@keyframes zz{0%{transform:translate(0,0) scale(.6);opacity:0}20%{opacity:.9}100%{transform:translate(26px,-80px) scale(1.2);opacity:0}}
 @media (prefers-reduced-motion: reduce){
-  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span,.ib .halo{animation:none}
-  .spark,.note,.steam{opacity:0}
+  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span,.ib .halo,.hop,.sway,.peek,.ksteam,.zz{animation:none}
+  .spark,.note,.steam,.ksteam,.zz{opacity:0}
 }
 
 /* Info bands: each band rises out of the one above with its own hill silhouette */
@@ -288,10 +331,13 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
       <path id="m2" fill="url(#gM2)"/>
       <path id="m3" fill="url(#gM3)"/>
       <g id="forest"></g>
+      <g id="birds" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"></g>
       <path d="M-1600,606 C-1100,572 -700,604 -300,586 C100,568 400,606 800,588 C1200,568 1500,606 1900,586 C2300,568 2700,600 3200,590 V1400 H-1600Z" fill="url(#gG)"/>
 
+      <g id="wild"></g>
       <g id="camp"></g>
       <g id="kitchen"></g>
+      <g id="kfx"></g>
       <g id="edgeTrees"></g>
 
       <g id="vigs"></g>
@@ -301,6 +347,7 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
 
       <g id="klight" opacity="0"></g>
       <g id="runde" opacity="0"></g>
+      <g id="night"></g>
       <g id="infos"></g>
     </svg>
 
@@ -397,6 +444,18 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
     </div>
   </div>
 </footer>
+    <div class="pv" id="pv" role="dialog" aria-modal="true" aria-labelledby="pvT" aria-hidden="true">
+  <figure class="pv-card" id="pvCard" style="margin:0">
+    <button class="pv-x" id="pvX" type="button" aria-label="Foto schließen">×</button>
+    <div class="pv-img"><img id="pvImg" alt="">
+      <div class="none">Hier kommt bald ein Foto hin.</div>
+      <button class="pv-n prev" id="pvPrev" type="button" aria-label="Vorheriges Foto">‹</button>
+      <button class="pv-n next" id="pvNext" type="button" aria-label="Nächstes Foto">›</button>
+      <div class="pv-dots" id="pvDots" aria-hidden="true"></div>
+    </div>
+    <figcaption><h3 id="pvT"></h3><p id="pvP"></p></figcaption>
+  </figure>
+</div>
 <script>
 (function(){
 const NS='http://www.w3.org/2000/svg';
@@ -408,8 +467,15 @@ const SK=['#f2c9a0','#e8b48a','#c98d62','#9a6440','#f5d4b3'];
 const HR=['#4a3526','#2b2019','#8a5a2b','#d6a24a','#6b4a2a','#1c1c1c'];
 const pick=a=>a[Math.floor(rnd()*a.length)];
 function P(x,y,o){o=o||{};const s=(o.kid?.64:1)*(o.s||1);const id=o.seat?'ps':'pp';
-  const sh=o.seat?'':`<ellipse cx="${x.toFixed(1)}" cy="${(y+1).toFixed(1)}" rx="${(15*s).toFixed(1)}" ry="${(4*s).toFixed(1)}" fill="#1a1030" opacity=".18"/>`;
+  const sh=o.seat||o.nosh?'':`<ellipse cx="${x.toFixed(1)}" cy="${(y+1).toFixed(1)}" rx="${(15*s).toFixed(1)}" ry="${(4*s).toFixed(1)}" fill="#1a1030" opacity=".18"/>`;
   return sh+`<use class="${o.cls||''}" href="#${id}" transform="translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${o.f?-s:s},${s})" fill="${o.c||pick(SH)}" style="--skin:${o.skin||pick(SK)};--hair:${o.hair||pick(HR)}"/>`}
+
+/* animated figure: own shadow stays on the ground, the body hops or sways in a wrapper (cls from CSS) */
+function PA(x,y,o,cls,dl,du,extra){o=o||{};const s=(o.kid?.64:1)*(o.s||1);
+  return `<ellipse cx="${x.toFixed(1)}" cy="${(y+1).toFixed(1)}" rx="${(15*s).toFixed(1)}" ry="${(4*s).toFixed(1)}" fill="#1a1030" opacity=".18"/><g class="${cls}" style="animation-delay:${(-dl).toFixed(2)}s;animation-duration:${du}s">${P(x,y,{...o,nosh:1})}${extra||''}</g>`}
+/* figure that script moves: outer g = position (set per frame), .in = hop, lean, flip */
+const actor=(id,x,y,o)=>{const s=o.kid?.64:1;
+  return `<g id="${id}" transform="translate(${x},${y})"><ellipse cx="0" cy="1" rx="${(15*s).toFixed(1)}" ry="${(4*s).toFixed(1)}" fill="#1a1030" opacity=".18"/><g class="in">${P(0,0,{...o,nosh:1})}</g></g>`};
 
 /* four-point sparkle stars */
 const spark=(x,y,r)=>`M${x},${y-r} Q${x},${y} ${x+r},${y} Q${x},${y} ${x},${y+r} Q${x},${y} ${x-r},${y} Q${x},${y} ${x},${y-r}Z`;
@@ -477,16 +543,28 @@ function table(x0,x1,y,items){let h='';
   for(let x=x0+50,i=0;x<x1-30;x+=74,i++)h+=P(x,y+104,{seat:1,kid:i%2==0});
   h+=`<rect x="${x0-6}" y="${y+88}" width="${x1-x0+12}" height="9" rx="3" fill="url(#wood)"/><rect x="${x0+20}" y="${y+97}" width="6" height="18" fill="#7a4a24"/><rect x="${x1-26}" y="${y+97}" width="6" height="18" fill="#7a4a24"/>`;
   return h}
-function mugs(x0,x1,y){let h='';for(let x=x0;x<x1;x+=62)h+=`<rect x="${x}" y="${y-16}" width="10" height="12" rx="2" fill="${pick(['#fff','#3b8fd0','#f2c230','#d9124a'])}"/>`;return h}
+function mugs(x0,x1,y,skip){let h='';for(let x=x0;x<x1;x+=62)if(x!==skip)h+=`<rect x="${x}" y="${y-16}" width="10" height="12" rx="2" fill="${pick(['#fff','#3b8fd0','#f2c230','#d9124a'])}"/>`;return h}
 const steam=(x,y)=>[0,1,2].map(i=>`<path class="steam" style="animation-delay:${-i*.8}s" d="M${x+i*10-10},${y} q-6,-10 0,-18 q6,-8 0,-16" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>`).join('');
 
-vig('fruehstueck',.10,.20, table(560,1040,700,
-  mugs(595,1020,700)+`<path d="M770,697 h60 l-8,-16 h-44z" fill="#c8913e"/><circle cx="785" cy="680" r="7" fill="#e6b36a"/><circle cx="800" cy="677" r="7" fill="#e6b36a"/><circle cx="815" cy="680" r="7" fill="#e6b36a"/>
-  <rect x="890" y="672" width="18" height="25" rx="4" fill="#6b4a2a"/>${steam(899,668)}`));
+/* breakfast chaos: people run across the camp both ways, a mug tips off the table */
+const RUNS=[
+ {L:'b',dir:-1,y:670,per:15,ph:2,kid:0,c:'#ef3a62',s:.92},
+ {L:'b',dir:1,y:674,per:11,ph:7,kid:1,c:'#8cbf26',s:.92},
+ {L:'f',dir:-1,y:864,per:8,ph:0,kid:1,c:'#ff8a2a',roll:1},
+ {L:'f',dir:1,y:884,per:13,ph:5,kid:0,c:'#3a7bd5'},
+ {L:'f',dir:-1,y:852,per:17,ph:11,kid:1,c:'#9b5bd4'}];
+const runHTML=L=>RUNS.map((r,i)=>{if(r.L!==L)return '';const k=r.kid?.64:1;
+  return `<g id="run${i}"><ellipse cx="0" cy="1" rx="${(15*k).toFixed(1)}" ry="${(4*k).toFixed(1)}" fill="#1a1030" opacity=".18"/><g class="in">${P(0,0,{kid:r.kid,c:r.c,s:r.s,nosh:1})}</g>`+
+   (r.roll?`<g class="rl"><circle r="7" fill="#e6b36a"/><path d="M-4,-2 Q0,-6 4,-2" stroke="#c8913e" stroke-width="2" fill="none" stroke-linecap="round"/></g>`:'')+`</g>`}).join('');
+vig('fruehstueck',.10,.20, runHTML('b')+table(560,1040,700,
+  mugs(595,1020,700,719)+`<path d="M770,697 h60 l-8,-16 h-44z" fill="#c8913e"/><circle cx="785" cy="680" r="7" fill="#e6b36a"/><circle cx="800" cy="677" r="7" fill="#e6b36a"/><circle cx="815" cy="680" r="7" fill="#e6b36a"/>
+  <rect x="890" y="672" width="18" height="25" rx="4" fill="#6b4a2a"/>${steam(899,668)}`)+runHTML('f')+
+  `<ellipse id="pud" cx="758" cy="828" rx="0" ry="0" fill="#6b4226" opacity="0"/><g id="mug" transform="translate(724,696)"><rect x="-5" y="-12" width="10" height="12" rx="2" fill="#3b8fd0"/></g>
+   <text id="huch" x="0" y="0" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="34" fill="#fff" stroke="#0f2a4a" stroke-width="6" paint-order="stroke" stroke-linejoin="round" opacity="0">Huch!</text>`);
 
 (function(){const C=[800,770],items=[];
-  for(let i=0;i<16;i++){const t=i/16*Math.PI*2+.2;items.push({y:C[1]+72*Math.sin(t),h:P(C[0]+255*Math.cos(t),C[1]+72*Math.sin(t),{kid:i%2==0})})}
-  items.push({y:C[1],h:P(800,770,{c:'#d9124a'})});
+  for(let i=0;i<16;i++){const t=i/16*Math.PI*2+.2;items.push({y:C[1]+72*Math.sin(t),h:PA(C[0]+255*Math.cos(t),C[1]+72*Math.sin(t),{kid:i%2==0},i%2==0?'hop':'sway',(i*.37)%1,i%2==0?(.78+(i%3)*.17).toFixed(2):(2.2+(i%3)*.5).toFixed(2))})}
+  items.push({y:C[1],h:PA(800,770,{c:'#d9124a'},'sway',0,1.6)});
   items.sort((a,b)=>a.y-b.y);
   vig('kreis',.20,.29, items.map(o=>o.h).join('')+
    `<g transform="translate(812,612)"><rect id="bubR" x="-8" y="-46" width="330" height="44" rx="14" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
@@ -495,33 +573,35 @@ vig('fruehstueck',.10,.20, table(560,1040,700,
 vig('spiele',.29,.40,
   `<g><rect x="530" y="690" width="100" height="66" fill="none" stroke="#fff" stroke-width="6"/><path d="M533,693 L545,705 V756 M627,693 L615,705 V756 M545,705 H615" stroke="#fff" stroke-width="2" opacity=".7" fill="none"/>
    <g opacity=".45" stroke="#fff" stroke-width="1">${Array.from({length:9},(_,i)=>`<line x1="${538+i*10}" y1="693" x2="${538+i*10}" y2="756"/>`).join('')}</g></g>`+
-  P(580,760,{c:'#f2c230'})+P(700,772,{kid:1,f:1,c:'#d9124a'})+P(760,780,{kid:1,f:1,c:'#1f4a7a'})+P(650,790,{c:'#3b8fd0'})+
+  actor('sG',580,760,{c:'#f2c230'})+actor('sA',690,772,{kid:1,f:1,c:'#d9124a'})+actor('sB',790,780,{kid:1,f:1,c:'#1f4a7a'})+actor('sM',668,792,{c:'#3b8fd0'})+
   `<g id="ball"><circle r="8" fill="#fff" stroke="#1c2431" stroke-width="2"/><path d="M-3,-3 l3,-2 3,2 -1,4 h-4z" fill="#1c2431"/></g>`+
-  P(1023,770,{kid:1,c:'#8b9c1c'})+
-  `<rect x="990" y="650" width="22" height="115" fill="#6b4a2a"/><circle cx="1001" cy="620" r="58" fill="#3f7a3a"/><circle cx="960" cy="645" r="38" fill="#4b8a41"/><circle cx="1042" cy="642" r="40" fill="#4b8a41"/>`+
+  PA(1023,770,{kid:1,c:'#8b9c1c'},'peek',0,3.6)+
   P(900,770,{c:'#7a4fa0'})+`<rect x="886" y="-2" width="28" height="9" rx="4" transform="translate(0,706)" fill="#7a4fa0"/>`+
+  `<text id="tor" x="0" y="0" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="46" fill="#ffd23a" stroke="#d9124a" stroke-width="7" paint-order="stroke" stroke-linejoin="round" opacity="0">TOOOR!</text>`+
   `<text x="880" y="680" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="26" fill="#fff">… 8, 9, 10!</text>`+
   `<rect x="1122" y="742" width="56" height="26" rx="3" fill="#7a4a24"/><path d="M1122,742 L1116,720 L1172,716 L1178,742Z" fill="#a8703f"/><rect x="1132" y="734" width="10" height="10" fill="#d9124a"/><rect x="1150" y="732" width="12" height="12" fill="#3b8fd0"/>`+
-  `<path d="M1086,742 L1100,724 L1114,742 L1118,790 L1082,790Z" fill="#d9124a"/>`+P(1100,790,{kid:1,c:'#f2c230'})+`<path d="M1093,742 l2,-9 4,5 3,-7 3,7 4,-5 2,9z" fill="#f2c230" stroke="#b8860b" stroke-width="1"/>`+
-  P(1205,784,{kid:1,f:1,c:'#fff'})+`<path d="M1192,738 Q1205,722 1218,738 Z" fill="#1c1c1c"/><circle cx="1205" cy="733" r="2.4" fill="#fff"/><rect x="1196" y="745" width="10" height="4" fill="#1c1c1c"/>`
+  `<path d="M1086,742 L1100,724 L1114,742 L1118,790 L1082,790Z" fill="#d9124a"/>`+PA(1100,790,{kid:1,c:'#f2c230'},'hop',.2,1.1,`<path d="M1093,742 l2,-9 4,5 3,-7 3,7 4,-5 2,9z" fill="#f2c230" stroke="#b8860b" stroke-width="1"/>`)+
+  PA(1205,784,{kid:1,f:1,c:'#fff'},'sway',0,2.8)+`<path d="M1192,738 Q1205,722 1218,738 Z" fill="#1c1c1c"/><circle cx="1205" cy="733" r="2.4" fill="#fff"/><rect x="1196" y="745" width="10" height="4" fill="#1c1c1c"/>`
 );
 
 vig('mittag',.40,.48, table(560,1040,700,
   mugs(595,1020,700)+`<rect x="770" y="664" width="64" height="34" rx="6" fill="#8e98a8"/><rect x="762" y="662" width="80" height="7" rx="3" fill="#6f7888"/>${steam(802,656)}`)+
-  P(1090,780,{c:'#fff'})+`<rect x="1080" y="740" width="20" height="30" fill="#fff" stroke="#ddd"/><line x1="1106" y1="738" x2="1122" y2="706" stroke="#8e98a8" stroke-width="4" stroke-linecap="round"/>`);
+  PA(1090,780,{c:'#fff'},'sway',0,3.4)+`<rect x="1080" y="740" width="20" height="30" fill="#fff" stroke="#ddd"/><g id="ladle" transform="translate(1106,738)"><line x1="0" y1="0" x2="16" y2="-32" stroke="#8e98a8" stroke-width="4" stroke-linecap="round"/></g>`+
+  [['mk1',832,'#ff8a2a'],['mk2',848,'#20a68a']].map(q=>`<g id="${q[0]}" transform="translate(1000,${q[1]})"><ellipse cx="0" cy="1" rx="9.6" ry="2.6" fill="#1a1030" opacity=".18"/><g class="in">${P(0,0,{kid:1,c:q[2],nosh:1})}<ellipse cx="14" cy="-24" rx="10" ry="3" fill="#fff"/><circle cx="12" cy="-28" r="4.5" fill="#e6b36a"/></g></g>`).join(''));
 
+const bfly=(id,c)=>`<g id="${id}"><g class="wg"><ellipse cx="-4.5" cy="-2" rx="5" ry="3.4" fill="${c}" transform="rotate(-28 -4.5 -2)"/><ellipse cx="4.5" cy="-2" rx="5" ry="3.4" fill="${c}" transform="rotate(28 4.5 -2)"/><ellipse cx="-3.5" cy="3" rx="3.4" ry="2.4" fill="${c}" opacity=".85"/><ellipse cx="3.5" cy="3" rx="3.4" ry="2.4" fill="${c}" opacity=".85"/></g><rect x="-1" y="-5" width="2" height="11" rx="1" fill="#2a1f3d"/></g>`;
 (function(){let w='';for(let i=0;i<8;i++){const kid=i%2==1,x=-i*56,s=kid?.64:1;
   w+=`<g transform="translate(${x},${(i%3)*6})"><g class="bob" style="animation-delay:${-i*.13}s">${P(0,0,{kid})}<rect x="${-20*s}" y="${-50*s}" width="${10*s}" height="${22*s}" rx="3" fill="${pick(['#f08a24','#1f4a7a','#2f8f7a','#d9124a'])}"/></g></g>`}
   vig('ausflug',.48,.60,
    `<path d="M300,800 C520,760 700,810 900,770 C1060,738 1200,770 1350,745" stroke="#d7c79a" stroke-width="26" fill="none" stroke-linecap="round" opacity=".8"/>
-    <g transform="translate(1210,760)"><rect x="-4" y="-80" width="8" height="84" fill="#6b4a2a"/>
+    <g transform="translate(1210,760)"><g id="sign"><rect x="-4" y="-80" width="8" height="84" fill="#6b4a2a"/>
     <path d="M-6,-78 H70 L84,-66 L70,-54 H-6Z" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><text x="36" y="-60" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="13" fill="#0f2a4a">Freibad</text>
-    <path d="M6,-48 H-70 L-84,-36 L-70,-24 H6Z" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><text x="-38" y="-30" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="12" fill="#0f2a4a">Wanderweg</text></g>
-    <g id="walkers" transform="translate(600,790)">${w}</g>`)})();
+    <path d="M6,-48 H-70 L-84,-36 L-70,-24 H6Z" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><text x="-38" y="-30" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="12" fill="#0f2a4a">Wanderweg</text></g></g>
+    <g id="walkers" transform="translate(600,790)">${w}</g>`+bfly('bf1','#ff8a2a')+bfly('bf2','#ffe14a'))})();
 
 vig('abend',.60,.68, table(560,1040,700,
-  mugs(595,1020,700)+`<g transform="translate(800,697)"><rect x="-9" y="-30" width="18" height="30" rx="3" fill="#2b3346"/><rect x="-6" y="-26" width="12" height="20" fill="#ffd27a"/><path d="M-9,-30 Q0,-42 9,-30" stroke="#2b3346" stroke-width="3" fill="none"/></g>
-  <ellipse cx="700" cy="696" rx="20" ry="5" fill="#fff"/><ellipse cx="900" cy="696" rx="20" ry="5" fill="#fff"/>`));
+  mugs(595,1020,700)+`<circle class="kflick" cx="800" cy="672" r="72" fill="url(#kGlow)"/><g transform="translate(800,697)"><rect x="-9" y="-30" width="18" height="30" rx="3" fill="#2b3346"/><rect x="-6" y="-26" width="12" height="20" fill="#ffd27a"/><path d="M-9,-30 Q0,-42 9,-30" stroke="#2b3346" stroke-width="3" fill="none"/></g>
+  <ellipse cx="700" cy="696" rx="20" ry="5" fill="#fff"/><ellipse cx="900" cy="696" rx="20" ry="5" fill="#fff"/>`)+PA(1092,792,{kid:1,c:'#ff8a2a'},'hop',0,.7));
 
 
 /* Lagerrunde */
@@ -558,33 +638,53 @@ const guitars=[0,1,2].map(i=>{const g=document.createElementNS(NS,'g');g.setAttr
   return {g,off:i*Math.PI*2/3}});
 
 /* captions: headline on the scene, info text lives in the round buttons (info: x/y in scene units, or f for sun/moon) */
+/* photo spots: items = one or more photos (blättern), t = caption of the spot, an item can bring its own t */
+const FOTO={
+ zelte:{l:'Ankunft',items:[{src:'fotos/zelte-1.jpg',alt:'Kinder sitzen auf einer Bank, dahinter die Zeltreihe',t:'Die Kinder sind gerade auf dem Platz angekommen. Sie reisen mit zwei Reisebussen an und sind schon ganz gespannt darauf, bald in die Zelte einzuziehen.'}]},
+ kueche:{l:'Küche und Grillbereich',items:[{src:'fotos/kueche-1.jpg',alt:'Küchenzelt mit Spülstation, dahinter das Vorratszelt',t:'Der Grillbereich mit dem Küchenzelt, im Hintergrund das Vorratszelt. Hier wird für das leibliche Wohl gesorgt: Es wird gebacken, gekocht und gebraten.'}]},
+ laternen:{l:'Öllampen',items:[{src:'fotos/laternen-1.jpg',alt:'Öllampen auf einem Tisch am Abend',t:'Unsere Öllampen sorgen abends für ganz besondere Stimmung. Wir haben kein oder nur selten elektrischen Strom, deshalb ergänzen sie nachts die Beleuchtung.'}]},
+ morgenkreis:{l:'Morgenkreis',t:'Im Morgenkreis verkündet die Lagerleitung in der Mitte das Programm.',items:[{src:'fotos/morgenkreis-1.jpg',alt:'Morgenkreis auf der Wiese vor den Zelten'},{src:'fotos/morgenkreis-2.jpg',alt:'Morgenkreis mit Bierbänken vor Zelten und Wald'}]},
+ fussball:{l:'Fußball',items:[{src:'fotos/fussball-1.jpg',alt:'Kinder und Teamer spielen Fußball auf der Wiese',t:'Kinder und Teamer beim Fußballspielen.'}]},
+ essen:{l:'Essenspavillon',items:[{src:'fotos/essen-1.jpg',alt:'Essenspavillon auf einer Wiese vor Bergkulisse',t:'Der Essenspavillon vor wunderschöner Kulisse. Wir sind oft auf Plätzen, die eigentlich Futterwiesen von Bauern sind. Die Bauern überlassen uns diese Wiesen.'}]},
+ lagerfeuer:{l:'Lagerrunde',t:'Auch hier wird gemeinsam gesungen. Es gibt ein paar kleinere Spiele, und die Schlachtrufe dürfen natürlich nicht fehlen.',items:[{src:'fotos/lagerfeuer-1.jpg',alt:'Teamerin mit Gitarre als Silhouette vor dem Lagerfeuer',t:'Die abendliche Lagerrunde: Im Dunkeln im Hintergrund sieht man das Lagerfeuer, vorne unsere Teamerin mit der Gitarre. Es wird gemeinsam gesungen, es gibt ein paar kleinere Spiele, und die Schlachtrufe dürfen natürlich nicht fehlen.'},{src:'fotos/lagerfeuer-2.jpg',alt:'Gruppe sitzt am Lagerfeuer, Funken fliegen'},{src:'fotos/lagerfeuer-3.jpg',alt:'Silhouetten am Lagerfeuer vor dunkelblauem Himmel'}]},
+ landschaft:{l:'Landschaft',items:[{src:'fotos/landschaft-1.jpg',alt:'Gewitterwolken im Abendlicht über Tannen',t:'Ein Blick auf die unglaubliche Landschaft.'}]},
+ freibad:{l:'Ausflug ins Freibad',items:[{src:'fotos/freibad-1.jpg',alt:'Freibad mit Becken und Stufen',t:'Ab und zu muss auch mal ein Ausflug sein. Hier sind wir an einem Dienstag den ganzen Tag ins Freibad gegangen, einfach um mal richtig sauber zu werden.'}]},
+ wanderung:{l:'Wanderung',items:[{src:'fotos/wanderung-1.jpg',alt:'Gruppe wandert auf einem Weg zwischen Bauernhöfen',t:'Manchmal gibt es auch einen längeren Spaziergang oder eine kleine Wanderung. Gerade im Schwarzwald kommt man immer wieder an wunderschönen Bauernhöfen vorbei.'}]},
+ rutsche:{l:'Wasserrutsche',items:[{src:'fotos/rutsche-1.jpg',alt:'Kind rutscht auf einer langen weißen Plane über die Wiese',t:'Eine Wasserrutsche auf einer Spargelplane. Auch so kann man sich zwischendurch abkühlen.'}]}};
 const S=[
  {a:0,b:.05,stop:0,l:'Start',h:'Ein Tag in der VKF',d:'Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel.',intro:1},
  {a:.05,b:.11,stop:.085,l:'Sonnenaufgang',h:'Die Sonne geht auf',d:'Über den Bergen wird es hell. Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.',info:[
    {f:'sun',d:'Über den Bergen wird es hell.'},
-   {x:1090,y:546,d:'Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.'}]},
+   {x:1090,y:546,d:'Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.'},
+   {x:515,y:512,photo:'zelte'},{x:1030,y:604,photo:'kueche'}]},
  {a:.11,b:.20,stop:.177,l:'Frühstück',h:'Frühstück',d:'Papas und Kinder sitzen zusammen an den Bierbänken. Kakao, Brötchen und die ersten Pläne für den Tag.',info:[
    {x:612,y:636,d:'Papas und Kinder sitzen zusammen an den Bierbänken.'},
    {x:800,y:630,d:'Kakao, Brötchen und die ersten Pläne für den Tag.'}]},
  {a:.20,b:.29,stop:.268,l:'Morgenkreis',h:'Morgenkreis',d:'Alle kommen im großen Kreis zusammen. Die Lagerleitung erzählt, was heute ansteht.',info:[
    {x:520,y:700,d:'Alle kommen im großen Kreis zusammen.'},
-   {x:800,y:672,d:'Die Lagerleitung erzählt, was heute ansteht.'}]},
+   {x:800,y:672,d:'Die Lagerleitung erzählt, was heute ansteht.'},
+   {x:1175,y:776,photo:'morgenkreis'}]},
  {a:.29,b:.40,stop:.377,l:'Fußball, Verstecken, Verkleiden',h:'Fußball, Verstecken, Verkleiden',d:'Auf der Wiese rollt der Ball, hinter dem Baum wird gezählt, und aus der Verkleidekiste kommen Piraten und Könige.',info:[
    {x:580,y:650,d:'Auf der Wiese rollt der Ball.'},
    {x:1001,y:540,d:'Hinter dem Baum wird gezählt.'},
-   {x:1150,y:690,d:'Aus der Verkleidekiste kommen Piraten und Könige.'}]},
+   {x:1150,y:690,d:'Aus der Verkleidekiste kommen Piraten und Könige.'},
+   {x:488,y:722,photo:'fussball'},{x:850,y:735,photo:'rutsche'}]},
  {a:.40,b:.48,stop:.457,l:'Mittagessen',h:'Mittagessen',d:'Das Küchenteam tischt auf. Wer Nachschlag möchte, stellt sich einfach noch einmal an.',info:[
    {x:1090,y:682,d:'Das Küchenteam tischt auf.'},
-   {x:800,y:630,d:'Wer Nachschlag möchte, stellt sich einfach noch einmal an.'}]},
+   {x:800,y:630,d:'Wer Nachschlag möchte, stellt sich einfach noch einmal an.'},
+   {x:700,y:692,photo:'essen'}]},
  {a:.48,b:.60,stop:.577,l:'Freibad oder Tour',h:'Ab ins Freibad oder auf Tour',d:'Nachmittags ziehen alle gemeinsam los: ins Schwimmbad, in den Wald oder auf eine Wanderung.',info:[
    {x:850,y:690,d:'Nachmittags ziehen alle gemeinsam los.'},
-   {x:1210,y:640,d:'Ins Schwimmbad, in den Wald oder auf eine Wanderung.'}]},
+   {x:1210,y:640,d:'Ins Schwimmbad, in den Wald oder auf eine Wanderung.'},
+   {x:1120,y:735,photo:'freibad'},{x:560,y:745,photo:'wanderung'}]},
  {a:.60,b:.68,stop:.657,l:'Abendessen',h:'Abendessen',d:'Die Sonne steht schon tief. Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.',info:[
    {f:'sun',d:'Die Sonne steht schon tief.'},
-   {x:800,y:630,d:'Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.'}]},
+   {x:800,y:630,d:'Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.'},
+   {x:1000,y:690,photo:'laternen'},{x:1190,y:470,photo:'landschaft'}]},
  {a:.68,b:.87,stop:.83,l:'Lagerrunde',h:'Lagerrunde',d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer. Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.',info:[
    {x:800,y:596,d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer.'},
-   {x:1190,y:730,d:'Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.'}]},
+   {x:1190,y:730,d:'Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.'},
+   {x:915,y:700,photo:'lagerfeuer'}]},
  {a:.87,b:1.01,stop:.96,l:'Gute Nacht',h:'Gute Nacht, VKF',d:'Mond und Sterne stehen über den Zelten. Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.',info:[
    {f:'moon',d:'Mond und Sterne stehen über den Zelten.'},
    {x:1100,y:546,d:'Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.'}]}
@@ -607,21 +707,41 @@ keyUp.addEventListener('click',()=>step(-1));keyDn.addEventListener('click',()=>
 const infos=$('infos'),pop=$('pop');
 let openIB=null,pinned=false;
 S.forEach(s=>(s.info||[]).forEach(o=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','ib');g.setAttribute('tabindex','0');g.setAttribute('role','button');
-  g.setAttribute('aria-label','Info: '+o.d);g.style.display='none';
-  g.innerHTML='<circle class="halo" r="24"/><circle r="40" fill="transparent"/><circle class="dsk" r="24"/><text y="11" text-anchor="middle">i</text>';
+  if(o.photo){const f=FOTO[o.photo];o.d='Foto ansehen: '+f.l;g.classList.add('ph');o.f_=f}
+  g.setAttribute('aria-label',(o.photo?'':'Info: ')+o.d);g.style.display='none';
+  g.innerHTML='<circle class="halo" r="24"/><circle r="40" fill="transparent"/><circle class="dsk" r="24"/>'+(o.photo?'<g class="cam"><path d="M-13,-6 H-6 L-4,-10 H4 L6,-6 H13 Q15,-6 15,-4 V9 Q15,11 13,11 H-13 Q-15,11 -15,9 V-4 Q-15,-6 -13,-6Z"/><circle class="lens" cy="2" r="6"/><circle cy="2" r="3.4"/></g>':'<text y="11" text-anchor="middle">i</text>');
   o.g=g;o.scene=s;infos.appendChild(g);
   g.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')showPop(g,o.d)});
   g.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'&&!pinned)hidePop()});
   g.addEventListener('focus',()=>showPop(g,o.d));g.addEventListener('blur',()=>{if(!pinned)hidePop()});
-  g.addEventListener('click',()=>{if(openIB===g&&pinned)hidePop();else{showPop(g,o.d);pinned=true}});
+  g.addEventListener('click',()=>{if(o.photo){hidePop();openPhoto(o.f_,g)}else if(openIB===g&&pinned)hidePop();else{showPop(g,o.d);pinned=true}});
   g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();g.dispatchEvent(new Event('click'))}})}));
 function showPop(g,txt){if(openIB&&openIB!==g)openIB.classList.remove('open');openIB=g;pinned=false;g.classList.add('open');
   pop.textContent=txt;pop.classList.add('on');
   const r=g.querySelector('.dsk').getBoundingClientRect(),w=pop.offsetWidth,h=pop.offsetHeight,above=r.top-h-14;
   pop.style.left=clamp(r.left+r.width/2-w/2,12,innerWidth-w-12)+'px';pop.style.top=(above>76?above:r.bottom+14)+'px'}
 function hidePop(){if(openIB)openIB.classList.remove('open');openIB=null;pinned=false;pop.classList.remove('on')}
+/* photo viewer: opens from the clicked button, closes with x, backdrop, Escape; the story stays put while it is open */
+const pv=$('pv'),pvCard=$('pvCard'),pvImg=$('pvImg');let phOpen=false,phFrom=null,phSpot=null,phIdx=0;
+function showPhoto(i){const f=phSpot,n=f.items.length;phIdx=(i+n)%n;const it=f.items[phIdx];
+  pvCard.classList.toggle('multi',n>1);pvCard.classList.remove('empty');
+  pvImg.alt=it.alt||f.l;$('pvT').textContent=f.l;$('pvP').textContent=it.t||f.t||'';
+  $('pvDots').innerHTML=n>1?f.items.map((_,k)=>`<i${k===phIdx?' class="on"':''}></i>`).join(''):'';
+  const fit=()=>{pvCard.classList.remove('land','port','empty');pvCard.classList.add(pvImg.naturalHeight>pvImg.naturalWidth?'port':'land')};
+  pvImg.onload=fit;pvImg.onerror=()=>{pvCard.classList.remove('port');pvCard.classList.add('land','empty')};
+  if(it.src){pvImg.src=it.src;if(pvImg.complete&&pvImg.naturalWidth)fit()}else{pvCard.classList.remove('port');pvCard.classList.add('land','empty')}
+  if(n>1){const nx=f.items[(phIdx+1)%n];if(nx.src)new Image().src=nx.src}}
+function openPhoto(f,g){const r=g.querySelector('.dsk').getBoundingClientRect();
+  pvCard.style.transformOrigin=`${(r.left+r.width/2).toFixed(0)}px ${(r.top+r.height/2).toFixed(0)}px`;
+  phSpot=f;phFrom=g;phOpen=true;showPhoto(0);pv.classList.add('on');pv.setAttribute('aria-hidden','false');setTimeout(()=>$('pvX').focus(),50)}
+function closePhoto(){if(!phOpen)return;phOpen=false;pv.classList.remove('on');pv.setAttribute('aria-hidden','true');if(phFrom)phFrom.focus({preventScroll:true})}
+$('pvPrev').addEventListener('click',()=>showPhoto(phIdx-1));$('pvNext').addEventListener('click',()=>showPhoto(phIdx+1));
+let swX=null;pvCard.addEventListener('touchstart',e=>{swX=e.touches.length===1?e.touches[0].clientX:null},{passive:true});
+pvCard.addEventListener('touchend',e=>{if(swX===null||phSpot.items.length<2)return;const dx=e.changedTouches[0].clientX-swX;swX=null;if(Math.abs(dx)>50)showPhoto(phIdx+(dx<0?1:-1))});
+$('pvX').addEventListener('click',closePhoto);
+pv.addEventListener('click',e=>{if(!e.target.closest('.pv-card'))closePhoto()});
 addEventListener('pointerdown',e=>{if(openIB&&!e.target.closest('.ib'))hidePop()});
-addEventListener('keydown',e=>{if(e.key==='Escape')hidePop()});
+addEventListener('keydown',e=>{if(e.key==='Escape'){hidePop();closePhoto()}});
 
 /* helpers */
 const story=$('story');
@@ -666,7 +786,7 @@ function render(){
   setStop('skyTop',kc(p,SKYT));setStop('skyMid',kc(p,SKYM));setStop('skyBot',kc(p,SKYB));
   setStop('m1a',kc(p,M1A));setStop('m1b',kc(p,M1B));setStop('m2a',kc(p,M2A));setStop('m2b',kc(p,M2B));
   setStop('m3a',kc(p,M3A));setStop('m3b',kc(p,M3B));setStop('g1',kc(p,GA));setStop('g2',kc(p,GB));
-  const tc=kc(p,TREE);$('forest').setAttribute('fill',tc);$('edgeTrees').setAttribute('fill',tc);
+  const tc=kc(p,TREE);$('forest').setAttribute('fill',tc);$('edgeTrees').setAttribute('fill',tc);$('birds').setAttribute('stroke',tc);
   const t=p/.84,sun=$('sun');
   if(t<=1.02){const [x,y]=sunPos(p);sun.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)})`);sun.style.opacity=1}else sun.style.opacity=0;
   const mt=clamp((p-.83)/.17,0,1),[mx,my]=moonPos(p);$('moon').setAttribute('transform',`translate(${mx.toFixed(1)},${my.toFixed(1)})`);$('moon').setAttribute('opacity',clamp(mt*3,0,1));
@@ -677,7 +797,6 @@ function render(){
   V.forEach(v=>{const f=.018;let o=0;if(p>v.a-f&&p<v.b+f)o=Math.min(clamp((p-(v.a-f))/(2*f),0,1),clamp(((v.b+f)-p)/(2*f),0,1));
     v.g.style.opacity=o;v.g.style.display=o>0?'':'none';v.g.style.transform=`translateY(${((1-o)*16).toFixed(1)}px)`;
     if(o>0){const lp=clamp((p-v.a)/(v.b-v.a),0,1);
-      if(v.g.id==='spiele'){const l=(lp*2)%1,b=$('ball');b.setAttribute('transform',`translate(${(740-l*150).toFixed(1)},${(772-Math.abs(Math.sin(l*Math.PI*2.5))*46-l*12).toFixed(1)}) rotate(${(-l*720).toFixed(0)})`)}
       if(v.g.id==='ausflug')$('walkers').setAttribute('transform',`translate(${(560+lp*520).toFixed(1)},${(792-lp*30).toFixed(1)})`);
     }});
   const ro=kf(p,[[.66,0],[.7,1]]);R.setAttribute('opacity',ro);R.style.display=ro>0?'':'none';
@@ -729,7 +848,7 @@ function step(d){const {p}=geo(),last=S.length-1;
   let k=nearest(p);if(d<0&&p>S[last].stop+.002)k=last+1;  /* coming back from below: land on the last scene */
   const to=k+d;if(to<0||to>last)return false;goTo(to);return true}
 function syncKeys(){const {p}=geo(),k=nearest(p);keyUp.disabled=k===0&&p<=S[0].stop+.002}
-addEventListener('wheel',e=>{if(e.ctrlKey||!inRange())return;
+addEventListener('wheel',e=>{if(phOpen){e.preventDefault();return}if(e.ctrlKey||!inRange())return;
   const {p}=geo(),past=p>S[S.length-1].stop+.002;
   const now0=performance.now();
   if((past||atEnd())&&e.deltaY>0){                      /* last scene: a fresh scroll leaves the story, leftover inertia is swallowed */
@@ -739,13 +858,14 @@ addEventListener('wheel',e=>{if(e.ctrlKey||!inRange())return;
   const now=performance.now(),quiet=now-lastInput>180;lastInput=now;
   if(busy||!quiet||e.deltaY===0)return;
   step(e.deltaY>0?1:-1)},{passive:false});
-addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.target.closest&&e.target.closest('button,.ib,a')&&(e.key===' '||e.key==='Enter'))return;
+addEventListener('keydown',e=>{if(phOpen){if(e.key==='ArrowLeft'&&phSpot.items.length>1){e.preventDefault();showPhoto(phIdx-1);return}if(e.key==='ArrowRight'&&phSpot.items.length>1){e.preventDefault();showPhoto(phIdx+1);return}if(e.key==='Tab'){e.preventDefault();const l=[$('pvX')].concat(phSpot.items.length>1?[$('pvPrev'),$('pvNext')]:[]),k=l.indexOf(document.activeElement);l[(k+(e.shiftKey?l.length-1:1))%l.length].focus()}else if(!e.target.closest('button'))e.preventDefault();return}
+  if(e.altKey||e.ctrlKey||e.metaKey||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.target.closest&&e.target.closest('button,.ib,a')&&(e.key===' '||e.key==='Enter'))return;
   const dn=['ArrowDown','PageDown'].includes(e.key)||(e.key===' '&&!e.shiftKey),up=['ArrowUp','PageUp'].includes(e.key)||(e.key===' '&&e.shiftKey);
   if(!(dn||up)||!inRange())return;
   const {p}=geo();if(dn&&p>S[S.length-1].stop+.002)return;if(up&&p<=.0005)return;
   e.preventDefault();if(busy)return;if(dn&&atEnd())release();else step(dn?1:-1)});
 addEventListener('touchstart',e=>{touchY=e.touches.length===1?e.touches[0].clientY:null},{passive:true});
-addEventListener('touchmove',e=>{if(touchY===null||!inRange())return;const {p}=geo(),dy=touchY-e.touches[0].clientY;
+addEventListener('touchmove',e=>{if(phOpen){if(!e.target.closest('.pv-card'))e.preventDefault();return}if(touchY===null||!inRange())return;const {p}=geo(),dy=touchY-e.touches[0].clientY;
   if(p>S[S.length-1].stop+.002&&dy>0)return;if(p<=.0005&&dy<0)return;
   e.preventDefault();if(busy||Math.abs(dy)<36)return;touchY=null;if(dy>0&&atEnd())release();else step(dy>0?1:-1)},{passive:false});
 /* fallback for scrollbar drags: settle on the nearest scene after a pause */
@@ -759,8 +879,133 @@ function fitBubble(){const t=$('bubT'),g=$('kreis'),d=g.style.display;g.style.di
   if(w>44){$('bubR').setAttribute('width',w);t.setAttribute('x',-8+w/2)}}
 if(document.fonts&&document.fonts.load)document.fonts.load("700 24px 'Baloo 2'").then(fitBubble,()=>{});
 
+/* a little life in every scene: deer, birds, football, breakfast chaos, butterflies, fireflies, shooting star */
+const on=(a,b)=>P0>=a-.03&&P0<=b+.03;
+const FIX=12,lerp=(a,b,t)=>a+(b-a)*t,setT=(el,s)=>el.setAttribute('transform',s);
+const pulse=(c,a,b)=>Math.sin(Math.PI*clamp((c-a)/(b-a),0,1));
+const show=(el,o)=>{el.style.display=o>0.01?'':'none';el.style.opacity=o};
+
+/* roe deer behind the tents */
+const dLeg=(id,x,col)=>`<g id="${id}" transform="translate(${x},-25)"><rect x="-2.4" y="0" width="4.8" height="25" rx="2.4" fill="${col}"/><rect x="-2.4" y="22" width="4.8" height="3" rx="1.5" fill="#2a1a12"/></g>`;
+$('wild').innerHTML=`<g id="deer"><g id="dsc">${dLeg('dl0',-14,'#7e4c24')}${dLeg('dl1',15,'#7e4c24')}
+ <ellipse cx="0" cy="-31" rx="23" ry="11" fill="#b9753b"/><ellipse cx="0" cy="-26" rx="19" ry="6.5" fill="#dca66b" opacity=".75"/><ellipse cx="-21.5" cy="-32" rx="4.5" ry="7" fill="#f4e6cf"/>
+ ${dLeg('dl2',-12,'#a2672f')}${dLeg('dl3',13,'#a2672f')}
+ <g id="dnk" transform="translate(15,-37) rotate(14)"><path d="M-7,4 L-5,-24 L6,-24 L9,4Z" fill="#b9753b"/>
+  <g id="dhd" transform="translate(0,-24) rotate(48)"><ellipse cx="5.5" cy="-2" rx="2.4" ry="6" fill="#8a5428" transform="rotate(42 5.5 -2)"/>
+   <ellipse cx=".5" cy="-8" rx="5.6" ry="9.5" fill="#c4813f"/><ellipse cx="2" cy="-14" rx="3.3" ry="3.5" fill="#f4e6cf"/><ellipse cx="2.2" cy="-17.5" rx="2.4" ry="1.8" fill="#2a1a12"/><circle cx="3.6" cy="-9" r="1.4" fill="#1a1030"/>
+   <g id="dear"><ellipse cx="-5" cy="-2" rx="2.6" ry="6.4" fill="#a8602c" transform="rotate(-50 -5 -2)"/></g></g></g></g></g>`;
+const dLegs=[0,1,2,3].map(i=>$('dl'+i)),dHip=[-14,15,-12,13];
+function deerPose(c){            /* one 37 s loop: walk in, look up, graze, look back, turn, walk back, hide */
+  if(c<10)return {x:lerp(330,880,ss(c/10)),sx:1,g:0};
+  if(c<12)return {x:880,sx:1,g:ss(c-11)};
+  if(c<19)return {x:880,sx:1,g:1};
+  if(c<20)return {x:880,sx:1,g:1-ss(c-19)};
+  if(c<21.5)return {x:880,sx:1,g:0};
+  if(c<22.1)return {x:880,sx:Math.cos(Math.PI*(c-21.5)/.6),g:0};
+  if(c<32.1)return {x:lerp(880,330,ss((c-22.1)/10)),sx:-1,g:0};
+  return {x:330,sx:-1,g:0}}
+function deerUpdate(t){const c=t%37,d=deerPose(c),d2=deerPose(c+.05),walk=Math.min(1,Math.abs(d2.x-d.x)/1.2),ph=d.x*.21;
+  setT($('dsc'),`translate(${d.x.toFixed(1)},${(624-walk*Math.abs(Math.sin(ph))*1.6).toFixed(1)}) scale(${(d.sx*1.3).toFixed(3)},1.3)`);
+  const sw=[1,-1,-1,1];dLegs.forEach((l,i)=>setT(l,`translate(${dHip[i]},-25) rotate(${(sw[i]*Math.sin(ph)*26*walk).toFixed(1)})`));
+  const nib=d.g>.99?Math.max(0,Math.sin(t*2.4)-.7)*3.3*Math.sin(t*16):0,look=c>=20&&c<21.5?Math.sin((c-20)*4)*5:0;
+  setT($('dnk'),`translate(15,-37) rotate(${(lerp(14,140,d.g)+Math.sin(ph*2)*2*walk+nib+look).toFixed(1)})`);
+  setT($('dhd'),`translate(0,-24) rotate(${lerp(48,15,d.g).toFixed(1)})`);
+  const tw=Math.sin(t*1.9)>.93?Math.sin(t*50)*10:0;setT($('dear'),`rotate(${tw.toFixed(1)} -5 -2)`)}
+
+/* birds */
+const BR=[{y:150,per:70,ph:0,s:1.3,d:1},{y:178,per:70,ph:2.2,s:1,d:1},{y:236,per:92,ph:40,s:.9,d:-1},{y:96,per:110,ph:60,s:1.1,d:1},{y:128,per:110,ph:63,s:.8,d:1}];
+$('birds').innerHTML=BR.map(()=>'<path d="M-13,3 Q-6.5,-7 0,1 Q6.5,-7 13,3"/>').join('');
+const brEl=[...$('birds').children];
+
+/* steam from the kitchen tent while it is cooking */
+$('kfx').innerHTML=[0,1,2,3,4].map(i=>`<circle class="ksteam" cx="${1066+(i%2)*8}" cy="546" r="11" fill="#f6efe6" style="animation-delay:${(-i*.64).toFixed(2)}s"/>`).join('');
+
+/* night layer: fireflies, shooting star, sleepers' Zzz */
+const FF=Array.from({length:16},(_,i)=>({cx:360+i*72+(i%3)*20,cy:610+(i*53)%210,ax:30+(i*17)%60,ay:16+(i*11)%34,wx:.25+(i%5)*.07,wy:.4+(i%4)*.09,ph:i*1.9}));
+$('night').innerHTML=`<g id="ffl">${FF.map(()=>'<g><circle r="10" fill="#d8ff6a" opacity=".22"/><circle r="2.6" fill="#f4ffb0"/></g>').join('')}</g>
+ <line id="shoot" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity="0"/>
+ <g id="zzz">${[0,1,2].map(i=>`<text class="zz" x="${518+i*6}" y="540" fill="#fff4d6" style="animation-delay:${(-i*1.5).toFixed(1)}s;font-size:${20+i*5}px">z</text>`).join('')}</g>`;
+const ffEl=[...$('ffl').children];
+
+/* scene actors */
+const A=id=>{const g=$(id);return {g,i:g&&g.lastElementChild}};
+const SG=A('sG'),SA=A('sA'),SB=A('sB'),SM=A('sM'),BALL=$('ball'),TOR=$('tor');
+const GX=[[0,580],[2.8,580],[3.5,546],[4.4,546],[5.1,598],[6.6,598],[8,580],[10,580]],GR=[[0,0],[2.8,0],[3.5,-80],[4.4,-80],[5,0],[10,0]],
+  AX=[[0,690],[1.4,690],[2.8,646],[4.2,646],[7,690],[10,690]],GS=[[0,5],[2.5,5],[2.8,0],[8,0],[8.4,5],[10,5]];
+const drb=c=>[kf(c,AX)-17,768-Math.abs(Math.sin((c-1.4)*10))*5];
+function arc(a,b,u,h){return [lerp(a[0],b[0],u),lerp(a[1],b[1],u)-Math.sin(Math.PI*u)*h]}
+function ballAt(c,gx){
+  if(c<1.4)return arc([772,774],drb(1.4),c/1.4,34);
+  if(c<2.8)return drb(c);
+  if(c<3.4)return arc(drb(2.8),[598,728],(c-2.8)/.6,14);
+  if(c<3.8)return arc([598,728],[602,752],(c-3.4)/.4,0);
+  if(c<4.2){const u=(c-3.8)/.4;return [602+u*4,752-Math.sin(u*Math.PI)*9]}
+  if(c<6.2)return [606,752];
+  if(c<6.6)return [gx+14,lerp(752,736,(c-6.2)/.4)];
+  if(c<7.6)return arc([gx+14,736],[678,784],(c-6.6)/1,62);
+  if(c<8.2)return [678+(c-7.6)*4,784];
+  if(c<9.6)return arc([680,784],[772,774],(c-8.2)/1.4,52);
+  return [772,774]}
+function soccer(t){const c=t%10,cheer=c>3.4&&c<5.6;
+  const gx=kf(c,GX)+Math.sin(c*Math.PI*2/2.5)*kf(c,GS),ax=kf(c,AX),amv=Math.abs(kf(c+.06,AX)-ax)>.15;
+  const j=k=>cheer?Math.abs(Math.sin((c-3.4)*7+k))*14:0;
+  setT(SG.g,`translate(${gx.toFixed(1)},760)`);setT(SG.i,`rotate(${kf(c,GR).toFixed(1)})`);
+  setT(SA.g,`translate(${ax.toFixed(1)},772)`);setT(SA.i,`translate(0,${-(amv?Math.abs(Math.sin(c*14))*5:0)-j(0)}) rotate(${(-12*pulse(c,2.5,3.1)).toFixed(1)})`);
+  setT(SB.g,`translate(790,780)`);setT(SB.i,`translate(0,${-j(1)}) rotate(${(-10*pulse(c,-.3,.4)-10*pulse(c,9.6,10.3)).toFixed(1)})`);
+  setT(SM.g,`translate(668,792)`);setT(SM.i,`translate(0,${-j(2)}) rotate(${(10*pulse(c,8,8.5)).toFixed(1)})`);
+  const b=ballAt(c,gx);setT(BALL,`translate(${b[0].toFixed(1)},${b[1].toFixed(1)}) rotate(${(b[0]*6).toFixed(0)})`);
+  const to=kf(c,[[3.3,0],[3.55,1],[5.6,1],[6.1,0]]);TOR.setAttribute('opacity',to.toFixed(2));setT(TOR,`translate(590,655) scale(${(1+.1*Math.sin(c*10)).toFixed(3)})`)}
+
+/* breakfast: runners and the tipping mug */
+const runEl=RUNS.map((r,i)=>{const g=$('run'+i);return {r,g,i:g.querySelector('.in'),rl:g.querySelector('.rl')}});
+function breakfast(t){
+  runEl.forEach(({r,g,i,rl},k)=>{const u=((t+r.ph)%r.per)/r.per,x=r.dir>0?-260+u*2120:1860-u*2120,w=t*11+k*1.7;
+    setT(g,`translate(${x.toFixed(1)},${r.y}) scale(${r.dir},1)`);setT(i,`translate(0,${(-Math.abs(Math.sin(w))*7).toFixed(1)}) rotate(${(Math.sin(w)*3).toFixed(1)})`);
+    if(rl)setT(rl,`translate(66,${(-7-Math.abs(Math.sin(w*.7))*6).toFixed(1)}) rotate(${(w*70).toFixed(0)})`)});
+  const c=t%9;let x=724,y=696,r=0,o=1;
+  if(c>=1.5&&c<2.1){const u=(c-1.5)/.6;r=ss(u)*35;x+=u*5}
+  else if(c>=2.1&&c<2.65){const d=c-2.1,u=d/.55;x=729+u*14;y=696+.5*846*d*d;r=35+u*130}
+  else if(c>=2.65&&c<3.05){const u=(c-2.65)/.4;x=743+u*10;y=824-16*Math.sin(Math.PI*u);r=165+u*85}
+  else if(c>=3.05&&c<7.2){x=753;y=824;r=250}
+  else if(c>=7.2&&c<8){x=753;y=824;r=250;o=1-(c-7.2)/.8}
+  else if(c>=8){o=clamp((c-8.5)/.5,0,1)}
+  setT($('mug'),`translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${r.toFixed(0)})`);$('mug').setAttribute('opacity',o.toFixed(2));
+  const pu=c>=3.05?clamp((c-3.05)/.6,0,1):0,po=c<7.2?.85:Math.max(0,.85*(1-(c-7.2)/.8));
+  const pd=$('pud');pd.setAttribute('rx',(30*pu).toFixed(1));pd.setAttribute('ry',(7*pu).toFixed(1));pd.setAttribute('opacity',c>=3.05&&c<8?po.toFixed(2):0);
+  const h=$('huch');h.setAttribute('opacity',kf(c,[[2.6,0],[2.8,1],[4.6,1],[5,0]]).toFixed(2));setT(h,`translate(735,652) scale(${(1+.08*Math.sin(c*9)).toFixed(3)})`)}
+
+function lunch(t){setT($('ladle'),`translate(1106,738) rotate(${(Math.sin(t*5)*14).toFixed(1)})`);
+  [['mk1',0],['mk2',4.5]].forEach(([id,off])=>{const a=A(id),ph=(t+off)/9*Math.PI*2,u=.5-.5*Math.cos(ph),mv=Math.abs(Math.sin(ph));
+    setT(a.g,`translate(${lerp(985,1062,u).toFixed(1)},${id==='mk1'?832:848})`);
+    setT(a.i,`translate(0,${(-Math.abs(Math.sin(t*10))*3*mv).toFixed(1)}) scale(${Math.sin(ph)>=0?1:-1},1)`)})}
+
+function hike(t){setT($('sign'),`rotate(${(Math.sin(t*1.3)*1.6).toFixed(2)})`);
+  [['bf1',760,230,.35,690,30,0],['bf2',990,160,.5,650,26,2]].forEach(([id,cx,ax,w,cy,ay,ph])=>{
+    setT($(id),`translate(${(cx+ax*Math.sin(t*w+ph)).toFixed(1)},${(cy+ay*Math.sin(t*.9+ph*1.3)).toFixed(1)}) rotate(${(Math.cos(t*w+ph)*22).toFixed(0)}) scale(1.3)`);
+    setT($(id).firstChild,`scale(${(.3+.7*Math.abs(Math.sin(t*16+ph))).toFixed(2)},1)`)})}
+
+function life(ts){const t=reduce?FIX:ts/1000;
+  const bo=kf(P0,[[0,1],[.6,1],[.68,0]]);show($('birds'),bo);
+  if(bo>.01)BR.forEach((b,i)=>{const u=((t+b.ph)%b.per)/b.per,x=b.d>0?-200+u*2000:1800-u*2000;
+    setT(brEl[i],`translate(${x.toFixed(1)},${(b.y+Math.sin(t*.8+b.ph)*12).toFixed(1)}) scale(${(b.s*b.d).toFixed(2)},${(b.s*(.55*Math.sin(t*9+i*1.7)+.45)).toFixed(2)})`)});
+  const wo=kf(P0,[[0,1],[.17,1],[.22,0]]);show($('wild'),wo);if(wo>.01)deerUpdate(t);
+  show($('kfx'),kf(P0,[[0,1],[.45,1],[.5,0],[.56,0],[.6,1],[.67,1],[.7,0]]));
+  if(on(.10,.20))breakfast(t);
+  if(on(.29,.40))soccer(t);
+  if(on(.40,.48))lunch(t);
+  if(on(.48,.60))hike(t);
+  const fo=kf(P0,[[.58,0],[.66,1],[.97,1],[1,.75]]);show($('ffl'),fo);
+  if(fo>.01)FF.forEach((f,i)=>setT(ffEl[i],`translate(${(f.cx+f.ax*Math.sin(t*f.wx+f.ph)).toFixed(1)},${(f.cy+f.ay*Math.sin(t*f.wy+f.ph*1.3)).toFixed(1)})`)),
+    ffEl.forEach((e,i)=>e.firstChild.setAttribute('opacity',(.12+.2*(.5+.5*Math.sin(t*1.6+i*2.3))).toFixed(2)));
+  show($('zzz'),kf(P0,[[.88,0],[.95,1]]));
+  const sh=$('shoot'),c=t%9;
+  if(P0>.9&&c<1.1){const u=c/1.1,hx=lerp(1220,880,u),hy=lerp(10,190,u),l=90*Math.sin(Math.PI*u);
+    sh.setAttribute('x1',(hx+.884*l).toFixed(1));sh.setAttribute('y1',(hy-.468*l).toFixed(1));sh.setAttribute('x2',hx.toFixed(1));sh.setAttribute('y2',hy.toFixed(1));sh.setAttribute('opacity',Math.sin(Math.PI*u).toFixed(2))}
+  else sh.setAttribute('opacity',0)}
+
 /* guitarists orbit the fire */
 function orbit(ts){
+  life(ts);
   if(P0>.66&&P0<1.01){const base=(reduce?0:ts/1000*.32)+P0*14;
     guitars.forEach(q=>{const a=base+q.off,x=C[0]+175*Math.cos(a),y=C[1]+50*Math.sin(a);
       q.g.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)})`);
