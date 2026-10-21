@@ -75,30 +75,49 @@ a{color:inherit}
 .caps{position:absolute;left:50%;top:clamp(92px,12vh,140px);width:min(1080px,calc(100% - 32px));transform:translateX(-50%);pointer-events:none;
   --cap-ink:#fff;--cap-accent:#ffd27a;--cap-glow:rgba(0,0,0,.3)}
 .cap{position:absolute;inset:0 0 auto 0;text-align:center;opacity:0;will-change:opacity,transform}
-.cap .time{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,3.2vw,40px);color:var(--cap-accent);line-height:1;text-shadow:0 1px 16px var(--cap-glow)}
-.cap h2{font-size:clamp(44px,6.2vw,92px);letter-spacing:-.01em;margin:4px 0 16px;color:var(--cap-ink);text-shadow:0 2px 28px var(--cap-glow)}
-.cap p{display:inline-block;margin:0;max-width:44ch;font-size:clamp(17px,1.5vw,20px);font-weight:600;color:#2a1f3d;background:rgba(255,255,255,.9);
-  padding:14px 22px;border-radius:24px;box-shadow:0 12px 34px rgba(20,16,43,.22);text-wrap:pretty}
+.cap h2{font-size:clamp(34px,4.4vw,64px);letter-spacing:-.01em;margin:4px 0 10px;color:var(--cap-ink);text-shadow:0 2px 28px var(--cap-glow)}
+.cap p{margin:0 auto;max-width:46ch;font-size:clamp(19px,1.7vw,23px);line-height:1.4;font-weight:700;color:var(--cap-ink);text-shadow:0 1px 3px var(--cap-glow),0 2px 22px var(--cap-glow);text-wrap:pretty}
+.cap.intro h2{font-size:clamp(44px,6.2vw,92px)}
 .tagline{font-family:var(--f-display);font-weight:700;font-size:clamp(21px,2.2vw,28px);line-height:1.2;color:var(--cap-ink);text-shadow:0 1px 14px var(--cap-glow);margin:-6px 0 18px}
 .hint{display:flex;justify-content:center;gap:8px;align-items:center;margin-top:24px;font-family:var(--f-display);font-weight:700;color:var(--cap-ink);font-size:20px;text-shadow:0 1px 10px var(--cap-glow)}
 .hint span{display:inline-block;animation:nudge 1.6s ease-in-out infinite}
 @keyframes nudge{50%{transform:translateY(6px)}}
 @media (max-width:640px){
-  .caps{top:max(calc(env(safe-area-inset-top,0px) + 92px),15vh)}
+  .caps{top:max(calc(env(safe-area-inset-top,0px) + 92px),15vh);width:calc(100% - 96px);left:calc(50% + 24px)}
   .cap h2{margin-bottom:12px}
-  .cap p{padding:12px 16px;font-size:16px}
+  .cap p{font-size:19px}
 }
 
-/* Day clock */
-.clock{position:absolute;left:clamp(16px,5vw,72px);right:clamp(16px,5vw,72px);bottom:calc(env(safe-area-inset-bottom,0px) + 18px);height:38px}
-.track{position:absolute;left:0;right:0;top:16px;height:6px;border-radius:6px;background:rgba(255,255,255,.3)}
-.fill{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:linear-gradient(90deg,#ffd27a,#ff8a3a,#c04aa8);width:0}
-.tick{position:absolute;top:0;transform:translateX(-50%);background:none;border:0;padding:0;cursor:pointer;color:#fff;font:800 14px/1 var(--f-body);
-  display:flex;flex-direction:column;align-items:center;gap:6px;text-shadow:0 1px 6px rgba(0,0,0,.45)}
-.tick i{width:14px;height:14px;margin-top:12px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(0,0,0,.12)}
-.tick.done i{background:#ffd27a;box-shadow:0 0 12px #ffb04a}
-.tick b{white-space:nowrap}
-@media (max-width:760px){.tick b{display:none}}
+/* Scene indicators (right edge): dots snap the story to a scene */
+.dots{position:absolute;left:clamp(6px,1.6vw,24px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;z-index:3}
+.dot{position:relative;width:32px;height:30px;background:none;border:0;padding:0;cursor:pointer;display:grid;place-items:center}
+.dot i{width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(20,16,43,.38),0 2px 8px rgba(0,0,0,.25);transition:transform .25s,background .25s}
+.dot:hover i{transform:scale(1.3)}
+.dot.on i{transform:scale(1.7);background:#ffd27a;box-shadow:0 0 0 2px rgba(20,16,43,.45),0 0 14px #ffb04a}
+.key{width:40px;height:40px;margin:6px 0 6px -4px;border-radius:12px;border:0;cursor:pointer;display:grid;place-items:center;color:#2a1f3d;background:#fff;box-shadow:0 4px 0 rgba(20,16,43,.35),0 6px 14px rgba(0,0,0,.2);transition:transform .1s,box-shadow .1s,opacity .2s}
+.key svg{width:24px;height:24px}
+.key:hover{background:#ffe9a8}
+.key:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(20,16,43,.35)}
+.key:focus-visible{outline:3px solid #ffd27a;outline-offset:2px}
+.key:disabled{opacity:.35;cursor:default;transform:none}
+.dot b{position:absolute;left:100%;margin-left:8px;top:50%;transform:translate(-6px,-50%);white-space:nowrap;font:800 16px/1 var(--f-body);color:#2a1f3d;
+  background:rgba(255,255,255,.94);padding:8px 14px;border-radius:999px;box-shadow:0 6px 18px rgba(20,16,43,.25);opacity:0;pointer-events:none;transition:opacity .15s,transform .15s}
+.dot:hover b,.dot:focus-visible b{opacity:1;transform:translate(0,-50%)}
+.dot:focus-visible{outline:3px solid #ffd27a;outline-offset:-4px;border-radius:50%}
+@media (max-width:640px){.dot b{display:none}}
+
+/* Info buttons inside the scene + popup */
+.ib{cursor:pointer;outline:none;filter:drop-shadow(0 3px 6px rgba(0,0,0,.35))}
+.ib .halo{fill:none;stroke:#fff;stroke-width:3;transform-box:fill-box;transform-origin:center;animation:ping 2.2s ease-out infinite}
+.ib .dsk{fill:#fff;stroke:#e0245e;stroke-width:4;transition:fill .15s}
+.ib text{font:800 34px/1 'Baloo 2',system-ui,sans-serif;fill:#e0245e;pointer-events:none}
+.ib:hover .dsk,.ib:focus-visible .dsk{fill:#ffe9a8}
+.ib:focus-visible .dsk{stroke:#14204a;stroke-width:5}
+.ib.open .dsk{fill:#e0245e} .ib.open text{fill:#fff}
+@keyframes ping{0%{transform:scale(1);opacity:.85}100%{transform:scale(1.8);opacity:0}}
+.pop{position:fixed;z-index:6;max-width:min(340px,calc(100vw - 24px));margin:0;font-size:18px;line-height:1.4;font-weight:600;color:#2a1f3d;background:rgba(255,255,255,.96);
+  padding:14px 20px;border-radius:24px;box-shadow:0 14px 38px rgba(20,16,43,.32);pointer-events:none;transition:opacity .15s;text-wrap:pretty}
+.pop:not(.on){opacity:0;visibility:hidden}
 
 /* SVG animation bits */
 .flame{transform-box:fill-box;transform-origin:50% 100%;animation:flick .9s ease-in-out infinite alternate}
@@ -122,7 +141,7 @@ a{color:inherit}
 #runde.sleep .sitter{opacity:0}
 #runde.sleep .note{display:none}
 @media (prefers-reduced-motion: reduce){
-  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span{animation:none}
+  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span,.ib .halo{animation:none}
   .spark,.note,.steam{opacity:0}
 }
 
@@ -282,10 +301,12 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
 
       <g id="klight" opacity="0"></g>
       <g id="runde" opacity="0"></g>
+      <g id="infos"></g>
     </svg>
 
     <div class="caps" id="caps" aria-live="polite"></div>
-    <div class="clock" id="clock"><div class="track"><div class="fill" id="fill"></div></div></div>
+    <nav class="dots" id="dots" aria-label="Szenen des Tages"></nav>
+    <p class="pop" id="pop" role="tooltip"></p>
   </div>
 </section>
 
@@ -468,8 +489,8 @@ vig('fruehstueck',.10,.20, table(560,1040,700,
   items.push({y:C[1],h:P(800,770,{c:'#d9124a'})});
   items.sort((a,b)=>a.y-b.y);
   vig('kreis',.20,.29, items.map(o=>o.h).join('')+
-   `<g transform="translate(812,612)"><rect x="-8" y="-46" width="250" height="44" rx="14" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
-   <text x="117" y="-17" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="24" fill="#0f2a4a">Heute: Fußball &amp; Freibad!</text></g>`)})();
+   `<g transform="translate(812,612)"><rect id="bubR" x="-8" y="-46" width="330" height="44" rx="14" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
+   <text id="bubT" x="157" y="-17" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="24" fill="#0f2a4a">Heute: Fußball &amp; Freibad!</text></g>`)})();
 
 vig('spiele',.29,.40,
   `<g><rect x="530" y="690" width="100" height="66" fill="none" stroke="#fff" stroke-width="6"/><path d="M533,693 L545,705 V756 M627,693 L615,705 V756 M545,705 H615" stroke="#fff" stroke-width="2" opacity=".7" fill="none"/>
@@ -536,27 +557,71 @@ const guitars=[0,1,2].map(i=>{const g=document.createElementNS(NS,'g');g.setAttr
   g.innerHTML=`<g class="gflip">${P(0,0,{c:['#3a7bd5','#ef3a62','#20a68a'][i]})}<g transform="translate(0,-38)"><rect x="-32" y="-18" width="30" height="5" rx="2.5" transform="rotate(34 -4 2)" fill="#5b3a1e"/><ellipse cx="4" cy="6" rx="14" ry="11" fill="#e0913a"/><circle cx="2" cy="5" r="3.6" fill="#3a2414"/></g></g>`;
   return {g,off:i*Math.PI*2/3}});
 
-/* captions */
+/* captions: headline on the scene, info text lives in the round buttons (info: x/y in scene units, or f for sun/moon) */
 const S=[
- {a:0,b:.05,t:'VKF Wiesloch',h:'Ein Tag in der VKF',d:'Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel.',intro:1},
- {a:.05,b:.11,t:'6:45 Uhr',h:'Die Sonne geht auf',d:'Über den Bergen wird es hell. Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.'},
- {a:.11,b:.20,t:'8:00 Uhr',h:'Frühstück',d:'Papas und Kinder sitzen zusammen an den Bierbänken. Kakao, Brötchen und die ersten Pläne für den Tag.'},
- {a:.20,b:.29,t:'9:30 Uhr',h:'Morgenkreis',d:'Alle kommen im großen Kreis zusammen. Die Lagerleitung erzählt, was heute ansteht.'},
- {a:.29,b:.40,t:'10:00 Uhr',h:'Fußball, Verstecken, Verkleiden',d:'Auf der Wiese rollt der Ball, hinter dem Baum wird gezählt, und aus der Verkleidekiste kommen Piraten und Könige.'},
- {a:.40,b:.48,t:'12:30 Uhr',h:'Mittagessen',d:'Das Küchenteam tischt auf. Wer Nachschlag möchte, stellt sich einfach noch einmal an.'},
- {a:.48,b:.60,t:'14:00 Uhr',h:'Ab ins Freibad oder auf Tour',d:'Nachmittags ziehen alle gemeinsam los: ins Schwimmbad, in den Wald oder auf eine Wanderung.'},
- {a:.60,b:.68,t:'18:00 Uhr',h:'Abendessen',d:'Die Sonne steht schon tief. Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.'},
- {a:.68,b:.87,t:'20:00 Uhr',h:'Lagerrunde',d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer. Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.'},
- {a:.87,b:1.01,t:'22:30 Uhr',h:'Gute Nacht, VKF',d:'Mond und Sterne stehen über den Zelten. Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.'}
+ {a:0,b:.05,stop:0,l:'Start',h:'Ein Tag in der VKF',d:'Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel.',intro:1},
+ {a:.05,b:.11,stop:.085,l:'Sonnenaufgang',h:'Die Sonne geht auf',d:'Über den Bergen wird es hell. Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.',info:[
+   {f:'sun',d:'Über den Bergen wird es hell.'},
+   {x:1090,y:546,d:'Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.'}]},
+ {a:.11,b:.20,stop:.177,l:'Frühstück',h:'Frühstück',d:'Papas und Kinder sitzen zusammen an den Bierbänken. Kakao, Brötchen und die ersten Pläne für den Tag.',info:[
+   {x:612,y:636,d:'Papas und Kinder sitzen zusammen an den Bierbänken.'},
+   {x:800,y:630,d:'Kakao, Brötchen und die ersten Pläne für den Tag.'}]},
+ {a:.20,b:.29,stop:.268,l:'Morgenkreis',h:'Morgenkreis',d:'Alle kommen im großen Kreis zusammen. Die Lagerleitung erzählt, was heute ansteht.',info:[
+   {x:520,y:700,d:'Alle kommen im großen Kreis zusammen.'},
+   {x:800,y:672,d:'Die Lagerleitung erzählt, was heute ansteht.'}]},
+ {a:.29,b:.40,stop:.377,l:'Fußball, Verstecken, Verkleiden',h:'Fußball, Verstecken, Verkleiden',d:'Auf der Wiese rollt der Ball, hinter dem Baum wird gezählt, und aus der Verkleidekiste kommen Piraten und Könige.',info:[
+   {x:580,y:650,d:'Auf der Wiese rollt der Ball.'},
+   {x:1001,y:540,d:'Hinter dem Baum wird gezählt.'},
+   {x:1150,y:690,d:'Aus der Verkleidekiste kommen Piraten und Könige.'}]},
+ {a:.40,b:.48,stop:.457,l:'Mittagessen',h:'Mittagessen',d:'Das Küchenteam tischt auf. Wer Nachschlag möchte, stellt sich einfach noch einmal an.',info:[
+   {x:1090,y:682,d:'Das Küchenteam tischt auf.'},
+   {x:800,y:630,d:'Wer Nachschlag möchte, stellt sich einfach noch einmal an.'}]},
+ {a:.48,b:.60,stop:.577,l:'Freibad oder Tour',h:'Ab ins Freibad oder auf Tour',d:'Nachmittags ziehen alle gemeinsam los: ins Schwimmbad, in den Wald oder auf eine Wanderung.',info:[
+   {x:850,y:690,d:'Nachmittags ziehen alle gemeinsam los.'},
+   {x:1210,y:640,d:'Ins Schwimmbad, in den Wald oder auf eine Wanderung.'}]},
+ {a:.60,b:.68,stop:.657,l:'Abendessen',h:'Abendessen',d:'Die Sonne steht schon tief. Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.',info:[
+   {f:'sun',d:'Die Sonne steht schon tief.'},
+   {x:800,y:630,d:'Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.'}]},
+ {a:.68,b:.87,stop:.83,l:'Lagerrunde',h:'Lagerrunde',d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer. Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.',info:[
+   {x:800,y:596,d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer.'},
+   {x:1190,y:730,d:'Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.'}]},
+ {a:.87,b:1.01,stop:.96,l:'Gute Nacht',h:'Gute Nacht, VKF',d:'Mond und Sterne stehen über den Zelten. Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.',info:[
+   {f:'moon',d:'Mond und Sterne stehen über den Zelten.'},
+   {x:1100,y:546,d:'Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.'}]}
 ];
 const caps=$('caps');
 S.forEach((s,i)=>{const d=document.createElement('div');d.className='cap'+(s.intro?' intro':'');
-  d.innerHTML=(s.intro?'<div class="logo hero-logo" role="img" aria-label="Logo VKF Wiesloch, Väter-Kinder-Freizeit"></div>':`<div class="time">${s.t}</div>`)+`<h2>${s.h}</h2>`+(s.intro?'<div class="tagline">Die VKF ist die Väter-Kinder-Freizeit Wiesloch.</div>':'')+`<p>${s.d}</p>`+(s.intro?'<div class="hint">Scrollen <span aria-hidden="true">↓</span></div>':'');
+  d.innerHTML=(s.intro?'<div class="logo hero-logo" role="img" aria-label="Logo VKF Wiesloch, Väter-Kinder-Freizeit"></div>':'')+`<h2>${s.h}</h2>`+(s.intro?'<div class="tagline">Die VKF ist die Väter-Kinder-Freizeit Wiesloch.</div><p>'+s.d+'</p><div class="hint">Scrollen <span aria-hidden="true">↓</span></div>':`<p>${s.d}</p>`);
   caps.appendChild(d);s.el=d});
-const clock=$('clock');
-S.slice(1).forEach(s=>{const b=document.createElement('button');b.className='tick';b.type='button';b.style.left=((s.a-.05)/.9*100).toFixed(2)+'%';
-  b.innerHTML=`<i></i><b>${s.t.replace(' Uhr','')}</b>`;b.setAttribute('aria-label',s.h+', '+s.t);
-  b.addEventListener('click',()=>jump(s.a+.012));clock.appendChild(b);s.tick=b});
+const dots=$('dots');
+S.forEach((s,i)=>{const b=document.createElement('button');b.className='dot';b.type='button';
+  b.innerHTML=`<i></i><b>${s.l}</b>`;b.setAttribute('aria-label',s.l);
+  b.addEventListener('click',()=>goTo(i));dots.appendChild(b);s.dot=b});
+const keyUp=document.createElement('button'),keyDn=document.createElement('button');
+[[keyUp,'up','Vorherige Szene (Pfeiltaste nach oben)','M6,15 L12,8 L18,15'],[keyDn,'down','Nächste Szene (Pfeiltaste nach unten)','M6,9 L12,16 L18,9']].forEach(([k,c,l,d])=>{k.type='button';k.className='key '+c;k.setAttribute('aria-label',l);k.title=l;
+  k.innerHTML=`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`});
+dots.prepend(keyUp);dots.append(keyDn);
+keyUp.addEventListener('click',()=>step(-1));keyDn.addEventListener('click',()=>{if(atEnd())release();else step(1)});
+
+/* info buttons: round "i" in the scene, shown while its scene is snapped; text opens as popup */
+const infos=$('infos'),pop=$('pop');
+let openIB=null,pinned=false;
+S.forEach(s=>(s.info||[]).forEach(o=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','ib');g.setAttribute('tabindex','0');g.setAttribute('role','button');
+  g.setAttribute('aria-label','Info: '+o.d);g.style.display='none';
+  g.innerHTML='<circle class="halo" r="24"/><circle r="40" fill="transparent"/><circle class="dsk" r="24"/><text y="11" text-anchor="middle">i</text>';
+  o.g=g;o.scene=s;infos.appendChild(g);
+  g.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')showPop(g,o.d)});
+  g.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'&&!pinned)hidePop()});
+  g.addEventListener('focus',()=>showPop(g,o.d));g.addEventListener('blur',()=>{if(!pinned)hidePop()});
+  g.addEventListener('click',()=>{if(openIB===g&&pinned)hidePop();else{showPop(g,o.d);pinned=true}});
+  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();g.dispatchEvent(new Event('click'))}})}));
+function showPop(g,txt){if(openIB&&openIB!==g)openIB.classList.remove('open');openIB=g;pinned=false;g.classList.add('open');
+  pop.textContent=txt;pop.classList.add('on');
+  const r=g.querySelector('.dsk').getBoundingClientRect(),w=pop.offsetWidth,h=pop.offsetHeight,above=r.top-h-14;
+  pop.style.left=clamp(r.left+r.width/2-w/2,12,innerWidth-w-12)+'px';pop.style.top=(above>76?above:r.bottom+14)+'px'}
+function hidePop(){if(openIB)openIB.classList.remove('open');openIB=null;pinned=false;pop.classList.remove('on')}
+addEventListener('pointerdown',e=>{if(openIB&&!e.target.closest('.ib'))hidePop()});
+addEventListener('keydown',e=>{if(e.key==='Escape')hidePop()});
 
 /* helpers */
 const story=$('story');
@@ -585,10 +650,13 @@ const TREE=pal(['#1e2c26','#253c2e','#2e6a3a','#2e6a3a','#2a4430','#1e2c22','#12
 const CINK=[[0,'#ffffff'],[.08,'#ffffff'],[.12,'#14204a'],[.64,'#14204a'],[.7,'#ffffff'],[1,'#ffffff']];
 const CACC=[[0,'#ffd27a'],[.08,'#ffd27a'],[.12,'#e0245e'],[.64,'#e0245e'],[.7,'#ffd27a'],[1,'#ffd27a']];
 const GLOW=[[0,1],[.08,1],[.12,0],[.64,0],[.7,1],[1,1]];
-function jump(p){const top=story.offsetTop,len=story.offsetHeight-innerHeight;window.scrollTo({top:top+p*len,behavior:reduce?'auto':'smooth'})}
+const sunPos=p=>{const t=p/.84;return [150+t*1300,650-Math.sin(Math.PI*clamp(t,0,1))*520]};
+const moonPos=p=>{const mt=clamp((p-.83)/.17,0,1);return [1330-mt*120,640-ss(mt)*470]};
 
-function fit(){const r=svg.getBoundingClientRect(),a=r.width/Math.max(1,r.height);let h=800,w=h*a;if(w<920){w=920;h=w/a}
-  svg.setAttribute('viewBox',`${(800-w/2).toFixed(1)} ${(945-h).toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`)}
+let VB={x:0,y:0,w:1600,h:900,us:1};
+function fit(){const r=svg.getBoundingClientRect();if(r.width<1||r.height<1)return;const a=r.width/r.height;let h=800,w=h*a;if(w<920){w=920;h=w/a}
+  VB={x:800-w/2,y:945-h,w,h,us:r.width/w};
+  svg.setAttribute('viewBox',`${VB.x.toFixed(1)} ${VB.y.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`)}
 
 let P0=0;
 function progress(){const top=story.offsetTop,len=story.offsetHeight-innerHeight;return clamp((scrollY-top)/len,0,1)}
@@ -600,8 +668,8 @@ function render(){
   setStop('m3a',kc(p,M3A));setStop('m3b',kc(p,M3B));setStop('g1',kc(p,GA));setStop('g2',kc(p,GB));
   const tc=kc(p,TREE);$('forest').setAttribute('fill',tc);$('edgeTrees').setAttribute('fill',tc);
   const t=p/.84,sun=$('sun');
-  if(t<=1.02){const x=150+t*1300,y=650-Math.sin(Math.PI*clamp(t,0,1))*520;sun.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)})`);sun.style.opacity=1}else sun.style.opacity=0;
-  const mt=clamp((p-.83)/.17,0,1);$('moon').setAttribute('transform',`translate(${(1330-mt*120).toFixed(1)},${(640-ss(mt)*470).toFixed(1)})`);$('moon').setAttribute('opacity',clamp(mt*3,0,1));
+  if(t<=1.02){const [x,y]=sunPos(p);sun.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)})`);sun.style.opacity=1}else sun.style.opacity=0;
+  const mt=clamp((p-.83)/.17,0,1),[mx,my]=moonPos(p);$('moon').setAttribute('transform',`translate(${mx.toFixed(1)},${my.toFixed(1)})`);$('moon').setAttribute('opacity',clamp(mt*3,0,1));
   $('stars').setAttribute('opacity',kf(p,[[0,.6],[.07,0],[.74,0],[.86,1]]));
   $('dark').setAttribute('opacity',kf(p,[[0,.22],[.1,0],[.66,0],[.78,.18],[.88,.4],[1,.46]]));
   $('dusk').setAttribute('opacity',kf(p,[[0,.1],[.1,0],[.62,0],[.72,.14],[.82,.05],[.9,0]]));
@@ -624,12 +692,69 @@ function render(){
     const lp=clamp((p-s.a)/(s.b-s.a),0,1),dy=reduce?0:(i===0?-lp*60:(.5-lp)*56)+(1-o)*24;
     s.el.style.opacity=o.toFixed(3);s.el.style.visibility=o>0?'visible':'hidden';
     s.el.style.transform=`translateY(${dy.toFixed(1)}px) scale(${reduce?1:(.97+.03*o).toFixed(3)})`});
-  $('fill').style.width=(clamp((p-.05)/.9,0,1)*100).toFixed(2)+'%';
-  S.slice(1).forEach(s=>s.tick.classList.toggle('done',p>=s.a));
+  let act=0;S.forEach((s,i)=>{if(p>=s.a)act=i});
+  S.forEach((s,i)=>{s.dot.classList.toggle('on',i===act);if(i===act)s.dot.setAttribute('aria-current','true');else s.dot.removeAttribute('aria-current')});
+  syncKeys();
+  const k0=clamp(21/(24*VB.us),.6,3);
+  S.forEach(s=>(s.info||[]).forEach(o=>{
+    const v=clamp(1-(Math.abs(p-s.stop)-.004)/.012,0,1),g=o.g;
+    if(v<.03){if(g.style.display!=='none'){g.style.display='none';if(openIB===g)hidePop()}return}
+    let [x,y]=o.f==='sun'?sunPos(p):o.f==='moon'?moonPos(p):[o.x,o.y];
+    x=clamp(x,VB.x+34*k0,VB.x+VB.w-34*k0);y=clamp(y,VB.y+90/VB.us,VB.y+VB.h-34*k0);
+    g.style.display='';g.style.opacity=v.toFixed(3);g.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)}) scale(${(k0*(.6+.4*v)).toFixed(3)})`)}));
 }
-let tick=false;function onScroll(){if(!tick){tick=true;requestAnimationFrame(()=>{tick=false;render()})}}
+let tick=false;function onScroll(){hidePop();if(!tick){tick=true;requestAnimationFrame(()=>{tick=false;render()})}snapLater()}
 addEventListener('scroll',onScroll,{passive:true});
 addEventListener('resize',()=>{fit();render()});
+
+/* step navigation: one gesture (wheel, swipe, arrow key, button, dot) moves exactly one scene, then the story holds still so every info button can be explored.
+   Inertia of the same gesture is swallowed; after the last scene the page is released. */
+let anim=0,busy=false,busyT=0,lastInput=-1e9,touchY=null;
+const geo=()=>{const top=story.offsetTop,len=story.offsetHeight-innerHeight;return {top,len,p:(scrollY-top)/len}};
+const nearest=p=>{let k=0;S.forEach((s,i)=>{if(Math.abs(s.stop-p)<Math.abs(S[k].stop-p))k=i});return k};
+const inRange=()=>{const {p}=geo();return p>=-.001&&p<=1};
+function goTo(i,done){i=clamp(i,0,S.length-1);const {top,len}=geo(),from=scrollY,to=top+S[i].stop*len,t0=performance.now(),dur=reduce?0:Math.min(1100,500+Math.abs(to-from)/len*5000);
+  cancelAnimationFrame(anim);busy=true;hidePop();clearTimeout(busyT);busyT=setTimeout(()=>{busy=false},dur+400);
+  const tick=now=>{const t=dur?clamp((now-t0)/dur,0,1):1,e=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;jumpTo(from+(to-from)*e);
+    if(t<1)anim=requestAnimationFrame(tick);else{busy=false;lastInput=performance.now();if(done)done()}};
+  anim=requestAnimationFrame(tick)}
+const jumpTo=y=>{try{window.scrollTo({top:y,behavior:'instant'})}catch(_){window.scrollTo(0,y)}};
+const release=()=>window.scrollTo({top:story.offsetTop+story.offsetHeight,behavior:reduce?'auto':'smooth'});
+const atEnd=()=>nearest(geo().p)===S.length-1&&geo().p>=S[S.length-1].stop-.002;
+function step(d){const {p}=geo(),last=S.length-1;
+  if(d>0&&p>S[last].stop+.002)return false;            /* past the last scene: normal page scrolling */
+  let k=nearest(p);if(d<0&&p>S[last].stop+.002)k=last+1;  /* coming back from below: land on the last scene */
+  const to=k+d;if(to<0||to>last)return false;goTo(to);return true}
+function syncKeys(){const {p}=geo(),k=nearest(p);keyUp.disabled=k===0&&p<=S[0].stop+.002}
+addEventListener('wheel',e=>{if(e.ctrlKey||!inRange())return;
+  const {p}=geo(),past=p>S[S.length-1].stop+.002;
+  const now0=performance.now();
+  if((past||atEnd())&&e.deltaY>0){                      /* last scene: a fresh scroll leaves the story, leftover inertia is swallowed */
+    if(!past&&(busy||now0-lastInput<=180)){lastInput=now0;e.preventDefault()}return}
+  if(p<=0.0005&&e.deltaY<0)return;
+  e.preventDefault();
+  const now=performance.now(),quiet=now-lastInput>180;lastInput=now;
+  if(busy||!quiet||e.deltaY===0)return;
+  step(e.deltaY>0?1:-1)},{passive:false});
+addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.target.closest&&e.target.closest('button,.ib,a')&&(e.key===' '||e.key==='Enter'))return;
+  const dn=['ArrowDown','PageDown'].includes(e.key)||(e.key===' '&&!e.shiftKey),up=['ArrowUp','PageUp'].includes(e.key)||(e.key===' '&&e.shiftKey);
+  if(!(dn||up)||!inRange())return;
+  const {p}=geo();if(dn&&p>S[S.length-1].stop+.002)return;if(up&&p<=.0005)return;
+  e.preventDefault();if(busy)return;if(dn&&atEnd())release();else step(dn?1:-1)});
+addEventListener('touchstart',e=>{touchY=e.touches.length===1?e.touches[0].clientY:null},{passive:true});
+addEventListener('touchmove',e=>{if(touchY===null||!inRange())return;const {p}=geo(),dy=touchY-e.touches[0].clientY;
+  if(p>S[S.length-1].stop+.002&&dy>0)return;if(p<=.0005&&dy<0)return;
+  e.preventDefault();if(busy||Math.abs(dy)<36)return;touchY=null;if(dy>0&&atEnd())release();else step(dy>0?1:-1)},{passive:false});
+/* fallback for scrollbar drags: settle on the nearest scene after a pause */
+let held=false,snapT=0;
+const snapLater=()=>{clearTimeout(snapT);snapT=setTimeout(()=>{if(held||busy)return;const {p}=geo();if(p<0||p>S[S.length-1].stop)return;const k=nearest(p),{top,len}=geo();if(Math.abs(top+S[k].stop*len-scrollY)>2)goTo(k)},600)};
+['mousedown'].forEach(e=>addEventListener(e,()=>{held=true}));
+['mouseup'].forEach(e=>addEventListener(e,()=>{held=false;snapLater()}));
+
+/* speech bubble hugs its text once the font is in */
+function fitBubble(){const t=$('bubT'),g=$('kreis'),d=g.style.display;g.style.display='';const w=Math.ceil(t.getComputedTextLength())+44;g.style.display=d;
+  if(w>44){$('bubR').setAttribute('width',w);t.setAttribute('x',-8+w/2)}}
+if(document.fonts&&document.fonts.load)document.fonts.load("700 24px 'Baloo 2'").then(fitBubble,()=>{});
 
 /* guitarists orbit the fire */
 function orbit(ts){
