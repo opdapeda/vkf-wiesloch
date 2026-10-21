@@ -27,6 +27,7 @@ Alles steckt in einer Datei: HTML, CSS und JavaScript. Es gibt keine Abhängigke
    - Die Lagerrunde (`#runde`) hat Bänke im Kreis, das Feuer und Gitarristen, die mit `orbit()` um das Feuer laufen.
    - Die Story-Texte liegen in `S[]`. Sie sind zentriert, blenden ein, wandern nach oben und blenden aus. Die Textfarbe folgt dem Himmel.
    - Die Zeitleiste `.clock` enthält Sprungmarken.
+   - Zeitgesteuerte Szenen-Animationen stehen in `life(ts)` (läuft im `orbit()`-Loop): Reh und Vögel (Start), Frühstückschaos mit umfallendem Becher, Fußballspiel mit Tor, Schöpfkelle und Kinder mit Tellern (Mittag), Schmetterlinge (Ausflug), Glühwürmchen (Abend), Sternschnuppe und Zzz (Nacht). Bei `prefers-reduced-motion` stehen sie still (feste Zeit `FIX`).
 2. **Über die VKF** `#ueber`
 3. **Team** `#team`: Die Rollen stehen in `ROLES[]`.
 4. **Anmeldung** `#anmeldung`: 4 Schritte, Tipp-Box und ein Button zum Kopieren der E-Mail-Adresse.
