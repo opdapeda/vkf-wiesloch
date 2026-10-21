@@ -132,6 +132,9 @@ a{color:inherit}
 .pv-card.land{width:max(480px,50vw)}
 .pv-card.port{width:fit-content}
 .pv-card img{display:block;width:100%;height:auto;max-height:62vh;object-fit:cover;border-radius:28px 28px 0 0;background:#e9e2f2}
+.pv-card img{transition:opacity .25s}
+.pv-card.loading img{opacity:0}
+.pv-card.loading .pv-img{aspect-ratio:3/2;background:#e9e2f2;border-radius:28px 28px 0 0}
 .pv-card.port img{width:auto;max-width:100%;max-height:66vh;margin-inline:auto}
 .pv-card .none{display:none;place-items:center;min-height:240px;padding:24px;text-align:center;font:800 24px/1.2 'Baloo 2',system-ui,sans-serif;background:#e9e2f2;border-radius:28px 28px 0 0}
 .pv-card.empty img{display:none}.pv-card.empty .none{display:grid}
@@ -740,6 +743,7 @@ S.forEach(s=>(s.info||[]).forEach(o=>{const g=document.createElementNS(NS,'g');g
   g.setAttribute('aria-label',(o.photo?'':'Info: ')+o.d);g.style.display='none';
   g.innerHTML='<circle class="halo" r="24"/><circle r="40" fill="transparent"/><circle class="dsk" r="24"/>'+(o.vid?'<g class="cam"><path d="M-7,-10 L11,0 L-7,10Z"/></g>':o.photo?'<g class="cam"><path d="M-13,-6 H-6 L-4,-10 H4 L6,-6 H13 Q15,-6 15,-4 V9 Q15,11 13,11 H-13 Q-15,11 -15,9 V-4 Q-15,-6 -13,-6Z"/><circle class="lens" cy="2" r="6"/><circle cy="2" r="3.4"/></g>':'<text y="11" text-anchor="middle">i</text>');
   o.g=g;o.scene=s;infos.appendChild(g);
+  if(o.photo){const warm=()=>{if(o.warm)return;o.warm=1;o.f_.items.forEach(it=>{if(it.src)new Image().src=it.src})};g.addEventListener('pointerenter',warm);g.addEventListener('focus',warm);g.addEventListener('pointerdown',warm)}
   g.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')showPop(g,o.d)});
   g.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'&&!pinned)hidePop()});
   g.addEventListener('focus',()=>showPop(g,o.d));g.addEventListener('blur',()=>{if(!pinned)hidePop()});
@@ -751,18 +755,23 @@ function showPop(g,txt){if(openIB&&openIB!==g)openIB.classList.remove('open');op
   pop.style.left=clamp(r.left+r.width/2-w/2,12,innerWidth-w-12)+'px';pop.style.top=(above>76?above:r.bottom+14)+'px'}
 function hidePop(){if(openIB)openIB.classList.remove('open');openIB=null;pinned=false;pop.classList.remove('on')}
 /* photo viewer: opens from the clicked button, closes with x, backdrop, Escape; the story stays put while it is open */
-const pv=$('pv'),pvCard=$('pvCard'),pvImg=$('pvImg');let phOpen=false,phFrom=null,phSpot=null,phIdx=0;
+const pv=$('pv'),pvCard=$('pvCard'),pvImg=$('pvImg');let phOpen=false,phFrom=null,phSpot=null,phIdx=0,phTok=0;
 function showPhoto(i){const f=phSpot,n=f.items.length;phIdx=(i+n)%n;const it=f.items[phIdx];
   pvCard.classList.toggle('multi',n>1);pvCard.classList.remove('empty');
   const pvVid=$('pvVid'),isV=!!it.video;pvCard.classList.toggle('vid',isV);$('pvEmpty').textContent=isV?'Das Video konnte nicht geladen werden.':'Hier kommt bald ein Foto hin.';
   pvImg.alt=it.alt||f.l;$('pvT').textContent=f.l;$('pvP').textContent=it.t||f.t||'';
   $('pvDots').innerHTML=n>1?f.items.map((_,k)=>`<i${k===phIdx?' class="on"':''}></i>`).join(''):'';
   const fit=()=>{pvCard.classList.remove('land','port','empty');pvCard.classList.add(pvImg.naturalHeight>pvImg.naturalWidth?'port':'land')};
-  pvImg.onload=fit;pvImg.onerror=()=>{pvCard.classList.remove('port');pvCard.classList.add('land','empty')};
+  const tok=++phTok;pvCard.classList.remove('loading');
   if(isV){pvImg.removeAttribute('src');pvVid.onloadedmetadata=()=>{pvCard.classList.remove('land','port');pvCard.classList.add(pvVid.videoHeight>pvVid.videoWidth?'port':'land')};
     pvVid.onerror=()=>{pvCard.classList.remove('port');pvCard.classList.add('land','empty')};if(it.poster)pvVid.poster=it.poster;else pvVid.removeAttribute('poster');pvVid.src=it.video;const pl=pvVid.play();if(pl&&pl.catch)pl.catch(()=>{});return}
   pvVid.pause();pvVid.removeAttribute('src');pvVid.load();
-  if(it.src){pvImg.src=it.src;if(pvImg.complete&&pvImg.naturalWidth)fit()}else{pvCard.classList.remove('port');pvCard.classList.add('land','empty')}
+  if(it.src){pvCard.classList.add('loading');pvImg.removeAttribute('src');   /* hide the previous photo until the new one is fully decoded, no progressive flash */
+    const done=()=>{if(tok!==phTok)return;fit();pvCard.classList.remove('loading')};
+    pvImg.onload=()=>{if(!pvImg.decode)done()};
+    pvImg.onerror=()=>{if(tok!==phTok)return;pvCard.classList.remove('loading','port');pvCard.classList.add('land','empty')};
+    pvImg.src=it.src;if(pvImg.decode)pvImg.decode().then(done,()=>{})}
+  else{pvCard.classList.remove('port');pvCard.classList.add('land','empty')}
   if(n>1){const nx=f.items[(phIdx+1)%n];if(nx.src)new Image().src=nx.src}}
 function openPhoto(f,g){const r=(g.querySelector('.dsk')||g).getBoundingClientRect();
   pvCard.style.transformOrigin=`${(r.left+r.width/2).toFixed(0)}px ${(r.top+r.height/2).toFixed(0)}px`;
