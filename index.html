@@ -588,10 +588,8 @@ $('edgeTrees').innerHTML=[[-60,905,1.9],[40,890,1.5],[1660,905,1.9],[1560,892,1.
   const pack=(x,y,w,h,c)=>`<g><rect x="${x}" y="${y-h}" width="${w}" height="${h}" rx="${w*.4}" fill="${c}"/><rect x="${x+w*.15}" y="${y-h*.45}" width="${w*.7}" height="${h*.32}" rx="6" fill="#000" opacity=".16"/><path d="M${x+w*.3},${y-h} q${w*.2},-14 ${w*.4},0" stroke="#2a2438" stroke-width="4" fill="none"/></g>`;
   const mat=(x,y,w,c)=>`<g><rect x="${x}" y="${y-26}" width="${w}" height="26" rx="13" fill="${c}"/><rect x="${x+w*.2}" y="${y-26}" width="5" height="26" fill="#2a2438" opacity=".5"/><rect x="${x+w*.75}" y="${y-26}" width="5" height="26" fill="#2a2438" opacity=".5"/></g>`;
   let L=`<ellipse cx="-600" cy="2" rx="190" ry="9" fill="#1a1030" opacity=".2"/>`;
-  L+=case_(-700,0,54,70,'#3a7bd5')+duffel(-640,0,92,44,'#ef3a62')+case_(-542,0,60,80,'#ff8a2a')+pack(-770,0,46,58,'#20a68a')
-   +mat(-692,-70,104,'#9b5bd4')+case_(-668,-70,50,54,'#ffc93a')+duffel(-606,-44,86,40,'#3a7bd5')+pack(-520,-80,48,56,'#d9124a')
-   +duffel(-640,-74,80,36,'#8cbf26').replace('-74','-74')+mat(-664,-132,92,'#29b0c8')
-   +`<g><rect x="-806" y="-34" width="34" height="34" rx="4" fill="#d9124a"/><rect x="-806" y="-34" width="34" height="9" rx="3" fill="#fff"/></g>`;
+  L+=case_(-700,0,54,70,'#3a7bd5')+duffel(-640,0,92,44,'#ef3a62')+case_(-542,0,60,80,'#ff8a2a')
+   +mat(-692,-70,104,'#9b5bd4')+case_(-640,-44,50,54,'#ffc93a');
   $('luggage').innerHTML=L;
 
   const drop=(x,y,d)=>`<path class="sweat" style="animation-delay:${d}s" d="M${x},${y-4} q-7,11 0,14 q7,-3 0,-14z" fill="#8fd6ff"/>`;
@@ -599,10 +597,8 @@ $('edgeTrees').innerHTML=[[-60,905,1.9],[40,890,1.5],[1660,905,1.9],[1560,892,1.
     return `<g transform="translate(0,${o.dy||0})"><g class="bob" style="animation-delay:${-Math.abs(x)%7*.1}s">${P(x,y,{f:1,kid:o.kid,c:o.c,skin:pick(sk),hair:pick(hr)})}${o.extra||''}${drop(hx-6*sc,y-84*sc,0)+drop(hx+14*sc,y-80*sc,.5)+(o.kid?'':drop(hx+2,y-90,.9))}</g></g>`};
   const hand=(x,y,w,h,c)=>case_(x,y,w,h,c);
   $('dads').innerHTML=
-    dad(-450,40,{c:'#3a7bd5',extra:hand(-50-450,36,36,56,'#ef3a62')+hand(-28-450,36,26,40,'#ffc93a')})+
-    dad(-535,54,{c:'#ef3a62',extra:`<rect x="-600" y="-12" width="84" height="30" rx="15" fill="#20a68a" transform="rotate(-10 -560 0)"/>`})+
-    dad(-620,38,{c:'#8cbf26',extra:duffel(-68-620,36,60,36,'#ff8a2a')})+
-    dad(-690,48,{kid:1,c:'#ffc93a',extra:`<rect x="-718" y="18" width="20" height="30" rx="4" fill="#9b5bd4"/>`});
+    dad(-700,36,{c:'#3a7bd5',extra:hand(-50-700,32,36,56,'#ef3a62')})+
+    dad(-800,44,{c:'#8cbf26',extra:duffel(-68-800,32,60,36,'#ff8a2a')});
   seed=s0})();
 
 /* vignettes */
@@ -876,10 +872,10 @@ function render(){
   setStop('m3a',kc(p,M3A));setStop('m3b',kc(p,M3B));setStop('g1',kc(p,GA));setStop('g2',kc(p,GB));
   const tc=kc(p,TREE);$('forest').setAttribute('fill',tc);$('edgeTrees').setAttribute('fill',tc);$('birds').setAttribute('stroke',tc);
   const ar=$('arrival');ar.style.display=p<.095?'':'none';
-  if(p<.095){const dv=clamp(p/.07,0,1),drive=dv*dv*1100,rt=VB.x+VB.w,lo=1-clamp((p-.04)/.04,0,1),A=n=>`translate(${(rt+n).toFixed(1)},806)`;
-    $('bus').setAttribute('transform',A(drive));['spin1','spin2'].forEach(i=>$(i).setAttribute('transform',`rotate(${(drive/34*57.3).toFixed(1)})`));
-    $('luggage').setAttribute('transform',A(-110)+' scale(.75)');$('luggage').setAttribute('opacity',lo.toFixed(3));
-    $('dads').setAttribute('transform',A(reduce?0:dv*-150)+' scale(1.25)');$('dads').setAttribute('opacity',lo.toFixed(3))}
+  if(p<.095){const dv=clamp(p/.07,0,1),drive=dv*dv*1100,rt=VB.x+VB.w,lo=1-clamp((p-.04)/.04,0,1),A=n=>`translate(${(rt+n).toFixed(1)},806)`,B=90;
+    $('bus').setAttribute('transform',A(B+drive));['spin1','spin2'].forEach(i=>$(i).setAttribute('transform',`rotate(${(drive/34*57.3).toFixed(1)})`));
+    $('luggage').setAttribute('transform',A(-30)+' scale(.55)');$('luggage').setAttribute('opacity',lo.toFixed(3));
+    $('dads').setAttribute('transform',A(reduce?0:dv*-150)+' scale(.8)');$('dads').setAttribute('opacity',lo.toFixed(3))}
   const t=p/.84,sun=$('sun');
   if(t<=1.02){const [x,y]=sunPos(p);sun.setAttribute('transform',`translate(${x.toFixed(1)},${y.toFixed(1)})`);sun.style.opacity=1}else sun.style.opacity=0;
   const mt=clamp((p-.83)/.17,0,1),[mx,my]=moonPos(p);$('moon').setAttribute('transform',`translate(${mx.toFixed(1)},${my.toFixed(1)})`);$('moon').setAttribute('opacity',clamp(mt*3,0,1));
