@@ -118,6 +118,31 @@ a{color:inherit}
 .pop{position:fixed;z-index:6;max-width:min(340px,calc(100vw - 24px));margin:0;font-size:18px;line-height:1.4;font-weight:600;color:#2a1f3d;background:rgba(255,255,255,.96);
   padding:14px 20px;border-radius:24px;box-shadow:0 14px 38px rgba(20,16,43,.32);pointer-events:none;transition:opacity .15s;text-wrap:pretty}
 .pop:not(.on){opacity:0;visibility:hidden}
+/* photo spots: teal camera buttons, photo opens in a card from the button */
+.ib.ph .dsk{stroke:#0f8f9b}
+.ib.ph .halo{stroke:#bff3f0}
+.ib.ph:hover .dsk,.ib.ph:focus-visible .dsk{fill:#d4f7f3}
+.ib.ph .cam{fill:#0f8f9b;pointer-events:none}
+.ib.ph .cam .lens{fill:#fff}
+.pv{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:16px;background:rgba(20,16,43,.58);transition:opacity .25s,visibility .25s}
+.pv:not(.on){opacity:0;visibility:hidden;pointer-events:none}
+.pv-card{position:relative;box-sizing:border-box;max-width:min(920px,100%);max-height:100%;overflow:auto;background:#fff;color:#2a1f3d;border-radius:28px;box-shadow:0 24px 70px rgba(10,6,30,.5);
+  transform:scale(.3);opacity:0;transition:transform .38s cubic-bezier(.2,.9,.3,1.15),opacity .25s}
+.pv.on .pv-card{transform:none;opacity:1}
+.pv-card.land{width:max(480px,50vw)}
+.pv-card.port{width:fit-content}
+.pv-card img{display:block;width:100%;height:auto;max-height:62vh;object-fit:cover;border-radius:28px 28px 0 0;background:#e9e2f2}
+.pv-card.port img{width:auto;max-width:100%;max-height:66vh;margin-inline:auto}
+.pv-card .none{display:none;place-items:center;min-height:240px;padding:24px;text-align:center;font:800 24px/1.2 'Baloo 2',system-ui,sans-serif;background:#e9e2f2;border-radius:28px 28px 0 0}
+.pv-card.empty img{display:none}.pv-card.empty .none{display:grid}
+.pv-card figcaption{padding:16px 24px 20px}
+.pv-card h3{margin:0 0 4px;font:800 26px/1.15 'Baloo 2',system-ui,sans-serif}
+.pv-card p{margin:0;font-size:18px;line-height:1.45;font-weight:600;max-width:62ch;text-wrap:pretty}
+.pv-card.port figcaption{max-width:min(100%,520px)}
+.pv-x{position:absolute;top:12px;right:12px;width:48px;height:48px;border:0;border-radius:50%;background:#fff;color:#2a1f3d;font:800 30px/1 'Baloo 2',system-ui,sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.pv-x:hover{background:#ffe9a8}.pv-x:focus-visible{outline:4px solid #0f8f9b;outline-offset:2px}
+@media (max-width:700px){.pv-card.land{width:100%}.pv-card h3{font-size:22px}}
+@media (prefers-reduced-motion: reduce){.pv,.pv-card{transition:none}.pv-card{transform:none}}
 
 /* SVG animation bits */
 .flame{transform-box:fill-box;transform-origin:50% 100%;animation:flick .9s ease-in-out infinite alternate}
@@ -321,6 +346,14 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
     <div class="caps" id="caps" aria-live="polite"></div>
     <nav class="dots" id="dots" aria-label="Szenen des Tages"></nav>
     <p class="pop" id="pop" role="tooltip"></p>
+    <div class="pv" id="pv" role="dialog" aria-modal="true" aria-labelledby="pvT" aria-hidden="true">
+      <figure class="pv-card" id="pvCard" style="margin:0">
+        <button class="pv-x" id="pvX" type="button" aria-label="Foto schließen">×</button>
+        <img id="pvImg" alt="">
+        <div class="none">Hier kommt bald ein Foto hin.</div>
+        <figcaption><h3 id="pvT"></h3><p id="pvP"></p></figcaption>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -593,33 +626,49 @@ const guitars=[0,1,2].map(i=>{const g=document.createElementNS(NS,'g');g.setAttr
   return {g,off:i*Math.PI*2/3}});
 
 /* captions: headline on the scene, info text lives in the round buttons (info: x/y in scene units, or f for sun/moon) */
+/* photo spots: replace src with the real file (portrait or landscape both work), t = short caption */
+const FOTO={
+ zelte:{l:'Die Zelte',src:'fotos/beispiel-hoch.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'},
+ kueche:{l:'Das Küchenzelt',src:'fotos/beispiel-quer.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'},
+ tisch:{l:'Am Tisch',src:'fotos/beispiel-quer.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'},
+ wiese:{l:'Auf der Wiese',src:'fotos/beispiel-hoch.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'},
+ tor:{l:'Am Tor',src:'fotos/beispiel-quer.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'},
+ essen:{l:'Beim Essen',src:'fotos/beispiel-hoch.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'},
+ feuer:{l:'Am Lagerfeuer',src:'fotos/beispiel-quer.jpg',t:'Platzhalter: Hier steht später ein kurzer Text zum Foto.'}};
 const S=[
  {a:0,b:.05,stop:0,l:'Start',h:'Ein Tag in der VKF',d:'Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel.',intro:1},
  {a:.05,b:.11,stop:.085,l:'Sonnenaufgang',h:'Die Sonne geht auf',d:'Über den Bergen wird es hell. Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.',info:[
    {f:'sun',d:'Über den Bergen wird es hell.'},
-   {x:1090,y:546,d:'Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.'}]},
+   {x:1090,y:546,d:'Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.'},
+   {x:515,y:512,photo:'zelte'},{x:1030,y:604,photo:'kueche'}]},
  {a:.11,b:.20,stop:.177,l:'Frühstück',h:'Frühstück',d:'Papas und Kinder sitzen zusammen an den Bierbänken. Kakao, Brötchen und die ersten Pläne für den Tag.',info:[
    {x:612,y:636,d:'Papas und Kinder sitzen zusammen an den Bierbänken.'},
-   {x:800,y:630,d:'Kakao, Brötchen und die ersten Pläne für den Tag.'}]},
+   {x:800,y:630,d:'Kakao, Brötchen und die ersten Pläne für den Tag.'},
+   {x:960,y:676,photo:'tisch'}]},
  {a:.20,b:.29,stop:.268,l:'Morgenkreis',h:'Morgenkreis',d:'Alle kommen im großen Kreis zusammen. Die Lagerleitung erzählt, was heute ansteht.',info:[
    {x:520,y:700,d:'Alle kommen im großen Kreis zusammen.'},
-   {x:800,y:672,d:'Die Lagerleitung erzählt, was heute ansteht.'}]},
+   {x:800,y:672,d:'Die Lagerleitung erzählt, was heute ansteht.'},
+   {x:1175,y:776,photo:'wiese'}]},
  {a:.29,b:.40,stop:.377,l:'Fußball, Verstecken, Verkleiden',h:'Fußball, Verstecken, Verkleiden',d:'Auf der Wiese rollt der Ball, hinter dem Baum wird gezählt, und aus der Verkleidekiste kommen Piraten und Könige.',info:[
    {x:580,y:650,d:'Auf der Wiese rollt der Ball.'},
    {x:1001,y:540,d:'Hinter dem Baum wird gezählt.'},
-   {x:1150,y:690,d:'Aus der Verkleidekiste kommen Piraten und Könige.'}]},
+   {x:1150,y:690,d:'Aus der Verkleidekiste kommen Piraten und Könige.'},
+   {x:488,y:722,photo:'tor'}]},
  {a:.40,b:.48,stop:.457,l:'Mittagessen',h:'Mittagessen',d:'Das Küchenteam tischt auf. Wer Nachschlag möchte, stellt sich einfach noch einmal an.',info:[
    {x:1090,y:682,d:'Das Küchenteam tischt auf.'},
-   {x:800,y:630,d:'Wer Nachschlag möchte, stellt sich einfach noch einmal an.'}]},
+   {x:800,y:630,d:'Wer Nachschlag möchte, stellt sich einfach noch einmal an.'},
+   {x:700,y:692,photo:'essen'}]},
  {a:.48,b:.60,stop:.577,l:'Freibad oder Tour',h:'Ab ins Freibad oder auf Tour',d:'Nachmittags ziehen alle gemeinsam los: ins Schwimmbad, in den Wald oder auf eine Wanderung.',info:[
    {x:850,y:690,d:'Nachmittags ziehen alle gemeinsam los.'},
    {x:1210,y:640,d:'Ins Schwimmbad, in den Wald oder auf eine Wanderung.'}]},
  {a:.60,b:.68,stop:.657,l:'Abendessen',h:'Abendessen',d:'Die Sonne steht schon tief. Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.',info:[
    {f:'sun',d:'Die Sonne steht schon tief.'},
-   {x:800,y:630,d:'Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.'}]},
+   {x:800,y:630,d:'Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.'},
+   {x:1000,y:690,photo:'tisch'}]},
  {a:.68,b:.87,stop:.83,l:'Lagerrunde',h:'Lagerrunde',d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer. Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.',info:[
    {x:800,y:596,d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer.'},
-   {x:1190,y:730,d:'Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.'}]},
+   {x:1190,y:730,d:'Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.'},
+   {x:915,y:700,photo:'feuer'}]},
  {a:.87,b:1.01,stop:.96,l:'Gute Nacht',h:'Gute Nacht, VKF',d:'Mond und Sterne stehen über den Zelten. Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.',info:[
    {f:'moon',d:'Mond und Sterne stehen über den Zelten.'},
    {x:1100,y:546,d:'Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.'}]}
@@ -642,21 +691,34 @@ keyUp.addEventListener('click',()=>step(-1));keyDn.addEventListener('click',()=>
 const infos=$('infos'),pop=$('pop');
 let openIB=null,pinned=false;
 S.forEach(s=>(s.info||[]).forEach(o=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','ib');g.setAttribute('tabindex','0');g.setAttribute('role','button');
-  g.setAttribute('aria-label','Info: '+o.d);g.style.display='none';
-  g.innerHTML='<circle class="halo" r="24"/><circle r="40" fill="transparent"/><circle class="dsk" r="24"/><text y="11" text-anchor="middle">i</text>';
+  if(o.photo){const f=FOTO[o.photo];o.d='Foto ansehen: '+f.l;g.classList.add('ph');o.f_=f}
+  g.setAttribute('aria-label',(o.photo?'':'Info: ')+o.d);g.style.display='none';
+  g.innerHTML='<circle class="halo" r="24"/><circle r="40" fill="transparent"/><circle class="dsk" r="24"/>'+(o.photo?'<g class="cam"><path d="M-13,-6 H-6 L-4,-10 H4 L6,-6 H13 Q15,-6 15,-4 V9 Q15,11 13,11 H-13 Q-15,11 -15,9 V-4 Q-15,-6 -13,-6Z"/><circle class="lens" cy="2" r="6"/><circle cy="2" r="3.4"/></g>':'<text y="11" text-anchor="middle">i</text>');
   o.g=g;o.scene=s;infos.appendChild(g);
   g.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')showPop(g,o.d)});
   g.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'&&!pinned)hidePop()});
   g.addEventListener('focus',()=>showPop(g,o.d));g.addEventListener('blur',()=>{if(!pinned)hidePop()});
-  g.addEventListener('click',()=>{if(openIB===g&&pinned)hidePop();else{showPop(g,o.d);pinned=true}});
+  g.addEventListener('click',()=>{if(o.photo){hidePop();openPhoto(o.f_,g)}else if(openIB===g&&pinned)hidePop();else{showPop(g,o.d);pinned=true}});
   g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();g.dispatchEvent(new Event('click'))}})}));
 function showPop(g,txt){if(openIB&&openIB!==g)openIB.classList.remove('open');openIB=g;pinned=false;g.classList.add('open');
   pop.textContent=txt;pop.classList.add('on');
   const r=g.querySelector('.dsk').getBoundingClientRect(),w=pop.offsetWidth,h=pop.offsetHeight,above=r.top-h-14;
   pop.style.left=clamp(r.left+r.width/2-w/2,12,innerWidth-w-12)+'px';pop.style.top=(above>76?above:r.bottom+14)+'px'}
 function hidePop(){if(openIB)openIB.classList.remove('open');openIB=null;pinned=false;pop.classList.remove('on')}
+/* photo viewer: opens from the clicked button, closes with x, backdrop, Escape; the story stays put while it is open */
+const pv=$('pv'),pvCard=$('pvCard'),pvImg=$('pvImg');let phOpen=false,phFrom=null;
+function openPhoto(f,g){const r=g.querySelector('.dsk').getBoundingClientRect();
+  pvCard.style.transformOrigin=`${(r.left+r.width/2).toFixed(0)}px ${(r.top+r.height/2).toFixed(0)}px`;
+  pvCard.className='pv-card land';pvImg.alt=f.l;$('pvT').textContent=f.l;$('pvP').textContent=f.t||'';
+  const fit=()=>pvCard.className='pv-card '+(pvImg.naturalHeight>pvImg.naturalWidth?'port':'land');
+  pvImg.onload=fit;pvImg.onerror=()=>{pvCard.className='pv-card land empty'};
+  if(f.src){pvImg.src=f.src;if(pvImg.complete&&pvImg.naturalWidth)fit()}else pvCard.className='pv-card land empty';
+  phFrom=g;phOpen=true;pv.classList.add('on');pv.setAttribute('aria-hidden','false');setTimeout(()=>$('pvX').focus(),50)}
+function closePhoto(){if(!phOpen)return;phOpen=false;pv.classList.remove('on');pv.setAttribute('aria-hidden','true');if(phFrom)phFrom.focus({preventScroll:true})}
+$('pvX').addEventListener('click',closePhoto);
+pv.addEventListener('click',e=>{if(!e.target.closest('.pv-card'))closePhoto()});
 addEventListener('pointerdown',e=>{if(openIB&&!e.target.closest('.ib'))hidePop()});
-addEventListener('keydown',e=>{if(e.key==='Escape')hidePop()});
+addEventListener('keydown',e=>{if(e.key==='Escape'){hidePop();closePhoto()}});
 
 /* helpers */
 const story=$('story');
@@ -763,7 +825,7 @@ function step(d){const {p}=geo(),last=S.length-1;
   let k=nearest(p);if(d<0&&p>S[last].stop+.002)k=last+1;  /* coming back from below: land on the last scene */
   const to=k+d;if(to<0||to>last)return false;goTo(to);return true}
 function syncKeys(){const {p}=geo(),k=nearest(p);keyUp.disabled=k===0&&p<=S[0].stop+.002}
-addEventListener('wheel',e=>{if(e.ctrlKey||!inRange())return;
+addEventListener('wheel',e=>{if(phOpen){e.preventDefault();return}if(e.ctrlKey||!inRange())return;
   const {p}=geo(),past=p>S[S.length-1].stop+.002;
   const now0=performance.now();
   if((past||atEnd())&&e.deltaY>0){                      /* last scene: a fresh scroll leaves the story, leftover inertia is swallowed */
@@ -773,13 +835,14 @@ addEventListener('wheel',e=>{if(e.ctrlKey||!inRange())return;
   const now=performance.now(),quiet=now-lastInput>180;lastInput=now;
   if(busy||!quiet||e.deltaY===0)return;
   step(e.deltaY>0?1:-1)},{passive:false});
-addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.target.closest&&e.target.closest('button,.ib,a')&&(e.key===' '||e.key==='Enter'))return;
+addEventListener('keydown',e=>{if(phOpen){if(e.key==='Tab'){e.preventDefault();$('pvX').focus()}else if(!e.target.closest('button'))e.preventDefault();return}
+  if(e.altKey||e.ctrlKey||e.metaKey||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.target.closest&&e.target.closest('button,.ib,a')&&(e.key===' '||e.key==='Enter'))return;
   const dn=['ArrowDown','PageDown'].includes(e.key)||(e.key===' '&&!e.shiftKey),up=['ArrowUp','PageUp'].includes(e.key)||(e.key===' '&&e.shiftKey);
   if(!(dn||up)||!inRange())return;
   const {p}=geo();if(dn&&p>S[S.length-1].stop+.002)return;if(up&&p<=.0005)return;
   e.preventDefault();if(busy)return;if(dn&&atEnd())release();else step(dn?1:-1)});
 addEventListener('touchstart',e=>{touchY=e.touches.length===1?e.touches[0].clientY:null},{passive:true});
-addEventListener('touchmove',e=>{if(touchY===null||!inRange())return;const {p}=geo(),dy=touchY-e.touches[0].clientY;
+addEventListener('touchmove',e=>{if(phOpen){if(!e.target.closest('.pv-card'))e.preventDefault();return}if(touchY===null||!inRange())return;const {p}=geo(),dy=touchY-e.touches[0].clientY;
   if(p>S[S.length-1].stop+.002&&dy>0)return;if(p<=.0005&&dy<0)return;
   e.preventDefault();if(busy||Math.abs(dy)<36)return;touchY=null;if(dy>0&&atEnd())release();else step(dy>0?1:-1)},{passive:false});
 /* fallback for scrollbar drags: settle on the nearest scene after a pause */
