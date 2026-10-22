@@ -573,33 +573,39 @@ const figure=(function(){
     if(hs==='pig')s+=`<circle cx="-21" cy="3" r="6.5" fill="${hr}"/><circle cx="21" cy="3" r="6.5" fill="${hr}"/><circle cx="-16.5" cy="1" r="2.4" fill="#3a7bd5"${N}/><circle cx="16.5" cy="1" r="2.4" fill="#3a7bd5"${N}/>`;
     if(hs==='pony')s+=`<path d="M-15,-10 Q-30,-6 -24,10 Q-20,0 -12,-4Z" fill="${hr}"/>`;
     s+=`<circle cx="-16" cy="1" r="4.3" fill="${shade(sk,.92)}"/><circle cx="16" cy="1" r="4.3" fill="${shade(sk,.92)}"/><circle r="17" fill="${sk}"/>`;
-    if(o.beard==='full')s+=`<path d="M-16,2 Q-17,21 0,23 Q17,21 16,2 Q12,11 0,11 Q-12,11 -16,2Z" fill="${hr}"/>`;
-    if(o.beard==='stub')s+=`<path d="M-16,2 Q-17,19 0,21 Q17,19 16,2 Q12,11 0,11 Q-12,11 -16,2Z" fill="${hr}" opacity=".3"${N}/>`;
+    const bh=o.beardc||hr;
+    if(o.beard==='full')s+=`<path d="M-16,2 Q-17,21 0,23 Q17,21 16,2 Q12,11 0,11 Q-12,11 -16,2Z" fill="${bh}"/>`;
+    if(o.beard==='stub')s+=`<path d="M-16,2 Q-17,19 0,21 Q17,19 16,2 Q12,11 0,11 Q-12,11 -16,2Z" fill="${bh}" opacity=".${o.beardc?45:3}"${N}/>`;
     if('short long pig pony messy'.includes(hs))s+=`<path d="M-17,0 Q-19,-19 0,-19 Q19,-19 17,0 Q15,-10 5,-12 Q-1,-8 -7,-12 Q-15,-10 -17,0Z" fill="${hr}"/>`;
     if(hs==='messy')s+=`<g fill="${hr}"><path d="M-8,-17 l-6,-9 l9,4Z"/><path d="M1,-18 l1,-12 l5,10Z"/><path d="M9,-16 l9,-6 l-4,10Z"/></g>`;
     if(hs==='curly')s+=`<g fill="${hr}"><circle cx="-16" cy="-1" r="3.4"/><circle cx="16" cy="-3" r="3.4"/><circle cx="-14" cy="-8" r="4.8"/><circle cx="13" cy="-11" r="4.8"/><circle cx="-9" cy="-15" r="5.4"/><circle cx="6" cy="-17" r="5.4"/><circle cx="-1" cy="-18" r="5.6"/></g>`;
     if(hs==='spiky')s+=`<path d="M-17,-1 L-16,-13 L-10,-11 L-8,-22 L-2,-15 L3,-24 L6,-15 L13,-20 L12,-11 L17,-5 L17,-1 Q10,-10 0,-10 Q-10,-10 -17,-1Z" fill="${hr}"/>`;
     if(hs==='bald')s+=`<ellipse cx="-5" cy="-11" rx="6" ry="3" fill="#fff" opacity=".35"${N}/><path d="M-17,-5 q-4,4 -1,11 q2,-6 3,-9Z M17,-5 q4,4 1,11 q-2,-6 -3,-9Z" fill="${hr}"/>`;
     if(hs==='cap')s+=`<path d="M-17,-2 Q-18,-22 0,-22 Q18,-22 17,-2Z" fill="${cap}"/><ellipse cx="0" cy="-3" rx="19" ry="4.2" fill="${shade(cap,.75)}"/>`;
+    if(hs==='capback')s+=`<g fill="${hr}"><path d="M-17,-4 q-2,7 1,10 l3,-9Z"/><path d="M17,-4 q2,7 -1,10 l-3,-9Z"/></g><g transform="translate(0,-4.5)"><path d="M-17.5,-2 Q-18.5,-23 0,-23 Q18.5,-23 17.5,-2 Q0,-7 -17.5,-2Z" fill="${cap}"/><path d="M-8,-5.5 Q0,-15 8,-5.5Z" fill="${hr}"/>${rect(-10,-8.5,20,4.4,'#c9ccd2',2.2)}<g fill="#8e929a">${[-6,-2,2,6].map(x=>`<circle cx="${x}" cy="-6.3" r=".9"/>`).join('')}</g></g>`;
     if(hs==='beanie')s+=`<path d="M-17,-3 Q-18,-23 0,-23 Q18,-23 17,-3Z" fill="${cap}"/>${rect(-18.5,-8,37,7,shade(cap,.78),3.5)}<circle cy="-24" r="4.5" fill="#fff"/>`;
     if(E==='dot')s+=`<g class="blink" style="animation-delay:${(-o.blink).toFixed(2)}s"><ellipse cx="-6" cy="-2" rx="2.1" ry="2.8" fill="#1f1830"${N}/><ellipse cx="6" cy="-2" rx="2.1" ry="2.8" fill="#1f1830"${N}/></g>`;
     if(E==='wide')s+=`<circle cx="-6" cy="-2" r="4" fill="#fff"/><circle cx="6" cy="-2" r="4" fill="#fff"/><circle cx="-5" cy="-2" r="1.8" fill="#1f1830"${N}/><circle cx="7" cy="-2" r="1.8" fill="#1f1830"${N}/>`;
     if(E==='happy')s+=`<path d="M-9,-1 q3,-3.4 6,0 M3,-1 q3,-3.4 6,0" fill="none" stroke="#1f1830" stroke-width="1.9" stroke-linecap="round"/>`;
     s+=`<path d="M-9,-8.5 l5,-1 M4,-9.5 l5,1" stroke="${hr}" stroke-width="1.9" stroke-linecap="round"/>`;
     s+=`<ellipse cx="0" cy="4" rx="3.2" ry="2.6" fill="${shade(sk,.87)}"/><circle cx="-9.5" cy="5.5" r="2.8" fill="#ff7a7a" opacity=".38"${N}/><circle cx="9.5" cy="5.5" r="2.8" fill="#ff7a7a" opacity=".38"${N}/>`;
-    if(o.beard==='mous')s+=`<path d="M-9,8.5 Q-3,4.5 0,8 Q3,4.5 9,8.5 Q4,12 0,10 Q-4,12 -9,8.5Z" fill="${hr}"/>`;
-    const my=o.beard==='mous'?13:10,mf='#6a1f1f';
+    if(o.beard==='mous'||o.mous)s+=`<path d="M-9,8.5 Q-3,4.5 0,8 Q3,4.5 9,8.5 Q4,12 0,10 Q-4,12 -9,8.5Z" fill="${o.beardc||hr}"/>`;
+    const my=(o.beard==='mous'||o.mous)?13:10,mf='#6a1f1f';
     if(M==='smile')s+=`<path d="M-4.5,${my} Q0,${my+5.5} 4.5,${my}Z" fill="${mf}"/>`;
     if(M==='grin')s+=`<path d="M-6.5,${my-1} Q0,${my+8} 6.5,${my-1}Z" fill="${mf}"/><rect x="-4.5" y="${my-1}" width="9" height="2.4" fill="#fff"${N}/>`;
     if(M==='sing')s+=`<ellipse class="sing" cx="0" cy="${my+1}" rx="3.2" ry="4.2" fill="${mf}"/>`;
     if(M==='o')s+=`<circle cx="0" cy="${my+1}" r="2.6" fill="${mf}"/>`;
-    if(o.glasses)s+=`<g fill="#fff" fill-opacity=".25" stroke="#2a1f3d" stroke-width="1.6"><circle cx="-6" cy="-2" r="5.2"/><circle cx="6" cy="-2" r="5.2"/></g><path d="M-1,-2.5 h2" stroke="#2a1f3d" stroke-width="1.6"/>`;
+    if(o.glasses==='round')s+=`<g fill="none" stroke="#6a5236" stroke-width="1.3"><circle cx="-6.5" cy="-2" r="5.8"/><circle cx="6.5" cy="-2" r="5.8"/><path d="M-.7,-3 q.7,-1.2 1.4,0 M-12.3,-2.5 L-16,-3.5 M12.3,-2.5 L16,-3.5"/></g>`;
+    else if(o.glasses)s+=`<g fill="#fff" fill-opacity=".25" stroke="#2a1f3d" stroke-width="1.6"><circle cx="-6" cy="-2" r="5.2"/><circle cx="6" cy="-2" r="5.2"/></g><path d="M-1,-2.5 h2" stroke="#2a1f3d" stroke-width="1.6"/>`;
+    if(o.hat==='straw'){s+=`<path d="M-15,-9 Q-15,10 -4,18 M15,-9 Q15,10 4,18" fill="none" stroke="#2a2420" stroke-width="1"/>`;
+      s+=`<ellipse cx="0" cy="-12" rx="31" ry="6.5" fill="#d8b06a" stroke="#2a2420" stroke-width="1.3"/><path d="M-14,-12 Q-15,-31 0,-31 Q15,-31 14,-12Z" fill="#cfa45c"/><path d="M-14,-15 Q0,-18 14,-15 L14,-12 Q0,-15 -14,-12Z" fill="#b8894a"/><g stroke="#b8894a" stroke-width=".8" fill="none" opacity=".7"><path d="M-10,-20 Q0,-23 10,-20 M-11,-25 Q0,-28 11,-25 M-24,-12 Q-12,-8 0,-8 Q12,-8 24,-12"/></g>`}
     return s}
 
   /* Figur: o.seat = sitzend (Ursprung Sitzfläche), sonst stehend (o.run = Lauf-, o.walk = Gehbeine) */
   return function(o){
     const kid=!!o.kid,sk=o.skin,sh=o.shirt,pa=o.pants||(kid?'#2f8f7a':'#3a3358'),sc=kid?SCK:SCA;
     const D=kid?{tw:28,th:32,tr:12,hr:15.5,nk:2,aw:7,al:24,ll:26,lw:8}:{tw:48,th:56,tr:20,hr:17,nk:6,aw:11,al:40,ll:46,lw:12};
+    if(o.stout&&!kid)D.tw=55;
     const tw=D.tw,th=D.th,k=D.hr/17,hy=-(th+D.nk+D.hr*.92),ry=D.lw*.42,shoe=o.shoes||(kid?'#ef3a62':'#5a3a22');
     let legs='';
     if(!o.seat){
@@ -618,6 +624,9 @@ const figure=(function(){
     let body=rect(-tw/2,-th,tw,th,sh,D.tr)+rect(-tw/2,-th,tw*.33,th,'#fff',D.tr*.5,' opacity=".15"');
     if(o.deco==='stripes')body+=rect(-tw/2+2,-th*.6,tw-4,th*.09,shade(sh,1.45),0,N)+rect(-tw/2+2,-th*.42,tw-4,th*.09,shade(sh,1.45),0,N);
     if(o.deco==='star')body+=`<path transform="translate(0,${f1(-th*.55)}) scale(${f1(th/32)})" d="M0,-5 l1.6,3.4 3.7,.4 -2.8,2.5 .8,3.7 -3.3,-1.9 -3.3,1.9 .8,-3.7 -2.8,-2.5 3.7,-.4Z" fill="#fff"${N}/>`;
+    if(o.cord)body+=`<path d="M-2,${f1(-th)} L1,${f1(-th*.5)} M2,${f1(-th)} L1,${f1(-th*.5)}" stroke="#2a2420" stroke-width="1.1" fill="none"/><circle cx="1" cy="${f1(-th*.6)}" r="1.6" fill="#2a2420"/>`;
+    if(o.deco==='logo')body+=rect(tw*.12,-th*.78,tw*.2,th*.05,'#e0245e',1)+rect(tw*.14,-th*.71,tw*.16,th*.12,'#7aa8e0',3);
+    if(o.lanyard)body+=`<path d="M${f1(-6*k)},${f1(-th+1)} L${f1(-1.5)},${f1(-th*.42)} L${f1(1.5)},${f1(-th*.42)} L${f1(6*k)},${f1(-th+1)}" stroke="#1c1c1c" stroke-width="1.4" fill="none"/>`;
     const neck=rect(-4.5*k,-th-D.nk-3,9*k,D.nk+6,shade(sk,.88),2);
     /* Arme */
     const sL=[-tw/2+D.aw/2-.5,-th+D.aw/2+2],sR=[-sL[0],sL[1]],al=D.al,aw=D.aw,hr=aw*.56;
@@ -627,6 +636,8 @@ const figure=(function(){
     if(A==='down')armsS=both(down(-1),down(1));
     if(A==='up'){const l=[sL,[-tw/2-8,-th-al*.35],[-tw/2-4,-th-al*.85]],r=l.map(p=>[-p[0],p[1]]);r[0]=sR;armsS=both(l,r)}
     if(A==='wave'){const r=[sR,[tw/2+9,-th-al*.3],[tw/2+6,-th-al*.82]];armsS=both(down(-1),r)}
+    if(A==='clip'){const l=[sL,[-tw/2-6,-th*.32],[-tw*.22,-th*.55]],r=[sR,[tw/2+11,-th*.72],[tw/2+13,-th-al*.45]];
+      armsS=arm(l,o,aw,sk)+rect(-tw*.5,-th*.85,tw*.42,th*.55,'#8e5a2c',2)+rect(-tw*.46,-th*.8,tw*.34,th*.45,'#fff',1)+`<path d="M${f1(-tw*.42)},${f1(-th*.68)} h${f1(tw*.24)} M${f1(-tw*.42)},${f1(-th*.58)} h${f1(tw*.2)} M${f1(-tw*.42)},${f1(-th*.48)} h${f1(tw*.24)}" stroke="#b8b0c8" stroke-width="1.6"/>`+hand(l[2],hr,sk)+arm(r,o,aw,sk)+hand(r[2],hr,sk)}
     if(A==='guitar'){
       const g=[tw*.1,-th*.3],n=[-tw*1.0,-th*.98],gc=o.gc||'#e0913a',rot=`rotate(-32 ${f1(g[0])} ${f1(g[1])})`;
       const gu=`<line x1="${f1(g[0])}" y1="${f1(g[1])}" x2="${f1(n[0])}" y2="${f1(n[1])}" stroke="#5b3a1e" stroke-width="${f1(6*k)}" stroke-linecap="round"/>`+
@@ -655,6 +666,7 @@ function look(o,c,skin,hair){
   v.deco=o.deco!==undefined?o.deco:(r()<.22?ch(['stripes','star']):'');
   v.pants=o.pants||(kid?ch(['#2f6fb0','#2f8f7a','#7a4fa0','#3a3358']):'#3a3358');
   v.arms=o.arms||(o.seat||o.run||o.walk?'down':ch(['down','down','down','wave','up']));
+  v.mous=o.mous;v.beardc=o.beardc;v.lanyard=o.lanyard;v.hat=o.hat;v.cord=o.cord;v.stout=o.stout;
   return v}
 /* figures are drawn BIG times the old size (the camp-fire round uses o.big 1.5); seated ones keep their seat height and grow around it */
 const BIG=2,grow=(x,y,h)=>`<g transform="translate(${x},${y}) scale(${BIG}) translate(${-x},${-y})">${h}</g>`; /* props made for the old size: scale them around the figure's feet */
@@ -783,16 +795,21 @@ const RUNS=[
 const runHTML=L=>RUNS.map((r,i)=>{if(r.L!==L)return '';const k=(r.kid?.64:1)*(r.s||1)*BIG;
   return `<g id="run${i}"><ellipse cx="0" cy="1" rx="${(15*k).toFixed(1)}" ry="${(4*k).toFixed(1)}" fill="#1a1030" opacity=".18"/><g class="in">${P(0,0,{kid:r.kid,c:r.c,s:r.s,nosh:1,run:1})}</g>`+
    (r.roll?`<g class="rl"><circle r="11" fill="#e6b36a"/><path d="M-4,-2 Q0,-6 4,-2" stroke="#c8913e" stroke-width="2" fill="none" stroke-linecap="round"/></g>`:'')+`</g>`}).join('');
+/* Lagerleiter Kalle und Hadl (docs/teamer-figuren.md) */
+const KALLE={c:'#7a1f35',arms:'clip',hs:'capback',capc:'#1c1c22',hair:'#8a6a48',beard:'stub',mous:1,beardc:'#b8794a',glasses:'round',skin:'#f3c6a6',lanyard:1,sleeve:'short',m:'grin',eyes:'dot',deco:''};
+const HADL={c:'#f4f3ef',arms:'wave',hs:'short',hair:'#6b5a4a',hat:'straw',cord:1,beard:'stub',beardc:'#8a8580',skin:'#f0bfa0',deco:'logo',stout:1,pants:'#2e3346',sleeve:'short',m:'grin',eyes:'happy',glasses:false,f:1};
 /* Gruppenkreis: Ring aus Papas und Kindern, die beiden Lagerleiter stehen in der Mitte */
-(function(){const C=[800,774],RX=430,RY=84,N=16,items=[];
+(function(){const s0=seed,n0=figN,C=[800,774],RX=430,RY=84,N=16,items=[];
   for(let i=0;i<N;i++){const t=(i+.5)/N*Math.PI*2,sn=Math.sin(t),k=.84+.16*(sn+1)/2,x=C[0]+RX*Math.cos(t),y=C[1]+RY*sn;
-    items.push({y,h:PA(x,y,{kid:i%3==1,s:k,arms:i%4==1?'wave':'down'},i%2?'hop':'sway',(i*.37)%1,i%2?(.8+(i%3)*.17).toFixed(2):(2.2+(i%3)*.5).toFixed(2))})}
-  items.push({y:C[1]+2,h:PA(745,C[1]+2,{c:'#ffc93a',s:1.2,arms:'wave',hs:'short',beard:'full',glasses:false},'sway',0,1.7)});
-  items.push({y:C[1]+10,h:PA(855,C[1]+8,{c:'#20a68a',s:1.2,arms:'up',hs:'short',beard:'',glasses:false},'sway',.6,1.5)});
+    const h=PA(x,y,{kid:i%3==1,s:k,arms:i%4==1?'wave':'down'},i%2?'hop':'sway',(i*.37)%1,i%2?(.8+(i%3)*.17).toFixed(2):(2.2+(i%3)*.5).toFixed(2));
+    if(Math.abs(t-Math.PI/2)>=.45)items.push({y,h})}   /* vorne offen, damit Kalle und Hadl frei stehen */
+  items.push({y:C[1]+2,h:PA(745,C[1]+2,{...KALLE,s:1.2},'sway',0,1.7)});
+  items.push({y:C[1]+10,h:PA(855,C[1]+8,{...HADL,s:1.2},'sway',.6,1.5)});
   items.sort((a,b)=>a.y-b.y);
   vig('gruppe',.09,.128,`<ellipse cx="${C[0]}" cy="${C[1]+4}" rx="${RX+34}" ry="${RY+22}" fill="#fff" opacity=".1"/>`+items.map(o=>o.h).join('')+
-   `<g transform="translate(790,575)"><rect x="-8" y="-46" width="270" height="44" rx="14" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
-   <text x="127" y="-17" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="24" fill="#0f2a4a">Guten Morgen, VKF!</text></g>`)})();
+   `<g transform="translate(745,575)"><rect x="-8" y="-46" width="270" height="44" rx="14" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
+   <text x="127" y="-17" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="24" fill="#0f2a4a">Guten Morgen, VKF!</text></g>`);
+  seed=s0;figN=n0})();
 
 vig('fruehstueck',.13,.20, runHTML('b')+table(560,1040,700,
   mugs(595,1020,700,719)+`<path d="M770,697 h60 l-8,-16 h-44z" fill="#c8913e"/><circle cx="785" cy="680" r="7" fill="#e6b36a"/><circle cx="800" cy="677" r="7" fill="#e6b36a"/><circle cx="815" cy="680" r="7" fill="#e6b36a"/>
@@ -801,11 +818,13 @@ vig('fruehstueck',.13,.20, runHTML('b')+table(560,1040,700,
    <text id="huch" x="0" y="0" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="34" fill="#fff" stroke="#0f2a4a" stroke-width="6" paint-order="stroke" stroke-linejoin="round" opacity="0">Huch!</text>`);
 
 (function(){const C=[800,770],items=[];
-  for(let i=0;i<16;i++){const t=i/16*Math.PI*2+.2;items.push({y:C[1]+66*Math.sin(t),h:PA(C[0]+215*Math.cos(t),C[1]+66*Math.sin(t),{kid:i%2==0},i%2==0?'hop':'sway',(i*.37)%1,i%2==0?(.78+(i%3)*.17).toFixed(2):(2.2+(i%3)*.5).toFixed(2))})}
-  items.push({y:C[1],h:PA(800,770,{c:'#d9124a'},'sway',0,1.6)});
+  for(let i=0;i<16;i++){const t=i/16*Math.PI*2+.2,h=PA(C[0]+215*Math.cos(t),C[1]+66*Math.sin(t),{kid:i%2==0},i%2==0?'hop':'sway',(i*.37)%1,i%2==0?(.78+(i%3)*.17).toFixed(2):(2.2+(i%3)*.5).toFixed(2));
+    if(Math.abs(t-Math.PI/2)>=.45)items.push({y:C[1]+66*Math.sin(t),h})}   /* vorne offen, damit Kalle und Hadl frei stehen */
+  PA(800,770,{c:'#d9124a'},'sway',0,1.6);   /* verbraucht Zufallswerte und Figurennummer wie die frühere Figur, damit alle späteren Figuren gleich bleiben */
+  const n1=figN;items.push({y:C[1],h:PA(765,770,KALLE,'sway',0,1.6)+PA(840,771,HADL,'sway',.5,1.4)});figN=n1;
   items.sort((a,b)=>a.y-b.y);
   vig('kreis',.20,.29, items.map(o=>o.h).join('')+
-   `<g transform="translate(812,566)"><rect id="bubR" x="-8" y="-46" width="330" height="44" rx="14" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
+   `<g transform="translate(772,566)"><rect id="bubR" x="-8" y="-46" width="330" height="44" rx="14" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
    <text id="bubT" x="157" y="-17" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="24" fill="#0f2a4a">Heute: Fußball &amp; Freibad!</text></g>`)})();
 
 vig('spiele',.29,.40,
