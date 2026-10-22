@@ -1,0 +1,639 @@
+<title>VKF Lagertag in Stil A</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Lexend:wght@400;600&display=swap">
+<style>
+/* Layout: der ganze Lagertag als zehn Szenen in Stil A, untereinander mit Uhrzeit-Leiste. */
+:root{
+  --ink:#2a1f3d; --muted:#5e5470; --ember:#e0245e; --flame:#ff9a2e;
+  --card:#ffffff; --line:rgba(42,31,61,.12); --tile:#f6f1fb; --bg:#fff8f1; --chip:#ffe7d4;
+  --f-display:"Baloo 2","Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Lexend","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ink:#f6efe6;--muted:#c4b9d4;--ember:#ff5a86;--card:#1d1838;--line:rgba(255,255,255,.12);--tile:rgba(255,255,255,.06);--bg:#14102b;--chip:#2b1a2c;color-scheme:dark}}
+:root[data-theme="dark"]{--ink:#f6efe6;--muted:#c4b9d4;--ember:#ff5a86;--card:#1d1838;--line:rgba(255,255,255,.12);--tile:rgba(255,255,255,.06);--bg:#14102b;--chip:#2b1a2c;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:56px}
+h1,h2,h3{font-family:var(--f-display);font-weight:800;line-height:1.05;margin:0;text-wrap:balance}
+h1{font-size:clamp(40px,7vw,64px)} h2{font-size:clamp(28px,4vw,38px)} h3{font-size:22px}
+p{margin:0}
+.eyebrow{display:inline-block;font-family:var(--f-display);font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--ember);margin-bottom:8px}
+.lede{max-width:64ch;color:var(--muted);margin-top:14px;font-size:19px}
+section{display:grid;gap:20px}
+figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+figure svg{display:block;width:100%;height:auto;aspect-ratio:16/9;max-width:100%}
+figcaption{padding:14px 20px 18px;display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+figcaption span{color:var(--muted);font-size:15.5px;min-width:0;flex:1 1 300px}
+.tag{flex:none;display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--ember);color:#fff;font-family:var(--f-display);font-weight:800;font-size:19px;align-self:center}
+.ask{background:var(--chip);border-radius:22px;padding:24px;display:grid;gap:10px}
+.ask p{max-width:70ch}
+
+/* Animationen */
+.blink{transform-box:fill-box;transform-origin:center;animation:blink 4.2s infinite}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3.2s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-2.2deg)}to{transform:rotate(2.2deg)}}
+.strum{transform-box:fill-box;transform-origin:100% 0;animation:strum .34s ease-in-out infinite alternate}
+@keyframes strum{from{transform:rotate(-7deg)}to{transform:rotate(5deg)}}
+.hop{animation:hop .45s ease-in-out infinite alternate}
+@keyframes hop{from{transform:translateY(0)}to{transform:translateY(-9px)}}
+.bob{animation:bob .9s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+.sing{transform-box:fill-box;transform-origin:50% 0;animation:sing .6s ease-in-out infinite alternate}
+@keyframes sing{from{transform:scaleY(1)}to{transform:scaleY(.45)}}
+.note{animation:note 3.2s ease-out infinite}
+@keyframes note{0%{transform:translate(0,0);opacity:0}15%{opacity:1}100%{transform:translate(var(--dx,10px),-60px);opacity:0}}
+.spark{animation:spark 2.4s ease-out infinite}
+@keyframes spark{0%{transform:translate(0,0);opacity:1}100%{transform:translate(var(--dx,0),-110px);opacity:0}}
+.zzz{animation:zzz 3s ease-out infinite}
+@keyframes zzz{0%{transform:translate(0,0) scale(.6);opacity:0}20%{opacity:1}100%{transform:translate(18px,-34px) scale(1.1);opacity:0}}
+.steam{animation:steam 2.4s ease-out infinite}
+@keyframes steam{0%{transform:translateY(0);opacity:.8}100%{transform:translateY(-16px);opacity:0}}
+.smoke{animation:smoke 2.4s ease-out infinite}
+@keyframes smoke{0%{transform:translate(0,0);opacity:.75}100%{transform:translate(8px,-26px);opacity:0}}
+.flk{transform-box:fill-box;transform-origin:50% 100%;animation:flk .9s ease-in-out infinite alternate}
+.flk2{transform-box:fill-box;transform-origin:50% 100%;animation:flk .5s ease-in-out infinite alternate}
+@keyframes flk{0%{transform:scale(1,1)}50%{transform:scale(.94,1.06)}100%{transform:scale(1.04,.95)}}
+.beam{animation:beam 2.6s ease-in-out infinite}
+@keyframes beam{0%,100%{opacity:.34}50%{opacity:.22}}
+.runner{animation:run 10s linear infinite}
+@keyframes run{from{transform:translateX(-160px)}to{transform:translateX(840px)}}
+.legA,.legB{transform-box:fill-box;transform-origin:50% 0;animation:leg .32s ease-in-out infinite alternate}
+.legB{animation-direction:alternate-reverse}
+@keyframes leg{from{transform:rotate(-24deg)}to{transform:rotate(24deg)}}
+.walk{animation:walk 1s ease-in-out infinite alternate}
+@keyframes walk{from{transform:translate(0,0)}to{transform:translate(-14px,-2px)}}
+.wasp{transform-box:view-box;animation:wasp 2.2s linear infinite}
+@keyframes wasp{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.rays{transform-box:view-box;animation:wasp 40s linear infinite}
+.huch{animation:huch 1.6s ease-in-out infinite alternate}
+@keyframes huch{from{transform:translateY(0) rotate(-4deg)}to{transform:translateY(-4px) rotate(3deg)}}
+.walkA,.walkB{transform-box:fill-box;transform-origin:50% 0;animation:leg .5s ease-in-out infinite alternate}
+.walkB{animation-direction:alternate-reverse}
+@keyframes leg2{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
+.walkA,.walkB{animation-name:leg2}
+.drip{animation:drip 1.4s ease-in infinite}
+@keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(10px);opacity:0}}
+.clap{animation:clap .35s ease-in-out infinite alternate}
+@keyframes clap{from{transform:translateY(0)}to{transform:translateY(-2px)}}
+.gest{transform-box:fill-box;transform-origin:0 100%;animation:gest 1.2s ease-in-out infinite alternate}
+@keyframes gest{from{transform:rotate(-6deg)}to{transform:rotate(8deg)}}
+.bird{animation:bird 6s ease-in-out infinite alternate}
+@keyframes bird{from{transform:translate(0,0)}to{transform:translate(60px,-14px)}}
+.bfly{animation:bfly 4s ease-in-out infinite alternate}
+@keyframes bfly{0%{transform:translate(0,0)}50%{transform:translate(30px,-20px)}100%{transform:translate(-20px,-6px)}}
+.ffly{animation:ffly 2.6s ease-in-out infinite alternate}
+@keyframes ffly{from{opacity:.15;transform:translate(0,0)}to{opacity:1;transform:translate(6px,-8px)}}
+.shoot{animation:shoot 5s ease-in infinite}
+@keyframes shoot{0%,80%{transform:translate(0,0);opacity:0}84%{opacity:1}100%{transform:translate(160px,60px);opacity:0}}
+.flag{transform-box:fill-box;transform-origin:0 50%;animation:flag 1.4s ease-in-out infinite alternate}
+@keyframes flag{from{transform:skewY(-3deg)}to{transform:skewY(4deg)}}
+.ball{animation:ball 1.6s ease-in-out infinite alternate}
+@keyframes ball{from{transform:translate(0,0)}to{transform:translate(-14px,-6px)}}
+.clock{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.clock a{text-decoration:none;font:600 14.5px var(--f-body);color:var(--ink);background:var(--chip);border:1px solid var(--line);padding:6px 12px;border-radius:999px}
+figcaption p{color:var(--muted);font-size:16px;flex:1 1 320px;min-width:0}
+.num{flex:none;font-family:var(--f-display);font-weight:800;font-size:15px;color:var(--ember);letter-spacing:.04em;text-transform:uppercase;align-self:center}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="nightG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#120e2a"/><stop offset=".7" stop-color="#2e2160"/><stop offset="1" stop-color="#4a2a6a"/></linearGradient>
+  <linearGradient id="dayG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7cc6f2"/><stop offset=".75" stop-color="#cfe9f7"/><stop offset="1" stop-color="#ffe7c4"/></linearGradient>
+  <radialGradient id="glowN"><stop offset="0" stop-color="#ffb347" stop-opacity=".55"/><stop offset=".6" stop-color="#ff8a3a" stop-opacity=".18"/><stop offset="1" stop-color="#ff8a3a" stop-opacity="0"/></radialGradient>
+  <radialGradient id="lamp"><stop offset="0" stop-color="#ffd27a" stop-opacity=".7"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient>
+  <linearGradient id="flO" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff5a1f"/><stop offset="1" stop-color="#ffb02e"/></linearGradient>
+  <linearGradient id="flI" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffd23a"/><stop offset="1" stop-color="#fff3b0"/></linearGradient>
+  <pattern id="check" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#fff"/><rect width="8" height="8" fill="#e8455f"/><rect x="8" y="8" width="8" height="8" fill="#e8455f"/><rect x="8" width="8" height="8" fill="#f4a0ad"/><rect y="8" width="8" height="8" fill="#f4a0ad"/></pattern>
+  <g id="flames">
+    <path d="M0,0 C-34,0 -48,-24 -44,-52 C-40,-80 -16,-96 -5,-136 C11,-110 20,-92 27,-71 C32,-82 34,-91 34,-100 C48,-80 50,-52 46,-34 C41,-11 27,0 0,0Z" fill="url(#flO)"/>
+    <path d="M0,0 C-18,0 -25,-14 -23,-30 C-21,-46 -9,-52 -2,-73 C7,-59 14,-50 16,-39 C18,-46 20,-50 20,-55 C30,-41 30,-25 25,-16 C20,-5 11,0 0,0Z" fill="url(#flI)"/>
+  </g>
+</defs></svg>
+
+<main class="wrap">
+  <header>
+    <span class="eyebrow">VKF Wiesloch · Figuren-Stil A</span>
+    <h1>Lagertag in Stil A</h1>
+    <p class="lede">Alle zehn Szenen der Scroll-Story in Stil A, mit den Texten von der Website. Die Figuren kommen aus dem Baukasten, die Szenen sind leicht animiert. Auf der Seite würden sie später beim Scrollen ineinander übergehen.</p>
+    <nav class="clock" aria-label="Szenen"><a href="#start">Start</a><a href="#sonnenaufgang">Sonnenaufgang</a><a href="#fruehstueck">Frühstück</a><a href="#morgenkreis">Morgenkreis</a><a href="#spiele">Spiele</a><a href="#mittag">Mittagessen</a><a href="#tour">Freibad oder Tour</a><a href="#abendessen">Abendessen</a><a href="#lagerrunde">Lagerrunde</a><a href="#nacht">Gute Nacht</a></nav>
+  </header>
+  <figure id="start"><svg data-s="0" viewBox="0 0 800 450" role="img" aria-label="Ein Tag in der VKF: Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel. Die Kinder reisen mit zwei Reisebussen an."></svg>
+    <figcaption><span class="num">01 · Start</span><h3>Ein Tag in der VKF</h3><p>Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel. Die Kinder reisen mit zwei Reisebussen an.</p></figcaption></figure>
+  <figure id="sonnenaufgang"><svg data-s="1" viewBox="0 0 800 450" role="img" aria-label="Die Sonne geht auf: Über den Bergen wird es hell. Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee."></svg>
+    <figcaption><span class="num">02 · Sonnenaufgang</span><h3>Die Sonne geht auf</h3><p>Über den Bergen wird es hell. Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.</p></figcaption></figure>
+  <figure id="fruehstueck"><svg data-s="2" viewBox="0 0 800 450" role="img" aria-label="Frühstück: Papas und Kinder sitzen zusammen an den Bierbänken. Kakao, Brötchen und die ersten Pläne für den Tag."></svg>
+    <figcaption><span class="num">03 · Frühstück</span><h3>Frühstück</h3><p>Papas und Kinder sitzen zusammen an den Bierbänken. Kakao, Brötchen und die ersten Pläne für den Tag.</p></figcaption></figure>
+  <figure id="morgenkreis"><svg data-s="3" viewBox="0 0 800 450" role="img" aria-label="Morgenkreis: Alle kommen im großen Kreis zusammen. Die Lagerleitung erzählt, was heute ansteht."></svg>
+    <figcaption><span class="num">04 · Morgenkreis</span><h3>Morgenkreis</h3><p>Alle kommen im großen Kreis zusammen. Die Lagerleitung erzählt, was heute ansteht.</p></figcaption></figure>
+  <figure id="spiele"><svg data-s="4" viewBox="0 0 800 450" role="img" aria-label="Fußball, Verstecken, Verkleiden: Auf der Wiese rollt der Ball, hinter dem Baum wird gezählt, und aus der Verkleidekiste kommen Piraten und Könige."></svg>
+    <figcaption><span class="num">05 · Spiele</span><h3>Fußball, Verstecken, Verkleiden</h3><p>Auf der Wiese rollt der Ball, hinter dem Baum wird gezählt, und aus der Verkleidekiste kommen Piraten und Könige.</p></figcaption></figure>
+  <figure id="mittag"><svg data-s="5" viewBox="0 0 800 450" role="img" aria-label="Mittagessen: Das Küchenteam tischt auf. Wer Nachschlag möchte, stellt sich einfach noch einmal an."></svg>
+    <figcaption><span class="num">06 · Mittagessen</span><h3>Mittagessen</h3><p>Das Küchenteam tischt auf. Wer Nachschlag möchte, stellt sich einfach noch einmal an.</p></figcaption></figure>
+  <figure id="tour"><svg data-s="6" viewBox="0 0 800 450" role="img" aria-label="Ab ins Freibad oder auf Tour: Nachmittags ziehen alle gemeinsam los: ins Schwimmbad, in den Wald oder auf eine Wanderung."></svg>
+    <figcaption><span class="num">07 · Freibad oder Tour</span><h3>Ab ins Freibad oder auf Tour</h3><p>Nachmittags ziehen alle gemeinsam los: ins Schwimmbad, in den Wald oder auf eine Wanderung.</p></figcaption></figure>
+  <figure id="abendessen"><svg data-s="7" viewBox="0 0 800 450" role="img" aria-label="Abendessen: Die Sonne steht schon tief. Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat."></svg>
+    <figcaption><span class="num">08 · Abendessen</span><h3>Abendessen</h3><p>Die Sonne steht schon tief. Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.</p></figcaption></figure>
+  <figure id="lagerrunde"><svg data-s="8" viewBox="0 0 800 450" role="img" aria-label="Lagerrunde: Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer. Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit."></svg>
+    <figcaption><span class="num">09 · Lagerrunde</span><h3>Lagerrunde</h3><p>Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer. Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.</p></figcaption></figure>
+  <figure id="nacht"><svg data-s="9" viewBox="0 0 800 450" role="img" aria-label="Gute Nacht, VKF: Mond und Sterne stehen über den Zelten. Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet."></svg>
+    <figcaption><span class="num">10 · Gute Nacht</span><h3>Gute Nacht, VKF</h3><p>Mond und Sterne stehen über den Zelten. Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.</p></figcaption></figure>
+  <section class="ask">
+    <h2>Was meinst du?</h2>
+    <p>Passt der Stil über den ganzen Tag? Sag mir, welche Szenen schon sitzen, wo noch Gags oder Details fehlen und was zu viel ist. Danach legen wir die Stilregeln fest und bauen die Figuren in die echte Seite ein.</p>
+  </section>
+</main>
+<script>
+(function(){
+const OUT='#2a1f3d';
+let seed=11;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const f1=n=>(+n).toFixed(1);
+function shade(h,f){const n=parseInt(h.slice(1),16),c=[n>>16,n>>8&255,n&255].map(v=>Math.max(0,Math.min(255,Math.round(f<1?v*f:v+(255-v)*(f-1)))));return '#'+c.map(v=>v.toString(16).padStart(2,'0')).join('')}
+const SK={l:'#f5d4b3',m:'#f2c9a0',t:'#c98d62',d:'#9a6440',dd:'#6e4528'};
+
+/* ---------- Baukasten ---------- */
+function rect(x,y,w,h,fill,rx,extra){rx=rx==null?Math.min(w,h)/2:rx;return `<rect x="${f1(x)}" y="${f1(y)}" width="${f1(w)}" height="${f1(h)}" rx="${f1(rx)}" fill="${fill}"${extra||''}/>`}
+function limb(C,pts,color,w){const d='M'+pts.map(p=>f1(p[0])+','+f1(p[1])).join(' L');
+  return (C?`<path d="${d}" stroke="${OUT}" stroke-width="${f1(w+4.4)}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`:'')+`<path d="${d}" stroke="${color}" stroke-width="${f1(w)}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`}
+function arm(C,pts,o,w,sk){
+  if(o.sleeve!=='short')return limb(C,pts,o.shirt,w);
+  const a=pts[0],b=pts[1],m=[a[0]+(b[0]-a[0])*.42,a[1]+(b[1]-a[1])*.42];
+  return limb(C,pts,sk,w*.9)+limb(C,[a,m],o.shirt,w*1.05)}
+const hand=(C,p,r,sk)=>`<circle cx="${f1(p[0])}" cy="${f1(p[1])}" r="${f1(r)}" fill="${sk}"${C?` stroke="${OUT}" stroke-width="2"`:''}/>`;
+
+function stickItem(C,x,y,t){
+  const S=C?` stroke="${OUT}" stroke-width="1.6"`:'';
+  if(t==='marsh')return `<rect x="${f1(x-5)}" y="${f1(y-4.5)}" width="10" height="9" rx="2.5" fill="#fff5e6"${S}/>`;
+  if(t==='marshfire')return `<rect x="${f1(x-5)}" y="${f1(y-4.5)}" width="10" height="9" rx="2.5" fill="#3a2a20"${S}/><path class="flk2" d="M${f1(x)},${f1(y-4)} q-6,-6 0,-15 q2,6 4,4 q2,7 -4,11Z" fill="#ffb02e"${S}/>`;
+  if(t==='sausage')return `<rect x="${f1(x-9)}" y="${f1(y-4)}" width="18" height="8" rx="4" fill="#c0603a"${S} transform="rotate(-24 ${f1(x)} ${f1(y)})"/>`;
+  if(t==='burnt')return `<rect x="${f1(x-9)}" y="${f1(y-4)}" width="18" height="8" rx="4" fill="#2a1a14"${S} transform="rotate(-24 ${f1(x)} ${f1(y)})"/><g fill="#d8d0e2" stroke="none"><circle class="smoke" cx="${f1(x)}" cy="${f1(y-9)}" r="4"/><circle class="smoke" style="animation-delay:-.8s" cx="${f1(x-4)}" cy="${f1(y-9)}" r="3.2"/><circle class="smoke" style="animation-delay:-1.6s" cx="${f1(x+4)}" cy="${f1(y-7)}" r="2.8"/></g>`;
+  if(t==='feather')return `<path d="M${f1(x)},${f1(y)} q10,-10 22,-6 q-10,8 -22,6Z" fill="#fff"${S}/><path d="M${f1(x)},${f1(y)} l18,-5" stroke="#d8d0e2" stroke-width="1"/>`;
+  return ''}
+function mug(C,x,y,c,rot){const S=C?` stroke="${OUT}" stroke-width="1.8"`:'';
+  return `<g transform="translate(${f1(x)},${f1(y)}) rotate(${rot||0})"><path d="M5,-7 q6,0 6,5 q0,5 -6,5" fill="none" stroke="${C?OUT:shade(c,.8)}" stroke-width="2.4"/><rect x="-6" y="-10" width="12" height="13" rx="2.5" fill="${c}"${S}/></g>`}
+function roll(C,x,y,s){s=s||1;const S=C?` stroke="${OUT}" stroke-width="1.8"`:'';return `<g transform="translate(${f1(x)},${f1(y)}) scale(${s})"><ellipse rx="9" ry="6.5" fill="#e6b36a"${S}/><path d="M-4,-3 Q0,-6 4,-3" stroke="#c8913e" stroke-width="1.8" fill="none"/></g>`}
+
+function headParts(C,o){
+  const lx=o.look||0,sk=o.skin,hr=o.hair||'#4a3526',S=C?` stroke="${OUT}" stroke-width="2.2"`:'',N=' stroke="none"';
+  let s='';
+  if(o.hs==='long')s+=`<path d="M-18,-6 Q-21,18 -14,22 H14 Q21,18 18,-6Z" fill="${hr}"${S}/>`;
+  if(o.hs==='pig')s+=`<circle cx="-21" cy="3" r="6.5" fill="${hr}"${S}/><circle cx="21" cy="3" r="6.5" fill="${hr}"${S}/><circle cx="-16.5" cy="1" r="2.4" fill="#3a7bd5"${N}/><circle cx="16.5" cy="1" r="2.4" fill="#3a7bd5"${N}/>`;
+  if(o.hs==='pony')s+=`<path d="M-15,-10 Q-30,-6 -24,10 Q-20,0 -12,-4Z" fill="${hr}"${S}/>`;
+  s+=`<circle cx="-16" cy="1" r="4.3" fill="${shade(sk,.92)}"${S}/><circle cx="16" cy="1" r="4.3" fill="${shade(sk,.92)}"${S}/>`;
+  s+=C?`<ellipse rx="17" ry="18" fill="${sk}"${S}/>`:`<circle r="17" fill="${sk}"/>`;
+  if(o.back){
+    if(o.hs==='bald')s+=`<path d="M-17,-5 q-4,4 -1,11 q2,-6 3,-9Z M17,-5 q4,4 1,11 q-2,-6 -3,-9Z M-15,6 Q0,14 15,6 Q14,2 12,1 Q0,6 -12,1Z" fill="${hr}"${S}/>`;
+    else if(o.hs==='cap')s+=`<path d="M-17.5,4 Q-19,-19 0,-19.5 Q19,-19 17.5,4 Q0,12 -17.5,4Z" fill="${hr}"${S}/><path d="M-17,-2 Q-18,-22 0,-22 Q18,-22 17,-2Z" fill="${o.capc||'#20a68a'}"${S}/>`;
+    else{s+=`<path d="M-17.5,2 Q-19,-19.5 0,-19.5 Q19,-19.5 17.5,2 Q16,12 0,13 Q-16,12 -17.5,2Z" fill="${hr}"${S}/>`;
+      if(o.hs==='curly')s+=`<g fill="${hr}"><circle cx="-12" cy="-12" r="7"/><circle cx="10" cy="-13" r="7"/><circle cx="0" cy="-17" r="7"/><circle cx="-14" cy="2" r="6"/><circle cx="14" cy="2" r="6"/><circle cx="0" cy="6" r="7"/></g>`;
+      if(o.hs==='spiky'||o.hs==='messy')s+=`<path d="M-8,-17 l-6,-9 l9,4Z M1,-18 l1,-12 l5,10Z M9,-16 l9,-6 l-4,10Z" fill="${hr}"/>`;}
+    return s+hatParts(o,S)}
+  if(o.beard==='full')s+=`<path d="M-16,2 Q-17,21 0,23 Q17,21 16,2 Q12,11 0,11 Q-12,11 -16,2Z" fill="${hr}"${S}/>`;
+  if(o.beard==='stub')s+=`<path d="M-16,2 Q-17,19 0,21 Q17,19 16,2 Q12,11 0,11 Q-12,11 -16,2Z" fill="${hr}" opacity=".3"${N}/>`;
+  // Frisur oben
+  const hs=o.hs||'short';
+  if(hs==='short'||hs==='long'||hs==='pig'||hs==='pony'||hs==='messy')s+=`<path d="M-17,0 Q-19,-19 0,-19 Q19,-19 17,0 Q15,-10 5,-12 Q-1,-8 -7,-12 Q-15,-10 -17,0Z" fill="${hr}"${S}/>`;
+  if(hs==='messy')s+=`<g fill="${hr}"${S}><path d="M-8,-17 l-6,-9 l9,4Z"/><path d="M1,-18 l1,-12 l5,10Z"/><path d="M9,-16 l9,-6 l-4,10Z"/></g>`;
+  if(hs==='curly')s+=`<g fill="${hr}"${S}><circle cx="-16" cy="-1" r="3.4"/><circle cx="16" cy="-3" r="3.4"/><circle cx="-14" cy="-8" r="4.8"/><circle cx="13" cy="-11" r="4.8"/><circle cx="-9" cy="-15" r="5.4"/><circle cx="6" cy="-17" r="5.4"/><circle cx="-1" cy="-18" r="5.6"/></g>`;
+  if(hs==='spiky')s+=`<path d="M-17,-1 L-16,-13 L-10,-11 L-8,-22 L-2,-15 L3,-24 L6,-15 L13,-20 L12,-11 L17,-5 L17,-1 Q10,-10 0,-10 Q-10,-10 -17,-1Z" fill="${hr}"${S}/>`;
+  if(hs==='bald')s+=`<ellipse cx="-5" cy="-11" rx="6" ry="3" fill="#fff" opacity=".35"${N}/><path d="M-17,-5 q-4,4 -1,11 q2,-6 3,-9Z M17,-5 q4,4 1,11 q-2,-6 -3,-9Z" fill="${hr}"${S}/>`;
+  if(hs==='cap')s+=`<path d="M-17,-2 Q-18,-22 0,-22 Q18,-22 17,-2Z" fill="${o.capc||'#20a68a'}"${S}/><ellipse cx="${lx*1.4}" cy="-3" rx="19" ry="4.2" fill="${shade(o.capc||'#20a68a',.75)}"${S}/>`;
+  if(hs==='beanie')s+=`<path d="M-17,-3 Q-18,-23 0,-23 Q18,-23 17,-3Z" fill="${o.capc||'#e0245e'}"${S}/>${rect(-18.5,-8,37,7,shade(o.capc||'#e0245e',.78),3.5,S)}<circle cy="-24" r="4.5" fill="#fff"${S}/>`;
+  // Gesicht
+  const E=o.eyes||'dot';let e='';
+  if(E==='dot')e=`<g class="blink" style="animation-delay:${(-rnd()*4).toFixed(2)}s"><ellipse cx="${lx-6}" cy="-2" rx="2.1" ry="2.8" fill="#1f1830"${N}/><ellipse cx="${lx+6}" cy="-2" rx="2.1" ry="2.8" fill="#1f1830"${N}/></g>`;
+  if(E==='wide')e=`<circle cx="${lx-6}" cy="-2" r="4" fill="#fff"${C?' stroke="'+OUT+'" stroke-width="1.6"':''}/><circle cx="${lx+6}" cy="-2" r="4" fill="#fff"${C?' stroke="'+OUT+'" stroke-width="1.6"':''}/><circle cx="${lx-5}" cy="-2" r="1.8" fill="#1f1830"${N}/><circle cx="${lx+7}" cy="-2" r="1.8" fill="#1f1830"${N}/>`;
+  if(E==='sleep')e=`<path d="M${lx-9},-2 q3,2.6 6,0 M${lx+3},-2 q3,2.6 6,0" fill="none" stroke="#1f1830" stroke-width="1.8" stroke-linecap="round"/>`;
+  if(E==='happy')e=`<path d="M${lx-9},-1 q3,-3.4 6,0 M${lx+3},-1 q3,-3.4 6,0" fill="none" stroke="#1f1830" stroke-width="1.9" stroke-linecap="round"/>`;
+  if(E==='squint')e=`<path d="M${lx-9},-5 L${lx-4},-2 L${lx-9},1 M${lx+9},-5 L${lx+4},-2 L${lx+9},1" fill="none" stroke="#1f1830" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>`;
+  s+=e;
+  const bc=C?OUT:hr,bw=C?2.4:1.9;
+  if(o.brow==='worried')s+=`<path d="M${lx-10},-8 l5,-2.5 M${lx+5},-10.5 l5,2.5" stroke="${bc}" stroke-width="${bw}" stroke-linecap="round"/>`;
+  else if(o.brow==='up')s+=`<path d="M${lx-10},-10 q3,-3 6,-1 M${lx+4},-11 q3,-2 6,1" fill="none" stroke="${bc}" stroke-width="${bw}" stroke-linecap="round"/>`;
+  else if(E!=='sleep')s+=`<path d="M${lx-9},-8.5 l5,-1 M${lx+4},-9.5 l5,1" stroke="${bc}" stroke-width="${bw}" stroke-linecap="round"/>`;
+  if(C)s+=`<circle cx="${f1(lx*1.3)}" cy="4" r="${o.bignose?5.5:4.2}" fill="${o.rednose?'#ff7f6e':shade(sk,.9)}" stroke="${OUT}" stroke-width="1.8"/>`;
+  else s+=`<ellipse cx="${f1(lx*1.25)}" cy="4" rx="3.2" ry="2.6" fill="${shade(sk,.87)}"/>`;
+  s+=`<circle cx="${lx-9.5}" cy="5.5" r="2.8" fill="#ff7a7a" opacity=".38"${N}/><circle cx="${lx+9.5}" cy="5.5" r="2.8" fill="#ff7a7a" opacity=".38"${N}/>`;
+  if(o.beard==='mous')s+=`<path d="M${lx-9},8.5 Q${lx-3},4.5 ${lx},8 Q${lx+3},4.5 ${lx+9},8.5 Q${lx+4},12 ${lx},10 Q${lx-4},12 ${lx-9},8.5Z" fill="${hr}"${S}/>`;
+  const M=o.m||'smile',mf='#6a1f1f',MS=C?` stroke="${OUT}" stroke-width="1.4"`:'';
+  const my=o.beard==='mous'?13:10;
+  if(M==='choc')s+=`<ellipse cx="${lx}" cy="${my+1}" rx="9" ry="5.5" fill="#6b3a1e" opacity=".8"${N}/>`;
+  if(M==='smile')s+=`<path d="M${lx-4.5},${my} Q${lx},${my+5.5} ${lx+4.5},${my}Z" fill="${mf}"${MS}/>`;
+  if(M==='grin'||M==='choc'||M==='foam')s+=`<path d="M${lx-6.5},${my-1} Q${lx},${my+8} ${lx+6.5},${my-1}Z" fill="${mf}"${MS}/><rect x="${lx-4.5}" y="${my-1}" width="9" height="2.4" fill="#fff"${N}/>`;
+  if(M==='sing')s+=`<ellipse class="sing" cx="${lx}" cy="${my+1}" rx="3.2" ry="4.2" fill="${mf}"${MS}/>`;
+  if(M==='yawn')s+=`<ellipse cx="${lx}" cy="${my+2}" rx="4.6" ry="6.6" fill="${mf}"${MS}/><ellipse cx="${lx}" cy="${my+6}" rx="3" ry="1.8" fill="#ff8a9a"${N}/>`;
+  if(M==='o')s+=`<circle cx="${lx}" cy="${my+1}" r="2.6" fill="${mf}"${MS}/>`;
+  if(M==='flat')s+=`<path d="M${lx-3.5},${my+1} h7" stroke="${mf}" stroke-width="1.8" stroke-linecap="round"/>`;
+  if(M==='foam')s+=`<g fill="#fff" stroke="${C?OUT:'#cfe6f2'}" stroke-width="1"><circle cx="${lx-7}" cy="${my+3}" r="2.6"/><circle cx="${lx+7}" cy="${my+2}" r="2.2"/><circle cx="${lx+3}" cy="${my+6}" r="2.4"/><circle cx="${lx-3}" cy="${my+6}" r="1.8"/></g>`;
+  if(o.glasses)s+=`<g fill="#fff" fill-opacity=".25" stroke="${OUT}" stroke-width="1.6"><circle cx="${lx-6}" cy="-2" r="5.2"/><circle cx="${lx+6}" cy="-2" r="5.2"/></g><path d="M${lx-1},-2.5 h2" stroke="${OUT}" stroke-width="1.6"/>`;
+  if(o.shades)s+=`${rect(-12,-19,11,6,'#2a1f3d',3,S)}${rect(1,-19,11,6,'#2a1f3d',3,S)}`;
+  if(o.lamp)s+=`<path d="M-17,-8 Q0,-13 17,-8" fill="none" stroke="#3a3358" stroke-width="3.2"/>${rect(lx-4,-16,9,7,'#ffd23a',2,C?` stroke="${OUT}" stroke-width="1.5"`:'')}`;
+  s+=hatParts(o,S);
+  return s}
+function hatParts(o,S){let s='';
+  if(o.hat==='chef')s+=`<g fill="#fff"${S}><circle cx="-9" cy="-24" r="8"/><circle cx="9" cy="-24" r="8"/><circle cx="0" cy="-30" r="9.5"/></g>${rect(-13,-22,26,9,'#fff',2,S)}`;
+  if(o.hat==='pirate')s+=`<path d="M-24,-9 Q-14,-34 0,-30 Q14,-34 24,-9 Q0,-17 -24,-9Z" fill="#1c1c1c"${S}/><circle cx="0" cy="-21" r="3.2" fill="#fff"/>`;
+  if(o.hat==='crown')s+=`<path d="M-12,-13 L-13,-29 L-6,-21 L0,-32 L6,-21 L13,-29 L12,-13Z" fill="#ffc93a"${S}/><circle cx="0" cy="-18" r="2" fill="#e0245e"/><circle cx="-7" cy="-17" r="1.6" fill="#3a7bd5"/><circle cx="7" cy="-17" r="1.6" fill="#3a7bd5"/>`;
+  if(o.hat==='sun')s+=`<ellipse cx="0" cy="-11" rx="26" ry="5" fill="${o.hatc||'#f2d27a'}"${S}/><path d="M-14,-11 Q-14,-27 0,-27 Q14,-27 14,-11Z" fill="${o.hatc||'#f2d27a'}"${S}/>${rect(-14,-15,28,4,'#e0245e',0)}`;
+  if(o.hat==='night')s+=`<path d="M-17,-6 Q-16,-24 2,-24 Q16,-22 26,-4 L18,-8 Q8,-14 -17,-6Z" fill="${o.hatc||'#3a7bd5'}"${S}/><circle cx="27" cy="-3" r="4" fill="#fff"/>`;
+  if(o.patch&&!o.back)s+=`<path d="M-17,-8 L17,-10" stroke="#1c1c1c" stroke-width="1.6"/><ellipse cx="${(o.look||0)+6}" cy="-2" rx="4.4" ry="4" fill="#1c1c1c"/>`;
+  return s}
+
+/* Figur: o.pose stand | sit | table | run, Ursprung: Füße (stand/run), Sitzfläche (sit), Rumpfunterkante (table) */
+function F(st,o){
+  o={skin:SK.m,...o};
+  const C=st==='C',kid=!!o.kid;
+  const D=kid?{tw:28,th:32,tr:12,hr:15.5,nk:2,aw:7,al:24,ll:26,lw:8}:{tw:48,th:56,tr:20,hr:17,nk:6,aw:11,al:40,ll:46,lw:12};
+  if(C&&o.belly)D.tw=56;
+  const sk=o.skin||SK.m,sh=o.shirt,pa=o.pants||(kid?'#2f8f7a':'#3a3358'),tw=D.tw,th=D.th,k=D.hr/17,hy=-(th+D.nk+D.hr*.92);
+  const S=C?` stroke="${OUT}" stroke-width="2.2"`:'',N=' stroke="none"';
+  let legs='',body='',front='',armsS='';
+  const lx=tw*.2;
+  const standing=['stand','run','walk'].includes(o.pose);
+  if(standing){
+    const L=D.ll;
+    [-1,1].forEach((sd,i)=>{const x=sd*lx-D.lw/2;let g='';
+      if(kid){g+=rect(x+.5,L*.3,D.lw-1,L*.66,sk,null,S)+rect(x-1,-4,D.lw+2,L*.42,pa,4,S)}
+      else if(o.sandals){g+=rect(x+.5,L*.36,D.lw-1,L*.3,sk,0,S)+rect(x+.5,L*.62,D.lw-1,L*.34,'#fff',2,S)+rect(x,-4,D.lw,L*.44,pa,4,S)}
+      else g+=rect(x,-4,D.lw,L,pa,null,S);
+      g+=`<ellipse cx="${f1(sd*lx+sd*1.5)}" cy="${f1(L-1)}" rx="${f1(D.lw*.85)}" ry="${f1(D.lw*.42)}" fill="${o.sandals?'#8a5a2b':(o.shoes||(kid?'#ef3a62':'#5a3a22'))}"${S}/>`;
+      legs+=o.pose==='run'?`<g class="${i?'legB':'legA'}">${g}</g>`:o.pose==='walk'?`<g class="${i?'walkB':'walkA'}">${g}</g>`:g});
+  } else if(o.pose==='sit'){
+    const L=D.ll*.62;
+    [-1,1].forEach(sd=>{const x=sd*lx-D.lw/2;
+      legs+=(kid?rect(x+.5,2,D.lw-1,L,sk,null,S):o.sandals?rect(x+.5,2,D.lw-1,L*.5,sk,0,S)+rect(x+.5,2+L*.45,D.lw-1,L*.55,'#fff',2,S):rect(x,2,D.lw,L,pa,null,S))
+        +rect(x-1,-9,D.lw+2,14,pa,5,S)
+        +`<ellipse cx="${f1(sd*lx+sd*1.5)}" cy="${f1(L+2)}" rx="${f1(D.lw*.85)}" ry="${f1(D.lw*.42)}" fill="${o.sandals?'#8a5a2b':(o.shoes||(kid?'#ef3a62':'#5a3a22'))}"${S}/>`});
+  }
+  // Rumpf
+  if(o.cape)body+=`<path d="M${f1(-tw/2)},${f1(-th+3)} L${f1(-tw*.85)},${f1(th*.2)} H${f1(tw*.85)} L${f1(tw/2)},${f1(-th+3)}Z" fill="${o.cape}"/>`;
+  if(o.pack)body+=rect(-tw/2-5,-th-4,tw+10,th*.85,o.pack,8);
+  if(C&&o.belly)body+=`<path d="M${f1(-tw*.38)},${-th} Q${f1(-tw*.62)},${f1(-th*.45)} ${f1(-tw*.5)},${f1(-th*.05)} Q0,${f1(th*.1)} ${f1(tw*.5)},${f1(-th*.05)} Q${f1(tw*.62)},${f1(-th*.45)} ${f1(tw*.38)},${-th} Q0,${f1(-th*1.1)} ${f1(-tw*.38)},${-th}Z" fill="${sh}"${S}/>`;
+  else body+=rect(-tw/2,-th,tw,th,sh,D.tr,S);
+  if(!C)body+=rect(-tw/2,-th,tw*.33,th,'#fff',D.tr*.5,' opacity=".15"');
+  if(o.deco==='stripes')body+=rect(-tw/2+2,-th*.6,tw-4,th*.09,shade(sh,1.45),0,N)+rect(-tw/2+2,-th*.42,tw-4,th*.09,shade(sh,1.45),0,N);
+  if(o.deco==='vkf')body+=`<text x="0" y="${f1(-th*.4)}" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="${f1(th*.22)}" fill="#fff" stroke="none">VKF</text>`;
+  if(o.deco==='star')body+=`<path transform="translate(0,${f1(-th*.55)}) scale(${f1(th/32)})" d="M0,-5 l1.6,3.4 3.7,.4 -2.8,2.5 .8,3.7 -3.3,-1.9 -3.3,1.9 .8,-3.7 -2.8,-2.5 3.7,-.4Z" fill="#fff" stroke="none"/>`;
+  if(o.deco==='robe')body+=`<path d="M-9,${-th} L0,${f1(-th*.62)} L9,${-th}Z" fill="${sk}"${S}/><path d="M0,${f1(-th*.62)} V-2" stroke="${shade(sh,.75)}" stroke-width="2"/>${rect(-tw/2+1,-th*.4,tw-2,5,shade(sh,.75),2,N)}`;
+  if(o.pack)body+=rect(-tw*.36,-th,4*k+2,th*.7,shade(o.pack,.8),2)+rect(tw*.36-4*k-2,-th,4*k+2,th*.7,shade(o.pack,.8),2);
+  if(o.apron)body+=rect(-tw*.36,-th*.72,tw*.72,th*.72,'#fff',4)+`<path d="M${f1(-tw*.3)},${f1(-th*.72)} L${f1(-tw*.18)},${-th} M${f1(tw*.3)},${f1(-th*.72)} L${f1(tw*.18)},${-th}" stroke="#fff" stroke-width="2.5"/>`;
+  const neck=rect(-4.5*k,-th-D.nk-3,9*k,D.nk+6,shade(sk,.88),2,S);
+  // Arme
+  const sL=[-tw/2+D.aw/2-.5,-th+D.aw/2+2],sR=[-sL[0],sL[1]],al=D.al,aw=D.aw,hr=aw*.56;
+  const down=sd=>[sd<0?sL:sR,[sd*(tw/2+1),-th+al]];
+  const A=o.arms||'down';
+  let back='';
+  const both=(l,r)=>arm(C,l,o,aw,sk)+hand(C,l[l.length-1],hr,sk)+arm(C,r,o,aw,sk)+hand(C,r[r.length-1],hr,sk);
+  if(A==='down')armsS=both(down(-1),down(1));
+  if(A==='up'){const l=[sL,[-tw/2-8,-th-al*.35],[-tw/2-4,-th-al*.85]],r=l.map(p=>[-p[0],p[1]]);r[0]=sR;armsS=both(l,r)}
+  if(A==='wave'){const r=[sR,[tw/2+9,-th-al*.3],[tw/2+6,-th-al*.82]];armsS=both(down(-1),r)}
+  if(A==='guitar'){
+    const g=[tw*.1,-th*.3],n=[-tw*1.0,-th*.98],GS=C?` stroke="${OUT}" stroke-width="2"`:'';
+    const gu=`<line x1="${f1(g[0])}" y1="${f1(g[1])}" x2="${f1(n[0])}" y2="${f1(n[1])}" stroke="${C?OUT:'#5b3a1e'}" stroke-width="${f1(6*k+(C?2.5:0))}" stroke-linecap="round"/>${C?`<line x1="${f1(g[0])}" y1="${f1(g[1])}" x2="${f1(n[0])}" y2="${f1(n[1])}" stroke="#7a4a24" stroke-width="${f1(6*k-1)}" stroke-linecap="round"/>`:''}`+
+      `<ellipse cx="${f1(g[0]-6*k)}" cy="${f1(g[1]-7*k)}" rx="${f1(11*k)}" ry="${f1(9*k)}" fill="${o.gc||'#e0913a'}"${GS} transform="rotate(-32 ${f1(g[0])} ${f1(g[1])})"/><ellipse cx="${f1(g[0]+2*k)}" cy="${f1(g[1]+2*k)}" rx="${f1(15*k)}" ry="${f1(12*k)}" fill="${o.gc||'#e0913a'}"${GS} transform="rotate(-32 ${f1(g[0])} ${f1(g[1])})"/><circle cx="${f1(g[0]-2*k)}" cy="${f1(g[1]-1*k)}" r="${f1(3.8*k)}" fill="#3a2414"${N}/>`;
+    const ln=[g[0]+(n[0]-g[0])*.72,g[1]+(n[1]-g[1])*.72];
+    const l=[sL,[-tw/2-6,-th*.42],ln],r=[sR,[tw/2+6,-th*.42],[tw*.22,-th*.28]];
+    armsS=gu+arm(C,l,o,aw,sk)+hand(C,ln,hr,sk)+`<g class="strum">${arm(C,r,o,aw,sk)+hand(C,r[2],hr,sk)}</g>`}
+  if(A==='mug'){const r=[sR,[tw/2+5,-th*.28],[tw*.24,-th*.6]];armsS=arm(C,down(-1),o,aw,sk)+hand(C,down(-1)[1],hr,sk)+arm(C,r,o,aw,sk)+mug(C,r[2][0],r[2][1]+3,o.mugc||'#fff')+hand(C,r[2],hr,sk)}
+  if(A==='tip'){const r=[sR,[tw/2+al*.5,-th*.55],[tw/2+al*.9,-th*.62]];armsS=arm(C,down(-1),o,aw,sk)+hand(C,down(-1)[1],hr,sk)+arm(C,r,o,aw,sk)+mug(C,r[2][0]+4,r[2][1]+4,o.mugc||'#fff',75)+hand(C,r[2],hr,sk)}
+  if(A==='stick'){const r=[sR,[tw/2+al*.45,-th*.62],[tw/2+al*.85,-th*.55]],L=o.stick||50,e=[r[2][0]+L,r[2][1]-L*.42];
+    armsS=arm(C,down(-1),o,aw,sk)+hand(C,down(-1)[1],hr,sk)+arm(C,r,o,aw,sk)+`<line x1="${f1(r[2][0])}" y1="${f1(r[2][1])}" x2="${f1(e[0])}" y2="${f1(e[1])}" stroke="#7a4a24" stroke-width="2.6" stroke-linecap="round"/>`+stickItem(C,e[0],e[1],o.item)+hand(C,r[2],hr,sk)}
+  if(A==='roll'){const r=[sR,[tw/2+7,-th-al*.2],[tw/2+3,-th-al*.66]];armsS=arm(C,down(-1),o,aw,sk)+hand(C,down(-1)[1],hr,sk)+arm(C,r,o,aw,sk)+roll(C,r[2][0],r[2][1]-6*k,k)+hand(C,r[2],hr,sk)}
+  if(A==='eat'){const h=[5*k+(o.look||0)*k,hy+16*k],r=[sR,[tw/2+6,-th*.3],h];armsS=arm(C,down(-1),o,aw,sk)+hand(C,down(-1)[1],hr,sk)+arm(C,r,o,aw,sk)+roll(C,h[0]+2,h[1]-2,k)+hand(C,h,hr,sk)}
+  if(A==='read'){const l=[sL,[-tw/2-4,-th*.3],[-tw*.36,-th*.62]],r=[sR,[tw/2+4,-th*.3],[tw*.36,-th*.62]];
+    const PS=C?` stroke="${OUT}" stroke-width="1.8"`:'';
+    const px=-tw*.42,py=-th*.95,pw=tw*.84,ph=th*.62;
+    const txt=o.upside?`<text transform="rotate(180 0 ${f1(py+ph*.32)})" x="0" y="${f1(py+ph*.32+3)}" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="7" fill="#e0245e" stroke="none">Programm</text>`:`<text x="0" y="${f1(py+ph*.32+3)}" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="7" fill="#e0245e" stroke="none">Programm</text>`;
+    armsS=arm(C,l,o,aw,sk)+arm(C,r,o,aw,sk)+rect(px,py,pw,ph,'#fff',2,PS)+txt+`<path d="M${f1(px+6)},${f1(py+ph*.6)} h${f1(pw-12)} M${f1(px+6)},${f1(py+ph*.78)} h${f1(pw-18)}" stroke="#b8b0c8" stroke-width="2"/>`+hand(C,[px+2,py+ph*.55],hr,sk)+hand(C,[px+pw-2,py+ph*.55],hr,sk)}
+  if(A==='carry'){const l=[sL,[-tw/2-3,-th*.25],[-tw*.2,-th*.2]],r=[sR,[tw/2+3,-th*.25],[tw*.2,-th*.2]];const PS=C?` stroke="${OUT}" stroke-width="2"`:'';
+    armsS=arm(C,l,o,aw,sk)+arm(C,r,o,aw,sk)+`<g transform="translate(0,${f1(-th*.1)})">${rect(-9,-22,18,24,'#3a3358',5,PS)}${rect(-6,-27,12,6,'#d9124a',3,PS)}</g>`+hand(C,[-tw*.2,-th*.2],hr,sk)+hand(C,[tw*.2,-th*.2],hr,sk)}
+  if(A==='brush'){const h=[(o.look||0)*k+9*k,hy+14*k],r=[sR,[tw/2+6,-th*.3],h];armsS=arm(C,down(-1),o,aw,sk)+hand(C,down(-1)[1],hr,sk)+arm(C,r,o,aw,sk)+`<g transform="rotate(-20 ${f1(h[0])} ${f1(h[1])})">${rect(h[0]-14,h[1]-2.5,20,5,'#3a9ad9',2.5,C?` stroke="${OUT}" stroke-width="1.5"`:'')}</g>`+hand(C,h,hr,sk)+towel(C,tw,th)}
+
+  if(A==='clip'){const l=[sL,[-tw/2-6,-th*.32],[-tw*.22,-th*.55]],r=[sR,[tw/2+11,-th*.72],[tw/2+13,-th-al*.45]];
+    armsS=arm(C,l,o,aw,sk)+rect(-tw*.5,-th*.85,tw*.42,th*.55,'#8e5a2c',2)+rect(-tw*.46,-th*.8,tw*.34,th*.45,'#fff',1)+`<path d="M${f1(-tw*.42)},${f1(-th*.68)} h${f1(tw*.24)} M${f1(-tw*.42)},${f1(-th*.58)} h${f1(tw*.2)} M${f1(-tw*.42)},${f1(-th*.48)} h${f1(tw*.24)}" stroke="#b8b0c8" stroke-width="1.6"/>`+hand(C,l[2],hr,sk)+`<g class="gest">${arm(C,r,o,aw,sk)+hand(C,r[2],hr,sk)}</g>`}
+  if(A==='eyes'){const l=[sL,[-tw/2-7,-th*.55],[-6*k,hy-1*k]],r=[sR,[tw/2+7,-th*.55],[6*k,hy-1*k]];armsS=both(l,r)}
+  if(A==='ladle'){const r=[sR,[tw/2+8,-th*.45],[tw/2+al*.55,-th*.35]];armsS=arm(C,down(-1),o,aw,sk)+hand(C,down(-1)[1],hr,sk)+arm(C,r,o,aw,sk)+`<line x1="${f1(r[2][0])}" y1="${f1(r[2][1])}" x2="${f1(r[2][0]+12)}" y2="${f1(r[2][1]+24)}" stroke="#8e98a8" stroke-width="3" stroke-linecap="round"/><circle cx="${f1(r[2][0]+13)}" cy="${f1(r[2][1]+26)}" r="5" fill="#8e98a8"/>`+hand(C,r[2],hr,sk)}
+  if(A==='plate'){const l=[sL,[-tw/2-4,-th*.25],[-tw*.3,-th*.42]],r=[sR,[tw/2+4,-th*.25],[tw*.3,-th*.42]];
+    const py=-th*.46,pl=`<ellipse cx="0" cy="${f1(py)}" rx="${f1(tw*.55)}" ry="${f1(4.5*k+1)}" fill="#fff"/>`+(o.food?`<ellipse cx="-3" cy="${f1(py-4*k)}" rx="${f1(tw*.24)}" ry="${f1(5*k)}" fill="#e8a33a"/><circle cx="${f1(tw*.2)}" cy="${f1(py-3*k)}" r="${f1(3.6*k)}" fill="#7fa82a"/><circle cx="${f1(-tw*.22)}" cy="${f1(py-2.5*k)}" r="${f1(3*k)}" fill="#e0245e"/>`:'');
+    armsS=arm(C,l,o,aw,sk)+arm(C,r,o,aw,sk)+pl+hand(C,l[2],hr,sk)+hand(C,r[2],hr,sk)}
+  if(A==='bag'){const r=down(1),l=down(-1);const bag=(x,y,c)=>`<path d="M${f1(x-4*k)},${f1(y+2)} v-4 h${f1(8*k)} v4" stroke="#3a3358" stroke-width="2" fill="none"/>`+rect(x-11*k,y+2,22*k,17*k,c,3);
+    armsS=arm(C,l,o,aw,sk)+arm(C,r,o,aw,sk)+bag(r[1][0],r[1][1],o.bagc||'#3a7bd5')+(o.bag2?bag(l[1][0],l[1][1],'#7fa82a'):'')+hand(C,l[1],hr,sk)+hand(C,r[1],hr,sk)}
+  if(A==='cheerball'){const l=[sL,[-tw/2-6,-th-al*.35],[-tw*.22,-th-al*.8]],r=l.map(p=>[-p[0],p[1]]);r[0]=sR;armsS=both(l,r)+`<g transform="translate(0,${f1(-th-al*.8-8*k)})"><circle r="${f1(9*k)}" fill="#fff"/><path d="M${f1(-3*k)},${f1(-3*k)} l${f1(3*k)},${f1(-2*k)} ${f1(3*k)},${f1(2*k)} ${f1(-1*k)},${f1(4*k)} h${f1(-4*k)}z" fill="#1c2431"/></g>`}
+  if(A==='clap'){const l=[sL,[-tw/2-7,-th*.35],[-2,-th*.64]],r=[sR,[tw/2+7,-th*.35],[2,-th*.64]];armsS=`<g class="clap">${both(l,r)}</g>`}
+  if(A==='pole'){const r=[sR,[tw/2+5,-th*.55],[tw/2+7,-th*.3]];armsS=arm(C,down(-1),o,aw,sk)+hand(C,down(-1)[1],hr,sk)+arm(C,r,o,aw,sk)+`<line x1="${f1(r[2][0]+1)}" y1="${f1(r[2][1]-14)}" x2="${f1(r[2][0]+5)}" y2="${f1(D.ll)}" stroke="#7a4a24" stroke-width="3" stroke-linecap="round"/>`+hand(C,r[2],hr,sk)}
+  if(A==='lamp'){const r=[sR,[tw/2+7,-th*.4],[tw/2+12,-th*.55]];armsS=arm(C,down(-1),o,aw,sk)+hand(C,down(-1)[1],hr,sk)+`<polygon class="beam" points="${f1(r[2][0]+8)},${f1(r[2][1]-2)} ${f1(r[2][0]+120)},${f1(r[2][1]+55)} ${f1(r[2][0]+120)},${f1(r[2][1]+5)}" fill="#fff3a0" opacity=".3"/>`+arm(C,r,o,aw,sk)+rect(r[2][0]-2,r[2][1]-4,13,8,'#ffd23a',2)+hand(C,r[2],hr,sk)}
+  function towel(C,tw,th){return `<path d="M${f1(-tw/2+2)},${f1(-th+2)} Q${f1(-tw/2-4)},${f1(-th*.6)} ${f1(-tw/2+2)},${f1(-th*.15)} L${f1(-tw/2+10)},${f1(-th*.15)} Q${f1(-tw/2+6)},${f1(-th*.6)} ${f1(-tw/2+12)},${f1(-th+2)}Z" fill="#ffc93a"${C?` stroke="${OUT}" stroke-width="2"`:''}/>`}
+  const head=`<g transform="translate(0,${f1(hy)}) scale(${f1(k)})${o.tilt?` rotate(${o.tilt})`:''}">${headParts(C,o)}</g>`;
+  if(o.towel)front+=towel(C,tw,th);
+  if(o.ring)front+=`<g><ellipse cx="0" cy="${f1(-th*.18)}" rx="${f1(tw*.8)}" ry="${f1(8*k)}" fill="${o.ring}"/><ellipse cx="0" cy="${f1(-th*.18-2*k)}" rx="${f1(tw*.5)}" ry="${f1(3*k)}" fill="${shade(o.ring,.7)}"/>${rect(-tw*.55,-th*.18-1,5*k,9*k,'#fff',1)}${rect(tw*.45,-th*.18-1,5*k,9*k,'#fff',1)}</g>`;
+  if(o.sweat)front+=`<path class="drip" d="M${f1(-21*k)},${f1(hy-8*k)} q-3,5 0,7 q3,-2 0,-7Z" fill="#8fd3ff"/><path class="drip" style="animation-delay:-.7s" d="M${f1(21*k)},${f1(hy-4*k)} q-3,5 0,7 q3,-2 0,-7Z" fill="#8fd3ff"/>`;
+  let out=legs+body+neck+head+armsS+front;
+  if(C)out=`<g stroke="${OUT}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">${out}</g>`;
+  if(standing)out=`<g transform="translate(0,${-D.ll})">${out}</g>`;
+  return out}
+
+function place(st,o,x,y,s,flip,cls){
+  const delay=`animation-delay:${(-rnd()*3).toFixed(2)}s`;
+  const inner=`<g class="${cls||''}" style="${delay}">${F(st,o)}</g>`;
+  return `<g transform="translate(${f1(x)},${f1(y)}) scale(${flip?-s:s},${s})">${inner}</g>`}
+const shadow=(x,y,rx)=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${rx*.22}" fill="#14102b" opacity=".25"/>`;
+const sparkle=(x,y,r)=>`<path d="M${x},${y-r} Q${x},${y} ${x+r},${y} Q${x},${y} ${x},${y+r} Q${x},${y} ${x-r},${y} Q${x},${y} ${x},${y-r}Z"/>`;
+
+function tent(C,x,y,s,night){
+  const w=night?'#6e6072':'#efe3cc',r=night?'#5a4c66':'#dccaa8',d=night?'#ffd27a':'#b89f78',S=C?` stroke="${OUT}" stroke-width="${2.2/s}"`:'';
+  return `<g transform="translate(${x},${y}) scale(${s})">${night?`<circle cy="-14" r="40" fill="url(#lamp)"/>`:''}<rect x="-40" y="-34" width="80" height="34" fill="${w}"${S}/><path d="M-47,-30 L-30,-60 H30 L47,-30Z" fill="${r}"${S}/><path d="M-11,0 L0,-27 L11,0Z" fill="${d}"${S}/></g>`}
+function bench(C,x0,x1,y){const S=C?` stroke="${OUT}" stroke-width="2"`:'';return `${rect(x0,y,x1-x0,8,'#8e5a2c',3,S)}${rect(x0+10,y+6,6,18,'#6b3e1e',2,S)}${rect(x1-16,y+6,6,18,'#6b3e1e',2,S)}`}
+
+/* ---------- Szene 1: Lagerrunde ---------- */
+function fireScene(st){
+  const C=st==='C';seed=31;
+  let s=`<rect width="800" height="450" fill="url(#nightG)"/>`;
+  s+=`<g fill="#fff">`;for(let i=0;i<46;i++){const x=rnd()*800,y=rnd()*190,r=rnd()<.15?5+rnd()*3:1.5+rnd()*2;s+=`<g opacity="${(.5+rnd()*.5).toFixed(2)}">${sparkle(+x.toFixed(0),+y.toFixed(0),+r.toFixed(1))}</g>`}s+=`</g>`;
+  s+=`<circle cx="690" cy="72" r="28" fill="#fff4d6"/><circle cx="702" cy="62" r="25" fill="#17112f"/>`;
+  s+=`<path d="M0,220 L60,180 L120,205 L200,160 L280,200 L360,170 L440,205 L520,165 L600,200 L680,172 L800,205 V450 H0Z" fill="#251c4e"/>`;
+  s+=`<g fill="#17122e">${[30,62,750,778,120].map((x,i)=>`<path transform="translate(${x},${250-i*2}) scale(${1+(i%2)*.3})" d="M0,-96 C5,-80 12,-66 18,-58 Q20,-55 15,-55 C20,-46 25,-36 30,-24 Q32,-18 25,-18 H4 V0 H-4 V-18 H-25 Q-32,-18 -30,-24 C-25,-36 -20,-46 -15,-55 Q-20,-55 -18,-58 C-12,-66 -5,-80 0,-96Z"/>`).join('')}</g>`;
+  s+=`<path d="M0,250 Q400,228 800,252 V450 H0Z" fill="#1d3428"/>`;
+  s+=tent(C,175,252,.8,1)+tent(C,640,250,.85,1);
+  s+=`<ellipse cx="400" cy="345" rx="420" ry="170" fill="url(#glowN)"/>`;
+  s+=`<ellipse cx="400" cy="352" rx="70" ry="13" fill="#0e0a1c" opacity=".45"/>`;
+  // hintere Bank
+  s+=bench(C,230,570,296);
+  const back=[
+    [262,{arms:'guitar',beard:'full',hs:'short',hair:'#6b4a2a',shirt:'#3a7bd5',deco:'stripes',m:'sing',look:2,...(C?{hs:'beanie',capc:'#ffc93a',glasses:1}:{})},'sway'],
+    [318,{kid:1,arms:'up',hs:'pig',hair:'#d6762a',skin:SK.l,shirt:'#ffc93a',m:'sing',...(C?{eyes:'happy',m:'grin'}:{})},'bob'],
+    [484,{arms:'down',hs:'bald',hair:'#4a3526',beard:'mous',shirt:'#20a68a',look:-2,eyes:'happy',m:'sing',...(C?{eyes:'sleep',m:'o',tilt:-8,belly:1}:{})},C?'':'sway'],
+    [540,C?{kid:1,arms:'stick',stick:30,item:'feather',hs:'spiky',hair:'#1c1c1c',skin:SK.d,shirt:'#ef3a62',m:'grin',look:4,eyes:'happy'}:{kid:1,arms:'down',hs:'spiky',hair:'#1c1c1c',skin:SK.d,shirt:'#ef3a62',eyes:'sleep',m:'flat',tilt:-16},'',C]];
+  back.forEach(([x,o,cls,flip])=>{s+=place(st,{pose:'sit',skin:o.skin||SK.m,...o},x,300,.8,flip,cls)});
+  // Feuer
+  s+=`<g transform="translate(400,352)"><g transform="rotate(9)">${rect(-40,-7,80,14,'#7a4a24',7,C?` stroke="${OUT}" stroke-width="2"`:'')}</g><g transform="rotate(-9)">${rect(-40,-7,80,14,'#8e5a2c',7,C?` stroke="${OUT}" stroke-width="2"`:'')}</g><g transform="translate(0,-4) scale(.78)"><g class="flk"><use href="#flames"/></g></g></g>`;
+  for(let i=0;i<10;i++)s+=`<circle class="spark" style="--dx:${(rnd()*60-30).toFixed(0)}px;animation-delay:${(-rnd()*2.4).toFixed(2)}s" cx="${(385+rnd()*30).toFixed(0)}" cy="300" r="${(1.5+rnd()*1.6).toFixed(1)}" fill="#ffd27a"/>`;
+  // seitliche Bänke
+  s+=bench(C,60,248,362)+bench(C,520,712,362);
+  const left=[
+    [92,{arms:'mug',hs:'curly',hair:'#2b2019',skin:SK.d,beard:'stub',shirt:'#20a68a',mugc:'#ffc93a',look:4,m:'smile',...(C?{belly:1,m:'grin'}:{})}],
+    [150,{kid:1,arms:'down',hs:'short',hair:'#d6a24a',skin:SK.l,shirt:'#ef3a62',look:4,m:'smile',...(C?{eyes:'wide',m:'o'}:{})}],
+    [206,{kid:1,arms:'stick',stick:44,item:C?'marshfire':'marsh',hs:'curly',hair:'#2b2019',skin:SK.t,shirt:'#9b5bd4',deco:'star',look:5,m:C?'o':'grin',...(C?{eyes:'wide'}:{})}]];
+  left.forEach(([x,o])=>{s+=place(st,{pose:'sit',...o},x,366,.8,0,o.kid?'':'sway')});
+  const right=[
+    [566,{arms:'stick',stick:48,item:C?'burnt':'sausage',hs:'short',hair:'#6b4a2a',beard:'full',shirt:'#ff8a2a',look:4,m:'smile',...(C?{eyes:'squint',brow:'worried',rednose:1,m:'flat'}:{})}],
+    [626,{kid:1,arms:C?'down':'mug',mugc:'#3a7bd5',hs:C?'curly':'long',hair:C?'#1c1c1c':'#8a5a2b',skin:C?SK.d:SK.m,shirt:'#ffc93a',look:4,m:C?'grin':'smile',...(C?{lamp:1}:{})}],
+    [686,{arms:'guitar',gc:'#c86a2a',hs:'pony',hair:'#8a5a2b',glasses:1,shirt:'#9b5bd4',look:3,m:'sing',...(C?{beard:'mous'}:{})}]];
+  right.forEach(([x,o])=>{s+=place(st,{pose:'sit',...o},x,366,.8,1,o.kid?'':'sway')});
+  if(C)s+=`<polygon class="beam" points="618,322 545,282 545,316" fill="#fff3a0" opacity=".3"/>`;
+  // vorne
+  s+=shadow(318,446,30)+place(st,{pose:'stand',arms:'guitar',shirt:'#e0245e',deco:'vkf',hs:'short',hair:'#2b2019',skin:SK.t,m:'sing',look:3,...(C?{belly:1,sandals:1,pants:'#c8b27a',shades:1,eyes:'happy',hs:'bald',beard:'full'}:{})},318,446,.85,0,'bob');
+  s+=shadow(520,434,18)+place(st,{pose:'stand',kid:1,arms:'up',hs:'spiky',hair:'#c06a2a',skin:SK.l,shirt:'#3a7bd5',m:'grin',eyes:'happy'},520,434,.85,0,'hop');
+  // Noten, Zzz
+  [[255,200],[200,300],[690,270],[360,250]].forEach(([x,y],i)=>{s+=`<text class="note" style="--dx:${i%2?-16:16}px;animation-delay:${-i*.8}s" x="${x}" y="${y}" font-size="26" fill="#fff4d6">${'♪♫♬♪'[i]}</text>`});
+  const zx=C?486:546,zy=C?222:262;
+  [0,1,2].forEach(i=>{s+=`<text class="zzz" style="animation-delay:${-i}s" x="${zx}" y="${zy}" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="${14+i*3}" fill="#cfe6ff">z</text>`});
+  return s}
+
+/* ---------- Szene 2: Frühstück ---------- */
+function breakfastScene(st){
+  const C=st==='C';seed=57;const S2=C?` stroke="${OUT}" stroke-width="2"`:'';
+  let s=`<rect width="800" height="450" fill="url(#dayG)"/>`;
+  s+=`<g transform="translate(660,92)"><g class="rays" style="transform-origin:660px 92px">${Array.from({length:12},(_,i)=>`<rect x="-3" y="-78" width="6" height="22" rx="3" fill="#ffd23a" opacity=".55" transform="rotate(${i*30})"/>`).join('')}</g><circle r="40" fill="#ffd23a"${S2}/></g>`;
+  s+=`<g fill="#fff"${C?` stroke="${OUT}" stroke-width="2"`:''}><path d="M90,80 a16,16 0 0 1 30,-8 a20,20 0 0 1 36,4 a14,14 0 0 1 4,26 h-66 a12,12 0 0 1 -4,-22Z"/><path d="M420,56 a12,12 0 0 1 22,-6 a16,16 0 0 1 28,4 a11,11 0 0 1 2,20 h-50 a10,10 0 0 1 -2,-18Z"/></g>`;
+  s+=`<path d="M0,200 Q160,150 330,190 Q520,140 800,185 V450 H0Z" fill="#a8d672"/>`;
+  s+=`<path d="M0,236 Q400,214 800,238 V450 H0Z" fill="#8cc04f"/>`;
+  s+=tent(C,95,236,.75,0)+tent(C,250,230,.7,0)+tent(C,560,232,.7,0)+tent(C,720,236,.75,0);
+  // Wimpelkette
+  s+=`<path d="M0,40 Q200,92 400,52 Q600,12 800,60" fill="none" stroke="#6b4a2a" stroke-width="2"/>`;
+  const pc=['#e0245e','#ffc93a','#3a7bd5','#7fa82a','#ff8a2a','#9b5bd4'];
+  const qb=(u,a,b,c)=>(1-u)*(1-u)*a+2*u*(1-u)*b+u*u*c;
+  for(let i=0;i<16;i++){const t=(i+.5)/16,h=t<.5,u=h?t*2:t*2-1;const x=h?qb(u,0,200,400):qb(u,400,600,800),y=h?qb(u,40,92,52):qb(u,52,12,60);s+=`<path d="M${f1(x-9)},${f1(y)} L${f1(x+9)},${f1(y)} L${f1(x)},${f1(y+20)}Z" fill="${pc[i%6]}"${C?` stroke="${OUT}" stroke-width="1.6"`:''}/>`}
+  // Personen hinter dem Tisch
+  const ppl=[
+    [150,{arms:'mug',mugc:'#3a7bd5',hs:'messy',hair:'#6b4a2a',beard:'stub',shirt:'#9b5bd4',sleeve:'short',eyes:'sleep',m:'yawn',...(C?{brow:'worried'}:{})}],
+    [217,{kid:1,arms:'roll',hs:'curly',hair:'#1c1c1c',skin:SK.d,shirt:'#ffc93a',sleeve:'short',eyes:'happy',m:'choc'}],
+    [287,{arms:'read',glasses:1,hs:'short',hair:'#2b2019',beard:'full',shirt:'#3a7bd5',deco:'stripes',sleeve:'short',m:'flat',...(C?{upside:1,brow:'up'}:{})}],
+    [357,{kid:1,arms:'wave',hs:'pig',hair:'#d6a24a',skin:SK.l,shirt:'#ef3a62',sleeve:'short',m:'grin'}],
+    [430,{arms:'mug',mugc:'#ffc93a',hs:'cap',capc:'#20a68a',hair:'#4a3526',beard:'mous',skin:SK.t,shirt:'#ff8a2a',sleeve:'short',m:'smile',...(C?{belly:1,m:'grin'}:{})}],
+    [500,C?{kid:1,arms:'tip',mugc:'#fff',hs:'long',hair:'#8a5a2b',shirt:'#20a68a',sleeve:'short',eyes:'wide',m:'o'}:{kid:1,arms:'mug',mugc:'#fff',hs:'long',hair:'#8a5a2b',shirt:'#20a68a',sleeve:'short',m:'smile'}],
+    [572,{arms:'eat',hs:'bald',hair:'#9a948c',beard:'full',shirt:'#20a68a',sleeve:'short',look:-1,m:'o',...(C?{bignose:1}:{})}],
+    [642,{kid:1,arms:'down',hs:'spiky',hair:'#c06a2a',skin:SK.l,shirt:'#3a7bd5',deco:'star',sleeve:'short',eyes:'sleep',m:'flat',tilt:14}]];
+  ppl.forEach(([x,o])=>{s+=place(st,{pose:'table',skin:o.skin||SK.m,...o},x,o.kid?312:322,1,0,'')});
+  // Tisch
+  s+=rect(100,300,600,10,'#a8703f',3,S2)+`<rect x="104" y="306" width="592" height="42" fill="url(#check)"${S2}/>`+rect(130,348,10,48,'#7a4a24',2,S2)+rect(660,348,10,48,'#7a4a24',2,S2);
+  // Sachen auf dem Tisch
+  s+=`<g>`+mug(C,180,300,'#fff')+mug(C,252,300,'#e0245e')+mug(C,470,300,'#3a7bd5')+mug(C,612,300,'#ffc93a');
+  s+=`<g transform="translate(325,300)"><path d="M-24,0 h48 l-6,-16 h-36z" fill="#c8913e"${S2}/>${roll(C,-12,-17)}${roll(C,4,-19)}${roll(C,15,-16)}</g>`;
+  s+=`<g transform="translate(400,300)">${rect(-11,-38,22,38,'#3a3358',5,S2)}${rect(-7,-44,14,8,'#e0245e',3,S2)}<g fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path class="steam" d="M-3,-48 q-5,-7 0,-14"/><path class="steam" style="animation-delay:-1.2s" d="M4,-48 q-5,-7 0,-14"/></g></g>`;
+  s+=`<g transform="translate(546,300)">${rect(-9,-20,18,20,'#e0245e',4,S2)}${rect(-10,-24,20,6,'#fff',2,S2)}</g>`;
+  s+=`<g transform="translate(262,300)">${rect(-8,-18,16,18,'#6b3a1e',4,S2)}${rect(-9,-22,18,6,'#ffc93a',2,S2)}</g>`;
+  s+=`<g transform="translate(600,300)"><path d="M-9,0 V-26 L0,-34 L9,-26 V0Z" fill="#fff"${S2}/>${rect(-9,-18,18,8,'#3a9ad9',0,' stroke="none"')}</g>`;
+  s+=`<g transform="translate(490,300)"><path d="M-14,-10 h28 q0,10 -14,10 q-14,0 -14,-10Z" fill="#ffc93a"${S2}/></g>`+`</g>`;
+  if(C){
+    s+=`<path d="M522,300 q30,2 34,14 q-8,10 -40,6 q-12,-8 6,-20Z" fill="#fff" opacity=".95"${S2}/><path d="M546,318 q4,10 -2,22" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none"/>`;
+    s+=`<g class="huch" style="transform-origin:520px 210px"><text x="520" y="214" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="30" fill="#fff" stroke="${OUT}" stroke-width="6" paint-order="stroke" stroke-linejoin="round">Huch!</text></g>`;
+    s+=`<g class="wasp" style="transform-origin:546px 262px"><g transform="translate(564,256)"><ellipse rx="6" ry="4" fill="#ffc93a" stroke="${OUT}" stroke-width="1.5"/><path d="M-1,-4 v8 M2.5,-3.5 v7" stroke="${OUT}" stroke-width="1.6"/><ellipse cx="-1" cy="-6" rx="4" ry="2.4" fill="#fff" opacity=".85" stroke="${OUT}" stroke-width="1"/></g></g>`;
+  }
+  // vorne: rennendes Kind
+  s+=`<g class="runner"><g transform="translate(60,0)">${shadow(0,438,14)}${place(st,{pose:'run',kid:1,arms:'roll',hs:'short',hair:'#2b2019',skin:SK.t,shirt:'#ff8a2a',sleeve:'short',look:5,m:'grin',eyes:'happy'},0,438,.95,0,'')}</g></g>`;
+  if(C)s+=shadow(722,440,26)+`<g class="walk">${place(st,{pose:'stand',arms:'brush',deco:'robe',shirt:'#a8d8f0',pants:'#a8d8f0',hs:'messy',hair:'#4a3526',beard:'stub',sandals:1,m:'foam',eyes:'squint',look:4,belly:1},722,440,.9,1,'')}</g>`;
+  else s+=shadow(722,440,26)+`<g class="walk">${place(st,{pose:'stand',arms:'carry',hs:'short',hair:'#8a5a2b',shirt:'#e0245e',deco:'vkf',sleeve:'short',look:4,m:'smile',beard:'stub'},722,440,.9,1,'')}</g>`;
+  [0,1,2].forEach(i=>{s+=`<text class="zzz" style="animation-delay:${-i}s" x="664" y="232" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="${13+i*3}" fill="#3a3358">z</text>`});
+  return s}
+
+/* ---------- Lagertag: alle Szenen in Stil A ---------- */
+const PAL={
+  dawn:{sky:['#4a4f9e','#c27aa8','#ffc08a'],far:'#8a6aa8',near:'#6f9a5a',ground:'#7fae4c'},
+  morning:{sky:['#7cc6f2','#cfe9f7','#ffe7c4'],far:'#a8d672',near:'#8cc04f',ground:'#8cc04f'},
+  noon:{sky:['#4fb0ee','#a9dcf7','#e8f6fd'],far:'#9fd06a',near:'#84bb48',ground:'#84bb48'},
+  after:{sky:['#5cb4ea','#bfe2f2','#fff0cf'],far:'#a3cf68',near:'#8abb4a',ground:'#8abb4a'},
+  eve:{sky:['#5a3a8e','#e0607a','#ffb36a'],far:'#7a4a7a',near:'#5f8a3e',ground:'#5f8a3e'},
+  night:{sky:['#120e2a','#2e2160','#4a2a6a'],far:'#251c4e',near:'#1d3428',ground:'#1d3428'}};
+const P=(o,x,y,s,flip,cls)=>place('A',o,x,y,s,flip,cls);
+const sh=(x,y,rx)=>shadow(x,y,rx);
+function tentA(x,y,s,mode){const w=mode==='night'?'#6e6072':'#efe3cc',r=mode==='night'?'#5a4c66':'#dccaa8',d=mode==='lit'?'#ffd27a':mode==='night'?'#3a3048':'#b89f78';
+  return `<g transform="translate(${x},${y}) scale(${s})">${mode==='lit'?`<circle cy="-14" r="40" fill="url(#lamp)"/>`:''}<rect x="-40" y="-34" width="80" height="34" fill="${w}"/><path d="M-47,-30 L-30,-60 H30 L47,-30Z" fill="${r}"/><path d="M-11,0 L0,-27 L11,0Z" fill="${d}"/><path d="M0,-27 V0" stroke="${shade(d,.8)}" stroke-width="1"/></g>`}
+function kitchen(x,y,s,lit){
+  let k=`<g transform="translate(${x},${y}) scale(${s})">`;
+  if(lit)k+=`<ellipse cx="0" cy="-60" rx="170" ry="110" fill="url(#lamp)"/>`;
+  k+=`<rect x="-110" y="-112" width="220" height="112" fill="${lit?'#f6dca0':'#f4ead8'}"/>`;
+  k+=`<path d="M-128,-100 L-96,-142 H96 L128,-100Z" fill="#e0245e"/>`;
+  for(let i=0;i<8;i++)k+=`<path d="M${-128+i*32},-100 q16,14 32,0Z" fill="${i%2?'#fff':'#e0245e'}"/>`;
+  k+=`<path d="M-60,-142 L-74,-100 M0,-142 V-100 M60,-142 L74,-100" stroke="#fff" stroke-width="7" opacity=".6"/>`;
+  k+=rect(-114,-100,6,100,'#8e5a2c',2)+rect(108,-100,6,100,'#8e5a2c',2);
+  if(lit)k+=`<g transform="translate(70,-92)"><line y1="-8" y2="0" stroke="#3a3358" stroke-width="2"/><circle r="6" fill="#ffd27a"/></g>`;
+  return k+`</g>`}
+function counter(x0,x1,y){return rect(x0,y,x1-x0,8,'#8e5a2c',3)+rect(x0+4,y+6,x1-x0-8,34,'#a8703f',2)+rect(x0+4,y+18,x1-x0-8,4,'#8e5a2c',0)}
+function bgA(id,p,o){o=o||{};
+  let s=`<defs><linearGradient id="g_${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.sky[0]}"/><stop offset=".62" stop-color="${p.sky[1]}"/><stop offset="1" stop-color="${p.sky[2]}"/></linearGradient></defs><rect width="800" height="450" fill="url(#g_${id})"/>`;
+  if(o.stars){s+=`<g fill="#fff">`;for(let i=0;i<46;i++){const x=rnd()*800,y=rnd()*190,r=rnd()<.15?5+rnd()*3:1.5+rnd()*2;s+=`<g opacity="${(.5+rnd()*.5).toFixed(2)}">${sparkle(+x.toFixed(0),+y.toFixed(0),+r.toFixed(1))}</g>`}s+=`</g>`}
+  if(o.moon)s+=`<circle cx="${o.moon[0]}" cy="${o.moon[1]}" r="28" fill="#fff4d6"/><circle cx="${o.moon[0]+12}" cy="${o.moon[1]-10}" r="25" fill="#17112f"/>`;
+  if(o.sun&&!o.sunLow)s+=sunA(o.sun[0],o.sun[1],o.sun[2]||40,o.sunc);
+  if(o.clouds)s+=`<g fill="#fff" opacity=".95"><path d="M90,80 a16,16 0 0 1 30,-8 a20,20 0 0 1 36,4 a14,14 0 0 1 4,26 h-66 a12,12 0 0 1 -4,-22Z"/><path d="M${o.clouds===2?300:420},56 a12,12 0 0 1 22,-6 a16,16 0 0 1 28,4 a11,11 0 0 1 2,20 h-50 a10,10 0 0 1 -2,-18Z"/></g>`;
+  s+=`<path d="M0,200 L60,170 L130,192 L210,150 L290,186 L370,160 L450,190 L540,150 L620,182 L700,158 L800,188 V450 H0Z" fill="${p.far}"/>`;
+  if(o.sunLow)s+=sunA(o.sun[0],o.sun[1],o.sun[2]||40,o.sunc);
+  if(o.trees)s+=`<g fill="${o.treec||shade(p.near,.7)}">${o.trees.map(([x,y,sc])=>`<path transform="translate(${x},${y}) scale(${sc})" d="M0,-96 C5,-80 12,-66 18,-58 Q20,-55 15,-55 C20,-46 25,-36 30,-24 Q32,-18 25,-18 H4 V0 H-4 V-18 H-25 Q-32,-18 -30,-24 C-25,-36 -20,-46 -15,-55 Q-20,-55 -18,-58 C-12,-66 -5,-80 0,-96Z"/>`).join('')}</g>`;
+  s+=`<path d="M0,236 Q400,214 800,238 V450 H0Z" fill="${p.ground}"/>`;
+  if(o.tents)s+=o.tents.map(([x,y,sc,m])=>tentA(x,y,sc,m||'day')).join('');
+  return s}
+function sunA(x,y,r,c){return `<g transform="translate(${x},${y})"><g class="rays" style="transform-origin:${x}px ${y}px">${Array.from({length:12},(_,i)=>`<rect x="-3" y="${-r*2}" width="6" height="${r*.55}" rx="3" fill="${c||'#ffd23a'}" opacity=".55" transform="rotate(${i*30})"/>`).join('')}</g><circle r="${r}" fill="${c||'#ffd23a'}"/></g>`}
+const txt=(x,y,t,size,fill,stroke)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="${size||22}" fill="${fill||'#fff'}"${stroke?` stroke="${stroke}" stroke-width="5" paint-order="stroke" stroke-linejoin="round"`:''}>${t}</text>`;
+const birds=(arr)=>arr.map(([x,y],i)=>`<g class="bird" style="animation-delay:${-i*.7}s"><path d="M${x-8},${y} q4,-5 8,0 q4,-5 8,0" fill="none" stroke="#3a3358" stroke-width="2" stroke-linecap="round"/></g>`).join('');
+const zz=(x,y,c)=>[0,1,2].map(i=>`<text class="zzz" style="animation-delay:${-i}s" x="${x}" y="${y}" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="${13+i*3}" fill="${c||'#cfe6ff'}">z</text>`).join('');
+const bfly=(x,y,c,d)=>`<g class="bfly" style="animation-delay:${d||0}s"><g transform="translate(${x},${y})"><ellipse cx="-4.5" cy="-2" rx="5" ry="3.4" fill="${c}" transform="rotate(-28 -4.5 -2)"/><ellipse cx="4.5" cy="-2" rx="5" ry="3.4" fill="${c}" transform="rotate(28 4.5 -2)"/><rect x="-1" y="-5" width="2" height="9" rx="1" fill="#3a3358"/></g></g>`;
+
+/* 1 Ankunft */
+function sArrival(){seed=101;
+  let s=bgA('ar',PAL.noon,{sun:[300,74,34],clouds:2,tents:[[90,238,.7],[230,232,.62],[360,236,.58]],trees:[[20,240,1],[440,238,.8]]});
+  // Reisebus
+  s+=`<g>${rect(470,176,360,174,'#f6efe2',26)}${rect(470,286,360,20,'#e0245e',0)}${rect(470,306,360,8,'#ffc93a',0)}`;
+  s+=`<path d="M470,202 Q470,176 496,176 H520 V276 H470Z" fill="#3a5a8a"/><path d="M478,192 l14,0 l-14,40Z" fill="#fff" opacity=".35"/>`;
+  for(let i=0;i<5;i++)s+=rect(534+i*62,196,52,64,'#3a5a8a',8)+`<path d="M${540+i*62},202 l14,0 l-14,30Z" fill="#fff" opacity=".3"/>`;
+  s+=rect(476,288,26,12,'#fff4c0',4)+rect(560,230,30,84,'#2e4a72',4);
+  s+=`<circle cx="540" cy="350" r="27" fill="#2a2a34"/><circle cx="540" cy="350" r="11" fill="#b8b8c4"/><circle cx="720" cy="350" r="27" fill="#2a2a34"/><circle cx="720" cy="350" r="11" fill="#b8b8c4"/>`;
+  s+=`<ellipse cx="640" cy="378" rx="190" ry="10" fill="#14102b" opacity=".18"/></g>`;
+  // Gepäckhaufen
+  s+=`<ellipse cx="430" cy="410" rx="70" ry="10" fill="#14102b" opacity=".18"/>`+rect(392,372,44,36,'#3a7bd5',5)+rect(432,360,38,48,'#ffc93a',5)+rect(404,346,32,28,'#7fa82a',5)+`<ellipse cx="470" cy="398" rx="20" ry="11" fill="#e0245e"/><ellipse cx="380" cy="402" rx="16" ry="9" fill="#9b5bd4"/>`+rect(410,342,8,6,'#3a3358',2)+rect(446,356,10,6,'#3a3358',2);
+  s+=P({pose:'sit',kid:1,arms:'wave',hs:'pig',hair:'#d6a24a',skin:SK.l,shirt:'#20a68a',m:'grin',eyes:'happy'},434,362,.85,0,'');
+  // Papas schleppen
+  s+=sh(318,432,26)+P({pose:'walk',arms:'bag',bag2:1,bagc:'#e0245e',sweat:1,hs:'short',hair:'#6b4a2a',beard:'full',shirt:'#3a7bd5',deco:'stripes',sleeve:'short',look:4,m:'o',brow:'worried'},318,432,.9,1,'');
+  s+=sh(222,424,24)+P({pose:'walk',arms:'bag',bagc:'#3a3358',sweat:1,hs:'bald',hair:'#4a3526',beard:'mous',skin:SK.t,shirt:'#ff8a2a',sleeve:'short',look:4,m:'smile'},222,424,.85,1,'');
+  s+=txt(318,268,'Puh!',24,'#fff','#3a3358');
+  // Kinder rennen zu den Zelten
+  s+=sh(130,418,13)+P({pose:'run',kid:1,arms:'up',hs:'curly',hair:'#2b2019',skin:SK.d,shirt:'#ef3a62',look:5,m:'grin'},130,418,.9,1,'');
+  s+=sh(60,410,13)+P({pose:'run',kid:1,arms:'wave',hs:'spiky',hair:'#c06a2a',skin:SK.l,shirt:'#ffc93a',deco:'star',look:5,m:'grin',eyes:'happy'},60,410,.85,1,'');
+  return s}
+
+/* 2 Sonnenaufgang */
+function sDawn(){seed=202;
+  let s=bgA('dw',PAL.dawn,{sun:[470,214,46,'#ffcf5a'],sunLow:1,trees:[[30,240,1.1],[770,240,1]],treec:'#4e6a44'});
+  s+=birds([[300,90],[330,104],[360,86]]);
+  s+=tentA(150,340,1.45,'day')+`<path d="M131,340 L150,295 L169,340Z" fill="#5a4a38"/>`+tentA(330,322,1.2,'day');
+  // Papa schaut aus dem Zelt
+  s+=P({pose:'table',hs:'messy',hair:'#6b4a2a',beard:'stub',shirt:'#9b5bd4',deco:'stripes',eyes:'sleep',m:'yawn'},150,356,.6,0,'');
+  s+=`<path d="M134,340 L150,301 L166,340Z" fill="none"/>`;
+  s+=txt(330,252,'Ratsch!',22,'#fff','#3a3358');
+  // Küchenzelt mit Kaffee
+  s+=kitchen(620,350,1,false);
+  s+=P({pose:'table',hat:'chef',apron:1,arms:'mug',mugc:'#ffc93a',hs:'short',hair:'#2b2019',beard:'mous',shirt:'#20a68a',m:'smile'},590,342,.9,0,'');
+  s+=counter(520,720,312);
+  s+=`<g transform="translate(668,312)">${rect(-16,-44,32,44,'#8e98a8',6)}${rect(-20,-48,40,8,'#6f7888',3)}<g fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path class="steam" d="M-6,-54 q-6,-9 0,-18"/><path class="steam" style="animation-delay:-.8s" d="M4,-54 q-6,-9 0,-18"/><path class="steam" style="animation-delay:-1.6s" d="M12,-54 q-6,-9 0,-18"/></g></g>`;
+  // Kind streckt sich
+  s+=sh(400,432,14)+P({pose:'stand',kid:1,arms:'up',hs:'pony',hair:'#8a5a2b',shirt:'#a8d8f0',pants:'#a8d8f0',deco:'stripes',eyes:'sleep',m:'yawn'},400,432,.95,0,'');
+  return s}
+
+/* 3 Frühstück: aus dem Szenentest */
+function sBreakfast(){return breakfastScene('A')}
+
+/* 4 Morgenkreis */
+function sCircle(){seed=404;
+  let s=bgA('mk',PAL.morning,{sun:[560,80,36],clouds:2,tents:[[60,236,.6],[700,236,.62]],trees:[[200,238,.9],[620,236,.8]]});
+  s+=`<g transform="translate(748,330)">${rect(-3,-150,6,150,'#8e98a8',2)}<path class="flag" d="M3,-148 q22,-6 44,0 q-6,10 0,24 q-22,-6 -44,0Z" fill="#e0245e"/>${txt(24,-131,'VKF',12,'#fff')}</g>`;
+  const C0=[400,350],rx=300,ry=64,N=16,items=[];
+  const shirts=['#3a7bd5','#ef3a62','#20a68a','#ffc93a','#ff8a2a','#9b5bd4','#7fa82a'],hairs=['#2b2019','#6b4a2a','#d6a24a','#8a5a2b','#c06a2a','#4a3526'],hss=['short','curly','spiky','long','pig','bald','pony','cap'];
+  for(let i=0;i<N;i++){const t=i/N*Math.PI*2+.2,x=C0[0]+rx*Math.cos(t),y=C0[1]+ry*Math.sin(t),kid=i%2==0,back=Math.sin(t)>.15;
+    let hs=hss[Math.floor(rnd()*hss.length)];if(kid&&hs==='bald')hs='spiky';if(!kid&&(hs==='pig'))hs='short';
+    const o={pose:'stand',kid,back,hs,hair:hairs[Math.floor(rnd()*hairs.length)],skin:Object.values(SK)[Math.floor(rnd()*5)],shirt:shirts[i%7],sleeve:'short',look:-Math.cos(t)*4,arms:'down',m:rnd()<.5?'smile':'grin',beard:!kid&&rnd()<.5?(rnd()<.5?'full':'mous'):undefined,capc:shirts[(i+3)%7]};
+    const sc=.62+.3*(y-(C0[1]-ry))/(2*ry);
+    items.push({y,h:sh(x.toFixed(0),y.toFixed(0),(kid?14:22)*sc)+P(o,x,y,sc,0,kid&&!back?'hop':'')})}
+  items.push({y:C0[1]+4,h:sh(400,354,20)+P({pose:'stand',arms:'clip',hs:'cap',capc:'#e0245e',hair:'#4a3526',beard:'full',shirt:'#7fa82a',deco:'vkf',sleeve:'short',m:'grin'},400,354,.78,0,'')});
+  items.sort((a,b)=>a.y-b.y).forEach(q=>s+=q.h);
+  s+=`<g transform="translate(424,190)"><path d="M-6,0 h96 q10,0 10,10 v22 q0,10 -10,10 h-80 l-14,10 l2,-10 h-4 q-10,0 -10,-10 v-22 q0,-10 10,-10Z" fill="#fff"/>${txt(42,27,'Guten Morgen!',15,'#2a1f3d')}</g>`;
+  return s}
+
+/* 5 Spiele */
+function sGames(){seed=505;
+  let s=bgA('sp',PAL.noon,{sun:[700,70,34],clouds:1,tents:[[330,234,.55],[420,236,.55]]});
+  // Tor
+  s+=`<g stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"><path d="M40,392 V292 H180 V392"/></g><g stroke="#fff" stroke-width="1.4" opacity=".6">${Array.from({length:8},(_,i)=>`<line x1="${54+i*16}" y1="296" x2="${54+i*16}" y2="390"/>`).join('')}${Array.from({length:5},(_,i)=>`<line x1="44" y1="${310+i*18}" x2="176" y2="${310+i*18}"/>`).join('')}</g>`;
+  s+=sh(110,404,24)+P({pose:'stand',arms:'up',hs:'short',hair:'#2b2019',skin:SK.t,beard:'stub',shirt:'#ffc93a',sleeve:'short',eyes:'wide',m:'o',look:3},110,404,.85,0,'');
+  s+=`<g class="ball"><circle cx="196" cy="318" r="10" fill="#fff" stroke="#1c2431" stroke-width="2"/><path d="M193,315 l3,-2 3,2 -1,4 h-4z" fill="#1c2431"/><path d="M214,318 h18 M212,326 h14 M212,310 h12" stroke="#fff" stroke-width="3" stroke-linecap="round"/></g>`;
+  s+=sh(270,424,14)+P({pose:'run',kid:1,arms:'up',hs:'curly',hair:'#1c1c1c',skin:SK.d,shirt:'#3a7bd5',deco:'star',m:'grin',eyes:'happy',look:4},270,424,.95,1,'');
+  s+=sh(340,420,14)+P({pose:'stand',kid:1,arms:'up',hs:'pig',hair:'#d6a24a',skin:SK.l,shirt:'#ef3a62',m:'grin',eyes:'happy'},340,420,.9,0,'hop');
+  // Verstecken
+  s+=`<rect x="508" y="232" width="22" height="122" rx="6" fill="#8e5a2c"/><g fill="#5f9a3a"><circle cx="520" cy="214" r="58"/><circle cx="476" cy="236" r="40"/><circle cx="566" cy="236" r="40"/></g><g fill="#7fb84a"><circle cx="504" cy="196" r="26"/><circle cx="548" cy="218" r="20"/></g>`;
+  s+=sh(520,404,14)+P({pose:'stand',kid:1,arms:'eyes',hs:'spiky',hair:'#c06a2a',skin:SK.l,shirt:'#20a68a',m:'sing'},520,404,.95,0,'');
+  s+=txt(520,312,'… 8, 9, 10!',20,'#fff','#3a3358');
+  s+=P({pose:'table',kid:1,hs:'long',hair:'#2b2019',skin:SK.t,shirt:'#9b5bd4',m:'grin',look:-4},630,394,.85,0,'');
+  s+=`<g fill="#5f9a3a"><circle cx="612" cy="392" r="22"/><circle cx="640" cy="384" r="26"/><circle cx="668" cy="394" r="20"/></g><rect x="596" y="392" width="88" height="14" rx="7" fill="#5f9a3a"/>`;
+  // Verkleidekiste
+  s+=`<g transform="translate(726,392)"><path d="M-40,-30 L-46,-62 L42,-66 L40,-30Z" fill="#a8703f"/>${rect(-42,-34,84,36,'#7a4a24',4)}${rect(-8,-26,16,10,'#ffc93a',2)}<path d="M-30,-34 l6,-16 l6,16Z M10,-34 q8,-18 18,-4Z" fill="#e0245e"/><path d="M-12,-34 l4,-12 l6,12Z" fill="#3a7bd5"/></g>`;
+  s+=sh(684,438,14)+P({pose:'stand',kid:1,arms:'wave',hat:'pirate',patch:1,hs:'short',hair:'#6b4a2a',shirt:'#3a3358',deco:'stripes',m:'grin',look:2},684,438,.95,0,'');
+  s+=sh(766,440,14)+P({pose:'stand',kid:1,arms:'up',hat:'crown',cape:'#e0245e',hs:'curly',hair:'#d6a24a',skin:SK.m,shirt:'#ffc93a',m:'grin',eyes:'happy',look:-2},766,440,.95,0,'');
+  return s}
+
+/* 6 Mittagessen */
+function sLunch(){seed=606;
+  let s=bgA('mi',PAL.noon,{sun:[400,60,34],clouds:1,tents:[[80,236,.6],[180,232,.55]],trees:[[300,238,.85]]});
+  s+=kitchen(590,352,1.05,false);
+  s+=P({pose:'table',hat:'chef',apron:1,arms:'ladle',hs:'short',hair:'#4a3526',beard:'full',shirt:'#3a7bd5',m:'grin'},530,338,.9,0,'');
+  s+=P({pose:'table',hat:'chef',apron:1,arms:'clap',hs:'bald',hair:'#9a948c',beard:'mous',skin:SK.t,shirt:'#ff8a2a',m:'smile',look:-2},660,338,.9,0,'');
+  s+=counter(474,710,316);
+  s+=`<g transform="translate(586,316)">${rect(-26,-40,52,40,'#8e98a8',8)}${rect(-30,-44,60,8,'#6f7888',3)}<g fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path class="steam" d="M-10,-50 q-6,-9 0,-18"/><path class="steam" style="animation-delay:-.8s" d="M2,-50 q-6,-9 0,-18"/><path class="steam" style="animation-delay:-1.6s" d="M14,-50 q-6,-9 0,-18"/></g></g>`;
+  s+=`<g transform="translate(680,316)"><path d="M-22,0 h44 l-6,-14 h-32z" fill="#c8913e"/>${roll(false,-10,-16)}${roll(false,6,-17)}</g>`;
+  // Schlange
+  const q=[
+    [440,{kid:1,hs:'curly',hair:'#2b2019',skin:SK.d,shirt:'#ef3a62',m:'grin'}],
+    [378,{hs:'short',hair:'#6b4a2a',beard:'stub',shirt:'#20a68a',deco:'stripes',m:'smile'}],
+    [316,{kid:1,hs:'pig',hair:'#d6a24a',skin:SK.l,shirt:'#ffc93a',m:'smile'}],
+    [258,{kid:1,hs:'spiky',hair:'#1c1c1c',skin:SK.t,shirt:'#3a7bd5',m:'o',eyes:'wide'}],
+    [196,{hs:'cap',capc:'#ffc93a',hair:'#4a3526',beard:'mous',skin:SK.t,shirt:'#9b5bd4',m:'smile'}],
+    [132,{kid:1,hs:'long',hair:'#8a5a2b',shirt:'#20a68a',m:'smile'}],
+    [70,{hs:'bald',hair:'#4a3526',beard:'full',shirt:'#ff8a2a',m:'o',brow:'up',sweat:0}]];
+  q.forEach(([x,o],i)=>{s+=sh(x,428+(i%2)*4,o.kid?14:22)+P({pose:'stand',arms:'plate',sleeve:'short',look:4,...o},x,428+(i%2)*4,.85,0,o.kid?'bob':'')});
+  s+=sh(752,436,14)+P({pose:'walk',kid:1,arms:'plate',food:1,hs:'short',hair:'#c06a2a',skin:SK.l,shirt:'#7fa82a',sleeve:'short',look:4,m:'grin',eyes:'happy'},752,436,.9,0,'');
+  s+=txt(70,300,'Nachschlag?',18,'#fff','#3a3358');
+  return s}
+
+/* 7 Freibad oder Tour */
+function sTour(){seed=707;
+  let s=bgA('to',PAL.after,{sun:[620,70,34],clouds:2,trees:[[40,240,1.1],[90,238,.9],[710,238,1],[760,240,1.2]]});
+  s+=`<path d="M-20,450 C120,420 260,410 420,398 C560,388 640,360 820,330" stroke="#e6d6a6" stroke-width="44" fill="none" stroke-linecap="round"/>`;
+  s+=`<g transform="translate(560,372)">${rect(-4,-96,8,100,'#6b4a2a',2)}<path d="M-6,-92 H70 L84,-80 L70,-68 H-6Z" fill="#fff"/>${txt(36,-74,'Freibad',13,'#0f2a4a')}<path d="M6,-62 H-70 L-84,-50 L-70,-38 H6Z" fill="#fff"/>${txt(-36,-44,'Wanderweg',12,'#0f2a4a')}</g>`;
+  const g=[
+    [96,442,{arms:'pole',pack:'#e0245e',hs:'short',hair:'#6b4a2a',beard:'full',shirt:'#3a7bd5',deco:'stripes',m:'smile',hat:'sun',hatc:'#f2d27a'}],
+    [170,430,{kid:1,arms:'wave',ring:'#ff5a7a',hat:'sun',hatc:'#ffc93a',hs:'pig',hair:'#d6a24a',skin:SK.l,shirt:'#20a68a',m:'grin',eyes:'happy'}],
+    [236,424,{kid:1,arms:'down',towel:1,hs:'curly',hair:'#1c1c1c',skin:SK.d,shirt:'#ff8a2a',m:'grin'}],
+    [304,418,{arms:'down',pack:'#7fa82a',hs:'cap',capc:'#3a7bd5',hair:'#4a3526',beard:'mous',skin:SK.t,shirt:'#ffc93a',m:'smile',sleeve:'short'}],
+    [372,410,{kid:1,arms:'up',pack:'#9b5bd4',hs:'spiky',hair:'#c06a2a',skin:SK.l,shirt:'#ef3a62',m:'grin',eyes:'happy'}],
+    [436,404,{arms:'pole',pack:'#3a7bd5',hs:'bald',hair:'#9a948c',beard:'full',shirt:'#20a68a',sleeve:'short',m:'smile'}]];
+  g.forEach(([x,y,o],i)=>{const sc=.88-i*.03;s+=sh(x,y,(o.kid?14:22)*sc)+P({pose:'walk',look:4,sleeve:o.sleeve||'short',...o},x,y,sc,0,'bob')});
+  s+=bfly(500,300,'#ff8a2a',0)+bfly(660,260,'#ffe14a',-1.2)+bfly(260,300,'#9b5bd4',-2);
+  return s}
+
+/* 8 Abendessen */
+function sDinner(){seed=808;
+  let s=bgA('ab',PAL.eve,{sun:[640,226,46,'#ffb347'],sunLow:1,tents:[[90,236,.62],[240,232,.58],[560,234,.58],[720,236,.62]]});
+  const ppl=[
+    [168,{arms:'clap',hs:'short',hair:'#6b4a2a',beard:'full',shirt:'#3a7bd5',deco:'stripes',m:'grin'}],
+    [236,{kid:1,arms:'clap',hs:'curly',hair:'#1c1c1c',skin:SK.d,shirt:'#ffc93a',m:'grin',eyes:'happy'}],
+    [306,{arms:'mug',mugc:'#fff',hs:'cap',capc:'#e0245e',hair:'#4a3526',beard:'mous',skin:SK.t,shirt:'#7fa82a',m:'smile'}],
+    [494,{kid:1,arms:'up',hs:'pig',hair:'#d6a24a',skin:SK.l,shirt:'#ef3a62',m:'grin'}],
+    [564,{arms:'clap',hs:'bald',hair:'#4a3526',beard:'full',shirt:'#ff8a2a',m:'grin',eyes:'happy'}],
+    [634,{kid:1,arms:'eat',hs:'long',hair:'#8a5a2b',shirt:'#20a68a',m:'o'}]];
+  ppl.forEach(([x,o])=>{s+=P({pose:'table',sleeve:'long',...o},x,o.kid?312:322,1,0,'')});
+  s+=rect(130,300,540,10,'#a8703f',3)+`<rect x="134" y="306" width="532" height="42" fill="url(#check)"/>`+rect(160,348,10,48,'#7a4a24',2)+rect(630,348,10,48,'#7a4a24',2);
+  s+=`<g transform="translate(400,300)"><circle cy="-22" r="46" fill="url(#lamp)"/>${rect(-9,-30,18,30,'#2b3346',3)}${rect(-6,-26,12,20,'#ffd27a',0)}<path d="M-9,-30 Q0,-42 9,-30" stroke="#2b3346" stroke-width="3" fill="none"/></g>`;
+  s+=`<ellipse cx="200" cy="300" rx="20" ry="5" fill="#fff"/><ellipse cx="270" cy="300" rx="16" ry="4" fill="#fff"/><ellipse cx="530" cy="300" rx="16" ry="4" fill="#fff"/><ellipse cx="600" cy="300" rx="20" ry="5" fill="#fff"/>`+mug(false,330,300,'#3a7bd5')+mug(false,470,300,'#ffc93a');
+  s+=sh(730,440,16)+P({pose:'stand',kid:1,arms:'cheerball',hs:'spiky',hair:'#c06a2a',skin:SK.l,shirt:'#3a7bd5',deco:'star',m:'grin',eyes:'happy'},730,440,1,0,'hop');
+  s+=txt(722,338,'Tor des Tages!',22,'#fff','#5a3a8e');
+  return s}
+
+/* 9 Lagerrunde: aus dem Szenentest */
+function sCamp(){return fireScene('A')}
+
+/* 10 Gute Nacht */
+function sNight(){seed=1010;
+  let s=bgA('gn',PAL.night,{stars:1,moon:[150,70],trees:[[30,250,1.2],[770,250,1.1],[700,246,.9]],treec:'#17122e'});
+  s+=`<g class="shoot"><path d="M420,40 l60,22" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".85"/></g>`;
+  s+=kitchen(640,340,.95,true);
+  s+=P({pose:'table',hat:'chef',apron:1,arms:'ladle',hs:'short',hair:'#2b2019',beard:'stub',shirt:'#3a7bd5',m:'smile'},610,322,.85,0,'');
+  s+=counter(546,734,302);
+  s+=`<g transform="translate(690,302)"><path d="M-22,0 h44 l-6,-14 h-32z" fill="#c8913e"/>${roll(false,-10,-16)}${roll(false,6,-17)}</g>`;
+  s+=tentA(110,350,1.5,'night')+tentA(290,336,1.3,'night')+tentA(450,350,1.4,'night');
+  s+=zz(130,250)+zz(306,250)+zz(466,256);
+  s+=sh(330,432,22)+P({pose:'walk',arms:'lamp',hs:'messy',hair:'#6b4a2a',beard:'full',shirt:'#a8d8f0',pants:'#a8d8f0',deco:'stripes',hat:'night',hatc:'#3a7bd5',look:4,m:'o',eyes:'squint'},330,432,.85,0,'');
+  for(let i=0;i<9;i++)s+=`<circle class="ffly" style="animation-delay:${(-rnd()*3).toFixed(2)}s" cx="${(60+rnd()*700).toFixed(0)}" cy="${(260+rnd()*150).toFixed(0)}" r="2.6" fill="#fff6a0"/>`;
+  return s}
+
+const SC=[sArrival,sDawn,sBreakfast,sCircle,sGames,sLunch,sTour,sDinner,sCamp,sNight];
+document.querySelectorAll('svg[data-s]').forEach(el=>{el.innerHTML=SC[+el.dataset.s]()});
+
+})();
+</script>
