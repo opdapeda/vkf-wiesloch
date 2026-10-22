@@ -142,7 +142,7 @@ a{color:inherit}
 .pv-card h3{margin:0 0 4px;font:800 26px/1.15 'Baloo 2',system-ui,sans-serif}
 .pv-card p{margin:0;font-size:18px;line-height:1.45;font-weight:600;max-width:62ch;text-wrap:pretty}
 .pv-card.port figcaption{max-width:min(100%,520px)}
-.vcard{position:relative;display:block;pointer-events:auto;width:clamp(128px,20vh,210px);margin:28px auto 22px;padding:9px 9px 0;border:0;border-radius:6px;background:#fffdf8;color:#2a1f3d;text-align:center;font:inherit;cursor:pointer;
+.vcard{position:relative;left:calc(-1*min(22vw,320px));top:-64px;display:block;pointer-events:auto;width:clamp(128px,20vh,210px);margin:28px auto 22px;padding:9px 9px 0;border:0;border-radius:6px;background:#fffdf8;color:#2a1f3d;text-align:center;font:inherit;cursor:pointer;
   box-shadow:0 14px 34px rgba(10,6,30,.45);transform:rotate(3.5deg);transition:transform .25s,box-shadow .25s,opacity .3s}
 .vcard:hover,.vcard:focus-visible{transform:rotate(0) translateY(-4px) scale(1.04);box-shadow:0 20px 42px rgba(10,6,30,.5)}
 .vcard:focus-visible{outline:4px solid #ffc93a;outline-offset:4px}
@@ -153,7 +153,7 @@ a{color:inherit}
 .vcard .play i::before{content:"";margin-left:4px;border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #e8890c}
 .vcard .lbl{display:block;padding:9px 2px 26px;font:800 19px/1.1 'Baloo 2',system-ui,sans-serif}
 .vcard .go{position:absolute;left:50%;bottom:-17px;transform:translateX(-50%);white-space:nowrap;padding:7px 16px;border-radius:999px;background:#ffc93a;color:#2a1f3d;font:800 16px/1.1 'Baloo 2',system-ui,sans-serif;box-shadow:0 4px 12px rgba(0,0,0,.35)}
-@media (max-width:700px){.vcard{left:-40px;width:clamp(104px,16vh,132px);margin-top:26px;padding:5px 5px 0}.vcard .play{left:5px;right:5px;top:5px}.vcard .play i{width:28px;height:28px}.vcard .play i::before{border-width:5px 0 5px 9px;margin-left:2px}.vcard .tape{width:44px;height:16px;margin-left:-22px;top:-8px}
+@media (max-width:700px){.vcard{left:-104px;top:-30px;width:clamp(104px,16vh,132px);margin-top:26px;padding:5px 5px 0}.vcard .play{left:5px;right:5px;top:5px}.vcard .play i{width:28px;height:28px}.vcard .play i::before{border-width:5px 0 5px 9px;margin-left:2px}.vcard .tape{width:44px;height:16px;margin-left:-22px;top:-8px}
   .vcard .lbl{font-size:12px;padding:5px 0 18px}.vcard .go{font-size:12px;padding:4px 9px;bottom:-12px}}
 @media (max-height:800px){.vcard{width:clamp(108px,17vh,140px);margin:18px auto 20px;padding:6px 6px 0}.vcard .play{left:6px;right:6px;top:6px}.vcard .play i{width:34px;height:34px}.vcard .play i::before{border-width:7px 0 7px 12px}
   .vcard .lbl{font-size:14px;padding:6px 0 20px}.vcard .go{font-size:13px;padding:5px 12px;bottom:-14px}}
