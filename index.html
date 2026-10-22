@@ -932,7 +932,7 @@ const HADL={c:'#f4f3ef',arms:'wave',hs:'short',hair:'#6b5a4a',hat:'straw',cord:1
   })();
 
   items.sort((a,b)=>a.y-b.y);
-  vig('ankunft',.045,.088,items.map(o=>o.h).join(''));
+  vig('ankunft',.045,.09,items.map(o=>o.h).join(''));
   seed=s0;figN=n0})();
 
 vig('fruehstueck',.13,.20, runHTML('b')+table(560,1040,700,
@@ -1194,7 +1194,7 @@ function render(){
   setStop('m3a',kc(p,M3A));setStop('m3b',kc(p,M3B));setStop('g1',kc(p,GA));setStop('g2',kc(p,GB));
   const tc=kc(p,TREE);$('forest').setAttribute('fill',tc);$('edgeTrees').setAttribute('fill',tc);$('birds').setAttribute('stroke',tc);
   const ar=$('arrival');ar.style.display=p<.095?'':'none';
-  if(p<.095){const dv=clamp(p/.07,0,1),drive=dv*dv*1100,rt=VB.x+VB.w,lo=1-clamp((p-.04)/.04,0,1),A=n=>`translate(${(rt+n).toFixed(1)},806)`,B=90;
+  if(p<.095){const dv=clamp(p/.07,0,1),drive=dv*dv*1100,rt=VB.x+VB.w,lo=1-clamp((p-.02)/.04,0,1),A=n=>`translate(${(rt+n).toFixed(1)},806)`,B=90;
     $('bus').setAttribute('transform',A(B+drive));['spin1','spin2','spin3'].forEach(i=>$(i).setAttribute('transform',`rotate(${(drive/24*57.3).toFixed(1)})`));
     $('luggage').setAttribute('transform',A(-82)+' scale(.65)');$('luggage').setAttribute('opacity',lo.toFixed(3));}
   const t=p/.84,sun=$('sun');
@@ -1204,7 +1204,7 @@ function render(){
   $('dark').setAttribute('opacity',kf(p,[[0,.22],[.1,0],[.66,0],[.78,.18],[.88,.4],[1,.46]]));
   $('dusk').setAttribute('opacity',kf(p,[[0,.1],[.1,0],[.62,0],[.72,.14],[.82,.05],[.9,0]]));
   $('klight').setAttribute('opacity',kf(p,[[.74,0],[.88,1]]));
-  V.forEach(v=>{const f=.018;let o=0;if(p>v.a-f&&p<v.b+f)o=Math.min(clamp((p-(v.a-f))/(2*f),0,1),clamp(((v.b+f)-p)/(2*f),0,1));
+  V.forEach(v=>{const f=.018;let o=0;if(p>v.a-f&&p<v.b+f)o=Math.min(clamp((p-(v.a-f))/(2*f)*1.05,0,1),clamp(((v.b+f)-p)/(2*f)*1.05,0,1));
     v.g.style.opacity=o;v.g.style.display=o>0?'':'none';v.g.style.transform=`translateY(${((1-o)*16).toFixed(1)}px)`;
     if(o>0){const lp=clamp((p-v.a)/(v.b-v.a),0,1);
       if(v.g.id==='ausflug')$('walkers').setAttribute('transform',`translate(${(560+lp*520).toFixed(1)},${(792-lp*30).toFixed(1)})`);
