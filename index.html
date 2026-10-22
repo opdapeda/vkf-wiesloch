@@ -868,6 +868,7 @@ const guitars=[0,1,2].map(i=>{const g=document.createElementNS(NS,'g');g.setAttr
 /* photo spots: items = one or more photos (blättern), t = caption of the spot, an item can bring its own t */
 const FOTO={
  drohne:{l:'Das Lager von oben',items:[{video:'video/drohne.mp4',poster:'video/drohne-poster.jpg',alt:'Drohnenflug'}]},
+ bus:{l:'Bus entladen',items:[{src:'fotos/bus-1.jpg',alt:'Papas stehen vor dem Reisebus und reichen Gepäck vom Anhänger und aus dem Busbauch',t:'Kaum angekommen, gibt es keine Verschnaufpause: Die Papas packen sofort mit an und entladen den Bus und den Anhänger.'}]},
  zelte:{l:'Ankunft',items:[{src:'fotos/zelte-1.jpg',alt:'Kinder sitzen auf einer Bank, dahinter die Zeltreihe',t:'Die Kinder sind gerade auf dem Platz angekommen. Sie reisen mit zwei Reisebussen an und sind schon ganz gespannt darauf, bald in die Zelte einzuziehen.'}]},
  kueche:{l:'Küche und Grillbereich',items:[{src:'fotos/kueche-1.jpg',alt:'Küchenzelt mit Spülstation, dahinter das Vorratszelt',t:'Der Grillbereich mit dem Küchenzelt, im Hintergrund das Vorratszelt. Hier wird für das leibliche Wohl gesorgt: Es wird gebacken, gekocht und gebraten.'}]},
  laternen:{l:'Öllampen',items:[{src:'fotos/laternen-1.jpg',alt:'Öllampen auf einem Tisch am Abend',t:'Unsere Öllampen sorgen abends für ganz besondere Stimmung. Wir haben kein oder nur selten elektrischen Strom, deshalb ergänzen sie nachts die Beleuchtung.'}]},
@@ -880,7 +881,7 @@ const FOTO={
  wanderung:{l:'Wanderung',items:[{src:'fotos/wanderung-1.jpg',alt:'Gruppe wandert auf einem Weg zwischen Bauernhöfen',t:'Manchmal gibt es auch einen längeren Spaziergang oder eine kleine Wanderung. Gerade im Schwarzwald kommt man immer wieder an wunderschönen Bauernhöfen vorbei.'}]},
  rutsche:{l:'Wasserrutsche',items:[{src:'fotos/rutsche-1.jpg',alt:'Kind rutscht auf einer langen weißen Plane über die Wiese',t:'Eine Wasserrutsche auf einer Spargelplane. Auch so kann man sich zwischendurch abkühlen.'}]}};
 const S=[
- {a:0,b:.05,stop:0,l:'Start',h:'Ein Tag in der VKF',d:'Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel.',intro:1},
+ {a:0,b:.05,stop:0,l:'Start',h:'Ein Tag in der VKF',d:'Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel.',intro:1,info:[{x:1500,y:700,photo:'bus'}]},
  {a:.05,b:.11,stop:.085,l:'Sonnenaufgang',h:'Die Sonne geht auf',d:'Über den Bergen wird es hell. Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.',info:[
    {f:'sun',d:'Über den Bergen wird es hell.'},
    {x:1090,y:546,d:'Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.'},
