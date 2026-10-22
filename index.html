@@ -182,6 +182,13 @@ a{color:inherit}
 /* SVG animation bits */
 .flame{transform-box:fill-box;transform-origin:50% 100%;animation:flick .9s ease-in-out infinite alternate}
 .flame.f2{animation-duration:.7s;animation-delay:-.3s}
+  /* Footer-Szene: nur Blinzeln und Feuer */
+  .ft-blink{transform-box:fill-box;transform-origin:center;animation:ft-blink 4.2s infinite}
+  .ft-blink.ft-d2{animation-delay:-1.7s}
+  @keyframes ft-blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+  .ft-flk{transform-box:fill-box;transform-origin:50% 100%;animation:ft-flk .9s ease-in-out infinite alternate}
+  @keyframes ft-flk{0%{transform:scale(1,1)}50%{transform:scale(.94,1.06)}100%{transform:scale(1.04,.95)}}
+  @media (prefers-reduced-motion: reduce){.ft-blink,.ft-flk{animation:none}}
 @keyframes flick{0%{transform:scale(1,1) skewX(0)}40%{transform:scale(.95,1.07) skewX(3deg)}100%{transform:scale(1.04,.93) skewX(-3deg)}}
 .spark{animation:rise 2.6s linear infinite;opacity:0}
 @keyframes rise{0%{transform:translate(0,0);opacity:0}10%{opacity:1}100%{transform:translate(var(--dx,10px),-190px);opacity:0}}
@@ -445,6 +452,8 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
       <linearGradient id="fSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1a4a"/><stop offset=".08" stop-color="#2a1a4a"/><stop offset=".55" stop-color="#8a3a8e"/><stop offset=".85" stop-color="#e8823a"/></linearGradient>
       <linearGradient id="fM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2a2a"/><stop offset="1" stop-color="#14102b"/></linearGradient>
       <radialGradient id="fGlow"><stop offset="0" stop-color="#ffb347" stop-opacity=".55"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></radialGradient>
+      <linearGradient id="ftFlO" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff5a1f"/><stop offset="1" stop-color="#ffb02e"/></linearGradient>
+      <linearGradient id="ftFlI" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffd23a"/><stop offset="1" stop-color="#fff3b0"/></linearGradient>
     </defs>
     <rect width="1440" height="360" fill="url(#fSky)"/>
     <path d="M0,0 H1440 V40 C1300,60 1180,30 1020,44 C860,58 700,26 540,38 C380,50 220,30 0,46Z" class="fHill"/>
@@ -452,10 +461,66 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
     <path d="M0,360 V270 L150,200 Q170,190 190,202 L330,280 L520,190 Q540,180 560,192 L720,270 L900,186 Q920,176 940,188 L1110,276 L1270,206 Q1290,198 1310,210 L1440,262 V360Z" fill="#5a3a2a" opacity=".7"/>
     <path d="M0,360 V300 L220,236 Q240,230 260,240 L560,320 L860,232 Q880,226 900,236 L1200,318 L1440,280 V360Z" fill="url(#fM)"/>
     <ellipse cx="720" cy="330" rx="260" ry="70" fill="url(#fGlow)"/>
-    <g transform="translate(720,338)">
-      <rect x="-46" y="-8" width="92" height="17" rx="8.5" fill="#6a2e14" transform="rotate(8)"/><rect x="-46" y="-8" width="92" height="17" rx="8.5" fill="#7a3a1a" transform="rotate(-8)"/>
-      <path class="flame" d="M0,0 C-30,0 -42,-22 -38,-46 C-34,-70 -14,-84 -4,-120 C10,-96 18,-80 24,-62 C28,-72 30,-80 30,-88 C42,-70 44,-46 40,-30 C36,-10 24,0 0,0Z" fill="#d8361a"/>
-      <path class="flame f2" d="M0,0 C-16,0 -22,-12 -20,-26 C-18,-40 -8,-46 -2,-64 C6,-52 12,-44 14,-34 C16,-40 18,-44 18,-48 C26,-36 26,-22 22,-14 C18,-4 10,0 0,0Z" fill="#ffb02a"/>
+    <!-- Footer-Szene: Papa und Kind am Lagerfeuer (Stil A) -->
+    <g id="ft-scene" transform="translate(720,342) scale(1.25) translate(-160,-212)">
+      <ellipse cx="94" cy="213" rx="28" ry="5" fill="#14102b" opacity=".35"/>
+      <ellipse cx="229" cy="213" rx="20" ry="4.5" fill="#14102b" opacity=".35"/>
+      <!-- Feuer -->
+      <g transform="translate(160,212)">
+        <ellipse cy="4" rx="30" ry="6" fill="#1a0c08" opacity=".45"/>
+        <g transform="rotate(9)"><rect x="-26" y="-5" width="52" height="10" rx="5" fill="#7a4a24"/></g>
+        <g transform="rotate(-9)"><rect x="-26" y="-5" width="52" height="10" rx="5" fill="#8e5a2c"/></g>
+        <g transform="translate(0,-2) scale(.5)"><g class="ft-flk">
+          <path d="M0,0 C-34,0 -48,-24 -44,-52 C-40,-80 -16,-96 -5,-136 C11,-110 20,-92 27,-71 C32,-82 34,-91 34,-100 C48,-80 50,-52 46,-34 C41,-11 27,0 0,0Z" fill="url(#ftFlO)"/>
+          <path d="M0,0 C-18,0 -25,-14 -23,-30 C-21,-46 -9,-52 -2,-73 C7,-59 14,-50 16,-39 C18,-46 20,-50 20,-55 C30,-41 30,-25 25,-16 C20,-5 11,0 0,0Z" fill="url(#ftFlI)"/>
+        </g></g>
+      </g>
+      <!-- Papa mit Würstchen -->
+      <g id="ft-papa" transform="translate(94,212)">
+    <rect x="-14" y="-50" width="12" height="46" rx="6" fill="#3a3358"/>
+    <rect x="2" y="-50" width="12" height="46" rx="6" fill="#3a3358"/>
+    <ellipse cx="-7" cy="-3" rx="10" ry="5" fill="#5a3a22"/><ellipse cx="10" cy="-3" rx="10" ry="5" fill="#5a3a22"/>
+    <rect x="-31" y="-94" width="11" height="40" rx="5.5" fill="#2f66b8"/>
+    <circle cx="-25.5" cy="-54" r="6" fill="#f2c9a0"/>
+    <rect x="-24" y="-100" width="48" height="56" rx="20" fill="#3a7bd5"/>
+    <rect x="-24" y="-100" width="16" height="56" rx="8" fill="#fff" opacity=".15"/>
+    <path d="M-8,-100 L0,-90 L8,-100Z" fill="#e3b088"/>
+    <rect x="6" y="-86" width="11" height="11" rx="2.5" fill="#2f66b8"/>
+    <line x1="40" y1="-62" x2="62" y2="-80" stroke="#7a4a24" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="55" y="-88" width="16" height="7" rx="3.5" fill="#c0603a" transform="rotate(-38 63 -84)"/>
+    <path d="M16,-92 Q30,-78 40,-66" stroke="#3a7bd5" stroke-width="11" stroke-linecap="round" fill="none"/>
+    <circle cx="41" cy="-64" r="6" fill="#f2c9a0"/>
+    <rect x="-5" y="-106" width="10" height="9" fill="#e3b088"/>
+    <circle cx="-15" cy="-120" r="4.5" fill="#e8b48a"/>
+    <circle cx="0" cy="-121" r="17" fill="#f2c9a0"/>
+    <path d="M-17,-122 Q-18,-140 0,-139 Q16,-139 17,-126 Q10,-133 2,-132 Q-9,-131 -13,-122Z" fill="#6b4a2a"/>
+    <path d="M-16,-119 Q-17,-100 1,-98 Q17,-100 17,-117 Q13,-109 1,-109 Q-11,-109 -16,-119Z" fill="#6b4a2a"/>
+    <path d="M-1,-108 Q4,-102 9,-108Z" fill="#7a2a2a"/>
+    <ellipse cx="7" cy="-116" rx="3.6" ry="3" fill="#e0a07a"/>
+    <g class="ft-blink"><ellipse cx="-1" cy="-123" rx="2.1" ry="2.8" fill="#2a1f3d"/><ellipse cx="11" cy="-123" rx="2.1" ry="2.8" fill="#2a1f3d"/></g>
+    <path d="M-5,-129 l6,-1 M8,-130 l6,1" stroke="#6b4a2a" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="14" cy="-113" r="3" fill="#ef7a7a" opacity=".35"/>
+      </g>
+      <!-- Kind mit Marshmallow (gespiegelt, schaut zum Feuer) -->
+      <g id="ft-kid" transform="translate(229,212) scale(-1,1)">
+    <rect x="-8" y="-26" width="7" height="24" rx="3.5" fill="#c98d62"/><rect x="1" y="-26" width="7" height="24" rx="3.5" fill="#c98d62"/>
+    <ellipse cx="-4.5" cy="-2.5" rx="6.5" ry="3.8" fill="#ef3a62"/><ellipse cx="6" cy="-2.5" rx="6.5" ry="3.8" fill="#ef3a62"/>
+    <rect x="-12" y="-36" width="24" height="13" rx="5" fill="#2f8f7a"/>
+    <rect x="-17" y="-58" width="7" height="22" rx="3.5" fill="#e8b020"/>
+    <circle cx="-13.5" cy="-36" r="4" fill="#c98d62"/>
+    <rect x="-13" y="-62" width="26" height="30" rx="11" fill="#ffc93a"/>
+    <rect x="-13" y="-62" width="9" height="30" rx="4.5" fill="#fff" opacity=".2"/>
+    <line x1="26" y1="-46" x2="52" y2="-58" stroke="#7a4a24" stroke-width="2" stroke-linecap="round"/>
+    <rect x="49" y="-64" width="9" height="8" rx="2.5" fill="#fff5e6" transform="rotate(-24 53 -60)"/>
+    <path d="M9,-56 Q18,-50 25,-46" stroke="#ffc93a" stroke-width="7" stroke-linecap="round" fill="none"/>
+    <circle cx="26" cy="-45" r="4.2" fill="#c98d62"/>
+    <circle cx="-13" cy="-77" r="3.5" fill="#b87c52"/>
+    <circle cx="0" cy="-78" r="15" fill="#c98d62"/>
+    <g fill="#2b2019"><circle cx="-14" cy="-84" r="4.5"/><circle cx="-10" cy="-92" r="5"/><circle cx="-1" cy="-95" r="5.5"/><circle cx="8" cy="-93" r="4.5"/><circle cx="13" cy="-87" r="3.5"/><circle cx="-15" cy="-77" r="3.2"/></g>
+    <g class="ft-blink ft-d2"><ellipse cx="3" cy="-78" rx="2" ry="2.6" fill="#2a1f3d"/><ellipse cx="11" cy="-78" rx="2" ry="2.6" fill="#2a1f3d"/></g>
+    <path d="M3,-71 Q8,-65 13,-71Z" fill="#6a1f1f"/><rect x="5" y="-71" width="3" height="2" fill="#fff"/>
+    <circle cx="14" cy="-73" r="2.6" fill="#ff7a7a" opacity=".4"/>
+      </g>
     </g>
   </svg>
   <div class="inner">
