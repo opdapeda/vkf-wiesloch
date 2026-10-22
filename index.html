@@ -1077,8 +1077,8 @@ const S=[
    {f:'moon',d:'Mond und Sterne stehen über den Zelten.'},
    {x:1100,y:546,d:'Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.'}]}
 ];
-/* Banner-Info: in jeder Szene am selben Platz an der Fahne */
-S.forEach(s=>{(s.info=s.info||[]).push({x:BANNER.x+60*BANNER.s,y:BANNER.y-470*BANNER.s,d:'Der Banner: ein baumhoher, entasteter Baumstamm, tief in die Erde eingegraben. Daran hängt die Wieslocher Fahne mit dem Wappen. Die VKF Wiesloch gehört übrigens zur KJG-Gemeinde. Im Zeltlager ist es durchaus üblich, dass man die Fahne bewachen muss, damit sie nicht von anderen Zeltlagern geklaut wird.'})});
+/* Banner-Info: nur in der zweiten Szene (Sonnenaufgang) an der Fahne */
+[S[1]].forEach(s=>{(s.info=s.info||[]).push({x:BANNER.x+60*BANNER.s,y:BANNER.y-470*BANNER.s,d:'Der Banner: ein baumhoher, entasteter Baumstamm, tief in die Erde eingegraben. Daran hängt die Wieslocher Fahne mit dem Wappen. Die VKF Wiesloch gehört übrigens zur KJG-Gemeinde. Im Zeltlager ist es durchaus üblich, dass man die Fahne bewachen muss, damit sie nicht von anderen Zeltlagern geklaut wird.'})});
 const caps=$('caps');
 S.forEach((s,i)=>{const d=document.createElement('div');d.className='cap'+(s.intro?' intro':'');
   d.innerHTML=(s.intro?'<div class="logo hero-logo" role="img" aria-label="Logo VKF Wiesloch, Väter-Kinder-Freizeit"></div>':'')+`<h2>${s.h}</h2>`+(s.intro?'<div class="tagline">Die VKF ist die Väter-Kinder-Freizeit Wiesloch.</div><p>'+s.d+'</p><div class="hint">Scrollen <span aria-hidden="true">↓</span></div>':`<p>${s.d}</p>`);
