@@ -153,7 +153,7 @@ a{color:inherit}
 .vcard .play i::before{content:"";margin-left:4px;border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #e8890c}
 .vcard .lbl{display:block;padding:9px 2px 26px;font:800 19px/1.1 'Baloo 2',system-ui,sans-serif}
 .vcard .go{position:absolute;left:50%;bottom:-17px;transform:translateX(-50%);white-space:nowrap;padding:7px 16px;border-radius:999px;background:#ffc93a;color:#2a1f3d;font:800 16px/1.1 'Baloo 2',system-ui,sans-serif;box-shadow:0 4px 12px rgba(0,0,0,.35)}
-@media (max-width:700px){.vcard{width:clamp(104px,16vh,132px);margin-top:26px;padding:5px 5px 0}.vcard .play{left:5px;right:5px;top:5px}.vcard .play i{width:28px;height:28px}.vcard .play i::before{border-width:5px 0 5px 9px;margin-left:2px}.vcard .tape{width:44px;height:16px;margin-left:-22px;top:-8px}
+@media (max-width:700px){.vcard{left:-40px;width:clamp(104px,16vh,132px);margin-top:26px;padding:5px 5px 0}.vcard .play{left:5px;right:5px;top:5px}.vcard .play i{width:28px;height:28px}.vcard .play i::before{border-width:5px 0 5px 9px;margin-left:2px}.vcard .tape{width:44px;height:16px;margin-left:-22px;top:-8px}
   .vcard .lbl{font-size:12px;padding:5px 0 18px}.vcard .go{font-size:12px;padding:4px 9px;bottom:-12px}}
 @media (max-height:800px){.vcard{width:clamp(108px,17vh,140px);margin:18px auto 20px;padding:6px 6px 0}.vcard .play{left:6px;right:6px;top:6px}.vcard .play i{width:34px;height:34px}.vcard .play i::before{border-width:7px 0 7px 12px}
   .vcard .lbl{font-size:14px;padding:6px 0 20px}.vcard .go{font-size:13px;padding:5px 12px;bottom:-14px}}
@@ -229,9 +229,13 @@ a{color:inherit}
 .zz{transform-box:fill-box;transform-origin:center;animation:zz 4.5s ease-out infinite;opacity:0;font:800 24px 'Baloo 2',system-ui,sans-serif}
 @keyframes zz{0%{transform:translate(0,0) scale(.6);opacity:0}20%{opacity:.9}100%{transform:translate(26px,-80px) scale(1.2);opacity:0}}
 @media (prefers-reduced-motion: reduce){
-  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span,.ib .halo,.hop,.sway,.peek,.ksteam,.zz,.blink,.strum,.sing,.legA,.legB,.walkA,.walkB{animation:none}
+  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span,.ib .halo,.hop,.sway,.peek,.ksteam,.zz,.blink,.strum,.sing,.legA,.legB,.walkA,.walkB,.wave{animation:none}
   .spark,.note,.steam,.ksteam,.zz{opacity:0}
 }
+
+/* Banner: Fahne weht leicht */
+.wave{transform-box:fill-box;transform-origin:100% 0;animation:wave 2.6s ease-in-out infinite alternate}
+@keyframes wave{from{transform:skewY(-1.5deg) scaleX(1)}to{transform:skewY(2deg) scaleX(.97)}}
 
 /* Info bands: each band rises out of the one above with its own hill silhouette */
 main{display:block}
@@ -368,6 +372,7 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
       <g id="kitchen"></g>
       <g id="kfx"></g>
       <g id="edgeTrees"></g>
+      <g id="banner"></g>
       <g id="arrival"><g id="luggage"></g><g id="bus"></g></g>
 
       <g id="vigs"></g>
@@ -769,6 +774,72 @@ $('edgeTrees').innerHTML=[[-60,905,1.9],[40,890,1.5],[1660,905,1.9],[1560,892,1.
 
   seed=s0})();
 
+const BANNER={x:972,y:655,s:.45};  /* Fuß des Stamms in Szenenkoordinaten, Maßstab */
+/* Banner: baumhoher Stamm mit Wieslocher Fahne (docs/banner-referenz.html). Er steht fest auf der Wiese, hinter den Vignetten; die Tageszeit kommt wie bei Zelten und Bäumen über die Overlays #dusk und #dark. */
+(function(){const f1=n=>(+n).toFixed(1);
+function bannerSVG(id,o){o=o||{};const N=!!o.night,P='bn'+id;
+  const wood=N?'#6b4a3a':'#9a6a40',woodD=N?'#4a3028':'#6e4a2a',woodL=N?'#7e5a48':'#b88454';
+  const white=N?'#cfd2e2':'#f6f6f2',blue=N?'#28449a':'#2f5fc4',rope=N?'#8a6a50':'#c48a52';
+  const black='#1c1a20',gold=N?'#c99a2a':'#f2b81e',goldD=N?'#8a6418':'#b8840e';
+  let s=`<defs>
+    <pattern id="${P}r" width="9" height="13" patternUnits="userSpaceOnUse" patternTransform="skewX(-20)"><rect width="9" height="13" fill="${white}"/><path d="M4.5,0 L9,6.5 L4.5,13 L0,6.5Z" fill="${N?'#3a5ab8':'#2a7fd4'}"/></pattern>
+    <clipPath id="${P}c"><path d="M-28,0 H28 V34 Q28,58 0,66 Q-28,58 -28,34Z"/></clipPath>
+  </defs>`;
+  // Spannseile nach rechts
+  s+=`<g stroke="${rope}" stroke-width="2.2" fill="none"><path d="M3,-548 Q170,-300 330,-10"/><path d="M3,-540 Q190,-270 380,-6" opacity=".8"/></g>`;
+  // Stamm (leicht konisch), Astansätze, Maserung
+  s+=`<path d="M-11,0 L-6,-552 Q0,-560 6,-552 L11,0Z" fill="${wood}"/><path d="M-11,0 L-6,-552 Q-3,-556 0,-556 L-2,0Z" fill="${woodL}" opacity=".55"/>`;
+  s+=`<g fill="${woodD}">${[[-2,-470],[3,-400],[-3,-330],[2,-250],[-1,-180]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="2.4" ry="3.6"/>`).join('')}</g>`;
+  s+=`<path d="M5,-250 l14,-12 l-12,16Z" fill="${woodD}"/>`;
+  // Fahne mit Querstange
+  s+=`<g transform="translate(-6,-536)"><rect x="-86" y="-6" width="88" height="6" rx="3" fill="${woodD}"/>
+    <g class="wave"><path d="M-84,0 H0 V196 Q-20,204 -42,196 Q-64,188 -84,198Z" fill="${white}"/>
+      <path d="M-42,0 H0 V196 Q-20,204 -42,196Z" fill="${blue}"/>
+      <path d="M-84,0 H0" stroke="${woodD}" stroke-width="2"/>`;
+  // Wappen
+  s+=`<g transform="translate(-42,12)"><g clip-path="url(#${P}c)">
+        <rect x="-28" y="0" width="28" height="70" fill="url(#${P}r)"/>
+        <rect x="0" y="0" width="28" height="70" fill="${black}"/>
+        <g transform="translate(13.5,33) scale(.262,.3)">${lion(gold,goldD)}</g>
+      </g><path d="M-28,0 H28 V34 Q28,58 0,66 Q-28,58 -28,34Z" fill="none" stroke="${goldD}" stroke-width="1.6"/></g>`;
+  // KJG
+  const L=(t,y)=>`<text x="-42" y="${y}" text-anchor="middle" font-family="'Baloo 2','Arial Rounded MT Bold',system-ui,sans-serif" font-weight="800" font-size="36" fill="${N?'#e8eaf4':'#fff'}" stroke="${N?'#14204a':'#1a2a6a'}" stroke-width="6" paint-order="stroke" stroke-linejoin="round">${t}</text>`;
+  s+=L('K',116)+L('J',150)+L('G',184);
+  s+=`</g></g>`;
+  // Wegweiser
+  const signs=[[-520+0,'r','#e6c27a'],[-500,'l','#d9a85a'],[-480,'r','#e8d08a'],[-460,'r','#c8924a']];
+  s+=`<g>${[[-118,1,'#e6c27a',40],[-100,-1,'#d9a85a',36],[-84,1,'#e8d08a',30],[-68,1,'#c8924a',26]].map(([y,d,c,w])=>{const x0=d>0?-6:6,x1=x0+d*w;
+      return `<path d="M${x0},${y-6} H${x1} L${x1+d*8},${y} L${x1},${y+6} H${x0}Z" fill="${N?'#7a6250':c}"/><path d="M${x0+d*5},${y} h${d*(w-10)}" stroke="${N?'#4a3a30':'#7a4a24'}" stroke-width="1.6" stroke-dasharray="5 3"/>`}).join('')}</g>`;
+  // Äste am Fuß, kleiner Erdhügel
+  s+=`<ellipse cx="0" cy="2" rx="30" ry="6" fill="${N?'#1a2a20':'#6e9a3a'}" opacity=".6"/><g stroke="${woodD}" stroke-width="3.2" stroke-linecap="round"><path d="M-14,2 L-5,-46"/><path d="M14,2 L5,-42"/><path d="M-6,4 L-2,-34"/><path d="M8,4 L1,-30"/><path d="M-18,2 L-9,-30"/></g>`;
+  return s}
+
+/* Steigender Löwe (heraldisch), schaut nach links zu den Rauten. Zeichenbox ca. 0..100 x 0..140 */
+function lion(g,d){
+  const L=(pts,w)=>{const p='M'+pts.map(q=>q.join(',')).join(' L');return `<path d="${p}" stroke="${d}" stroke-width="${w+3}" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="${p}" stroke="${g}" stroke-width="${w}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`};
+  const claw=(x,y,dx)=>`<path d="M${x},${y} l${dx*5},-3 M${x},${y} l${dx*6},1 M${x},${y} l${dx*4},4" stroke="#c8202a" stroke-width="1.6" stroke-linecap="round"/>`;
+  let s='';
+  // Schwanz (hinter dem Körper)
+  s+=`<path d="M68,88 C88,80 96,60 88,46 C82,36 88,24 98,24" stroke="${d}" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M68,88 C88,80 96,60 88,46 C82,36 88,24 98,24" stroke="${g}" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+  s+=`<path d="M96,26 q-2,-12 6,-16 q-2,8 4,10 q-4,2 2,8 q-6,0 -6,6 q-3,-4 -6,-8Z" fill="${g}" stroke="${d}" stroke-width="1.5" stroke-linejoin="round"/>`;
+  // Hinterbeine
+  s+=L([[64,96],[72,114],[64,130],[56,132]],9)+claw(56,132,-1);
+  s+=L([[54,92],[42,108],[30,124],[22,126]],10)+claw(22,126,-1);
+  // Körper
+  s+=`<path d="M28,42 Q44,34 56,50 Q68,68 72,90 Q68,104 54,100 Q44,88 38,74 Q28,60 28,42Z" fill="${g}" stroke="${d}" stroke-width="1.8" stroke-linejoin="round"/>`;
+  s+=`<path d="M44,62 q6,8 8,18 M50,56 q6,10 8,20" stroke="${d}" stroke-width="1.2" fill="none" opacity=".6"/>`;
+  // Vorderbeine
+  s+=L([[36,58],[20,58],[8,64]],8)+claw(8,64,-1);
+  s+=L([[32,46],[18,36],[6,26]],8)+claw(6,26,-1);
+  // Mähne
+  s+=`<path d="M26,14 L34,6 L36,14 L44,8 L44,17 L53,15 L48,23 L56,26 L48,31 L54,38 L45,38 L46,47 L38,42 L34,50 L30,42 L24,44Z" fill="${g}" stroke="${d}" stroke-width="1.6" stroke-linejoin="round"/>`;
+  // Kopf mit offenem Maul
+  s+=`<path d="M36,20 Q30,14 22,18 L12,20 L10,26 L16,28 L8,32 L12,37 L24,38 Q34,38 38,30 Q40,24 36,20Z" fill="${g}" stroke="${d}" stroke-width="1.6" stroke-linejoin="round"/>`;
+  s+=`<path d="M12,31 l-8,2 l7,2Z" fill="#c8202a"/>`;
+  s+=`<circle cx="24" cy="23" r="1.8" fill="${d}"/><path d="M28,16 l3,-6 l3,6" fill="${g}" stroke="${d}" stroke-width="1.4" stroke-linejoin="round"/>`;
+  return `<g transform="translate(-50,-70)">${s}</g>`}
+  $('banner').innerHTML=`<g transform="translate(${BANNER.x},${BANNER.y}) scale(${BANNER.s})">${bannerSVG('s')}</g>`})();
+
 /* vignettes */
 const V=[];
 function vig(id,a,b,html){const g=document.createElementNS(NS,'g');g.id=id;g.innerHTML=html;g.style.opacity=0;$('vigs').appendChild(g);V.push({g,a,b});return g}
@@ -953,6 +1024,8 @@ const S=[
    {f:'moon',d:'Mond und Sterne stehen über den Zelten.'},
    {x:1100,y:546,d:'Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.'}]}
 ];
+/* Banner-Info: in jeder Szene am selben Platz an der Fahne */
+S.forEach(s=>{(s.info=s.info||[]).push({x:BANNER.x+60*BANNER.s,y:BANNER.y-470*BANNER.s,d:'Der Banner: ein baumhoher, entasteter Baumstamm, tief in die Erde eingegraben. Daran hängt die Wieslocher Fahne mit dem Wappen. Die VKF Wiesloch gehört übrigens zur KJG-Gemeinde. Im Zeltlager ist es durchaus üblich, dass man die Fahne bewachen muss, damit sie nicht von anderen Zeltlagern geklaut wird.'})});
 const caps=$('caps');
 S.forEach((s,i)=>{const d=document.createElement('div');d.className='cap'+(s.intro?' intro':'');
   d.innerHTML=(s.intro?'<div class="logo hero-logo" role="img" aria-label="Logo VKF Wiesloch, Väter-Kinder-Freizeit"></div>':'')+`<h2>${s.h}</h2>`+(s.intro?'<div class="tagline">Die VKF ist die Väter-Kinder-Freizeit Wiesloch.</div><p>'+s.d+'</p><div class="hint">Scrollen <span aria-hidden="true">↓</span></div>':`<p>${s.d}</p>`);
