@@ -222,6 +222,12 @@ a{color:inherit}
 @keyframes hop{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-13px)}}
 .sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 2.4s ease-in-out infinite}
 @keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.pump{animation:pump .55s ease-in-out infinite alternate}
+@keyframes pump{to{transform:translateY(9px)}}
+.puff{transform-box:fill-box;transform-origin:50% 100%;animation:puff .55s ease-in-out infinite alternate}
+@keyframes puff{from{transform:scaleY(.88)}to{transform:scaleY(1.06)}}
+.sweat{animation:sweat 1.5s ease-in infinite;opacity:0}
+@keyframes sweat{0%{transform:translate(0,0);opacity:0}20%{opacity:.95}100%{transform:translate(var(--dx,12px),30px);opacity:0}}
 .peek{animation:peek 3.6s ease-in-out infinite}
 @keyframes peek{0%,45%,100%{transform:translateX(0)}60%,85%{transform:translateX(-9px)}}
 .ksteam{transform-box:fill-box;transform-origin:center;animation:ksteam 3.2s ease-out infinite;opacity:0}
@@ -229,7 +235,7 @@ a{color:inherit}
 .zz{transform-box:fill-box;transform-origin:center;animation:zz 4.5s ease-out infinite;opacity:0;font:800 24px 'Baloo 2',system-ui,sans-serif}
 @keyframes zz{0%{transform:translate(0,0) scale(.6);opacity:0}20%{opacity:.9}100%{transform:translate(26px,-80px) scale(1.2);opacity:0}}
 @media (prefers-reduced-motion: reduce){
-  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span,.ib .halo,.hop,.sway,.peek,.ksteam,.zz,.blink,.strum,.sing,.legA,.legB,.walkA,.walkB,.wave{animation:none}
+  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span,.ib .halo,.hop,.sway,.pump,.puff,.sweat,.peek,.ksteam,.zz,.blink,.strum,.sing,.legA,.legB,.walkA,.walkB,.wave{animation:none}
   .spark,.note,.steam,.ksteam,.zz{opacity:0}
 }
 
@@ -880,6 +886,53 @@ const HADL={c:'#f4f3ef',arms:'wave',hs:'short',hair:'#6b5a4a',hat:'straw',cord:1
   vig('gruppe',.09,.128,`<ellipse cx="${C[0]}" cy="${C[1]+4}" rx="${RX+34}" ry="${RY+22}" fill="#fff" opacity=".1"/>`+items.map(o=>o.h).join('')+
    `<g transform="translate(745,575)"><rect x="-8" y="-46" width="270" height="44" rx="14" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
    <text x="127" y="-17" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="24" fill="#0f2a4a">Guten Morgen, VKF!</text></g>`);
+  seed=s0;figN=n0})();
+
+/* Ankunft: das Gepäck aus dem Bus wird verstaut. Ein Papa pumpt eine Luftmatratze auf und schwitzt, ein anderer klappt den Campingstuhl auf, die Kinder schleppen Taschen zu den Zelten. */
+(function(){const s0=seed,n0=figN;
+  const say=(x,y,t)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="30" fill="#fff" stroke="#0f2a4a" stroke-width="6" paint-order="stroke" stroke-linejoin="round">${t}</text>`;
+  const shadow=(x,y,rx)=>`<ellipse cx="${x}" cy="${y+1}" rx="${rx}" ry="6" fill="#1a1030" opacity=".18"/>`;
+  const bag=(w,h,c)=>`<g><rect x="${-w/2}" y="0" width="${w}" height="${h}" rx="${h/2.4}" fill="${c}"/><rect x="${-w*.2}" y="0" width="6" height="${h}" fill="#000" opacity=".14"/><rect x="${w*.1}" y="0" width="6" height="${h}" fill="#000" opacity=".14"/><rect x="${-w/2}" y="0" width="${w}" height="6" rx="3" fill="#fff" opacity=".22"/><path d="M${-w*.28},3 Q0,-16 ${w*.28},3" stroke="#2a2438" stroke-width="4" fill="none"/></g>`;
+  /* Gehender Träger: Hände auf Taschenhöhe, Körper lehnt sich vom Gewicht weg. back = Teil hinter dem Körper, front = Teil vor den Händen */
+  const haul=(x,y,dir,o,delay,lean,back,front)=>{const kid=!!o.kid,hx=dir*(kid?16.5:27.5),hy=kid?-40:-72.6;
+    return shadow(x,y,kid?24:34)+`<g transform="translate(${x},${y}) rotate(${lean*-dir})"><g class="bob" style="animation-delay:${-delay}s">${back?back(hx,hy):''}${P(0,0,{...o,f:dir<0,walk:1,nosh:1,arms:'down'})}${front?front(hx,hy):''}</g></g>`};
+  const hang=(w,h,c)=>(hx,hy)=>`<g transform="translate(${hx},${hy+9})">${bag(w,h,c)}</g>`;
+  const rollMat=(hx,hy)=>`<g transform="translate(0,-46)"><rect x="-38" y="-14" width="76" height="28" rx="14" fill="#29b0c8"/><rect x="-38" y="-14" width="76" height="8" rx="4" fill="#fff" opacity=".25"/><rect x="-18" y="-14" width="6" height="28" fill="#2a2438" opacity=".5"/><rect x="14" y="-14" width="6" height="28" fill="#2a2438" opacity=".5"/><circle cx="-38" cy="0" r="9" fill="#1f8fa5"/><circle cx="-38" cy="0" r="4" fill="#29b0c8"/></g>`;
+  const pack=dir=>()=>`<g transform="translate(${-dir*23},-52)"><rect x="-16" y="-24" width="32" height="48" rx="13" fill="#ff8a2a"/><rect x="-11" y="2" width="22" height="14" rx="5" fill="#000" opacity=".16"/><rect x="-16" y="-6" width="32" height="5" fill="#2a2438" opacity=".35"/></g>`;
+  const items=[];
+
+  /* Kinder mit Taschen, auf dem Weg zu den Zelten */
+  items.push({y:712,h:haul(430,712,1,{kid:1,c:'#ffc93a',hs:'spiky',m:'o',eyes:'wide'},0,9,null,hang(58,38,'#3a7bd5'))});
+  items.push({y:690,h:haul(550,690,1,{kid:1,c:'#8cbf26',hs:'pony',m:'grin',eyes:'dot'},.25,0,null,rollMat)});
+  items.push({y:702,h:haul(880,702,-1,{kid:1,c:'#9b5bd4',hs:'beanie',m:'o',eyes:'wide'},.4,12,pack(-1),hang(54,36,'#ef3a62'))});
+
+  /* Papa mit Handpumpe: Körper und Griff wippen zusammen, die Matratze wird dicker, Schweiß fliegt */
+  (function(){const px=660,py=775,hx=27.5,hy=-72.6,mx=px+88;
+    const drops=[[-26,-150,-14,0],[24,-152,16,.5],[-8,-168,-4,1]].map(([dx,dy,sx,d])=>`<g transform="translate(${px+dx},${py+dy})"><path class="sweat" style="--dx:${sx}px;animation-delay:${-d}s" d="M0,-9 Q7,0 0,6 Q-7,0 0,-9Z" fill="#7fd0ff"/></g>`).join('');
+    items.push({y:py,h:shadow(px,py,34)
+     +`<g transform="translate(${mx},${py+6})"><ellipse cx="82" cy="20" rx="92" ry="9" fill="#1a1030" opacity=".18"/><g class="puff"><rect x="0" y="-12" width="164" height="34" rx="17" fill="#19b1a0"/><rect x="0" y="-12" width="164" height="10" rx="5" fill="#fff" opacity=".25"/>${[1,2,3,4,5].map(i=>`<rect x="${i*27}" y="-12" width="4" height="34" fill="#0b6f66" opacity=".35"/>`).join('')}</g><circle cx="0" cy="4" r="5" fill="#ffc93a"/></g>`
+     +`<path d="M${px+10},${py-8} C${px+44},${py-2} ${px+60},${py+14} ${mx-2},${py+10}" stroke="#2a2438" stroke-width="4" fill="none" stroke-linecap="round"/>`
+     +`<g class="pump">${P(px,py,{c:'#ef3a62',hs:'bald',hair:'#4a3526',beard:'full',m:'o',eyes:'wide',sleeve:'short',nosh:1,arms:'down'})}`
+     +`<rect x="${px-4}" y="${py-72}" width="8" height="30" rx="3" fill="#8e929a"/><rect x="${px-hx-3}" y="${py+hy-6}" width="${hx*2+6}" height="9" rx="4.5" fill="#2a2438"/></g>`
+     +`<rect x="${px-11}" y="${py-50}" width="22" height="50" rx="5" fill="#f0a020"/><rect x="${px-11}" y="${py-50}" width="22" height="8" rx="4" fill="#fff" opacity=".3"/><rect x="${px-11}" y="${py-30}" width="22" height="5" fill="#2a2438" opacity=".4"/><rect x="${px-16}" y="${py-5}" width="32" height="7" rx="3.5" fill="#6a4a1a"/>`
+     +drops+say(px,py-196,'Puh!')});
+  })();
+
+  /* Kind schaut zu */
+  items.push({y:722,h:shadow(745,722,24)+P(745,722,{kid:1,c:'#3a7bd5',hs:'curly',m:'grin',eyes:'happy',arms:'up',f:1,nosh:1})});
+
+  /* Papa baut den Campingstuhl auf und setzt sich */
+  (function(){const cx=1010,gy=745;
+    items.push({y:gy,h:shadow(cx,gy,44)
+     +`<rect x="${cx-130}" y="${gy-10}" width="62" height="15" rx="7.5" fill="#3a3358" transform="rotate(-5 ${cx-100} ${gy})"/>`
+     +`<g transform="translate(${cx},${gy})"><path d="M-30,-22 L20,0 M20,-22 L-30,0" stroke="#4a4660" stroke-width="5" stroke-linecap="round"/><rect x="-38" y="-30" width="76" height="9" rx="4" fill="#e0245e"/><g transform="rotate(8 30 -24)"><rect x="24" y="-112" width="12" height="90" rx="6" fill="#e0245e"/></g></g>`
+     +P(cx,gy-12,{seat:1,f:1,c:'#29b0c8',hs:'short',hair:'#6b4a2a',glasses:true,m:'smile',eyes:'dot',beard:'stub',nosh:1})
+     +`<rect x="${cx-38}" y="${gy-30}" width="12" height="9" rx="4" fill="#e0245e"/>`
+     +say(cx-78,gy-112,'Ahhh!')});
+  })();
+
+  items.sort((a,b)=>a.y-b.y);
+  vig('ankunft',.045,.088,items.map(o=>o.h).join(''));
   seed=s0;figN=n0})();
 
 vig('fruehstueck',.13,.20, runHTML('b')+table(560,1040,700,
