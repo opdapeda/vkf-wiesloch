@@ -1095,11 +1095,14 @@ const FOTO={
  laternen:{l:'Öllampen',items:[{src:'fotos/laternen-1.jpg',alt:'Öllampen auf einem Tisch am Abend',t:'Unsere Öllampen sorgen abends für ganz besondere Stimmung. Wir haben kein oder nur selten elektrischen Strom, deshalb ergänzen sie nachts die Beleuchtung.'}]},
  morgenkreis:{l:'Morgenkreis',t:'Im Morgenkreis verkündet die Lagerleitung in der Mitte das Programm.',items:[{src:'fotos/morgenkreis-1.jpg',alt:'Morgenkreis auf der Wiese vor den Zelten'},{src:'fotos/morgenkreis-2.jpg',alt:'Morgenkreis mit Bierbänken vor Zelten und Wald'}]},
  fussball:{l:'Fußball',items:[{src:'fotos/fussball-1.jpg',alt:'Kinder und Teamer spielen Fußball auf der Wiese',t:'Kinder und Teamer beim Fußballspielen.'}]},
- essen:{l:'Essenspavillon',items:[{src:'fotos/essen-1.jpg',alt:'Essenspavillon auf einer Wiese vor Bergkulisse',t:'Der Essenspavillon vor wunderschöner Kulisse. Wir sind oft auf Plätzen, die eigentlich Futterwiesen von Bauern sind. Die Bauern überlassen uns diese Wiesen.'}]},
+ essen:{l:'Essenspavillon',items:[{src:'fotos/essen-1.jpg',alt:'Essenspavillon auf einer Wiese vor Bergkulisse',t:'Der Essenspavillon vor wunderschöner Kulisse. Wir sind oft auf Plätzen, die eigentlich Futterwiesen von Bauern sind. Die Bauern überlassen uns diese Wiesen.'},{src:'fotos/essen-2.jpg',alt:'Lange Bierbänke unter dem großen Essenspavillon, an den Stangen hängen Beutel',t:'Unter dem großen Pavillon ist Platz für alle. An den Stangen hängen die Beutel.'}]},
  lagerfeuer:{l:'Lagerrunde',t:'Auch hier wird gemeinsam gesungen. Es gibt ein paar kleinere Spiele, und die Schlachtrufe dürfen natürlich nicht fehlen.',items:[{src:'fotos/lagerfeuer-1.jpg',alt:'Teamerin mit Gitarre als Silhouette vor dem Lagerfeuer',t:'Die abendliche Lagerrunde: Im Dunkeln im Hintergrund sieht man das Lagerfeuer, vorne unsere Teamerin mit der Gitarre. Es wird gemeinsam gesungen, es gibt ein paar kleinere Spiele, und die Schlachtrufe dürfen natürlich nicht fehlen.'},{src:'fotos/lagerfeuer-2.jpg',alt:'Gruppe sitzt am Lagerfeuer, Funken fliegen'},{src:'fotos/lagerfeuer-3.jpg',alt:'Silhouetten am Lagerfeuer vor dunkelblauem Himmel'}]},
  landschaft:{l:'Landschaft',items:[{src:'fotos/landschaft-1.jpg',alt:'Gewitterwolken im Abendlicht über Tannen',t:'Ein Blick auf die unglaubliche Landschaft.'}]},
  freibad:{l:'Ausflug ins Freibad',items:[{src:'fotos/freibad-1.jpg',alt:'Freibad mit Becken und Stufen',t:'Ab und zu muss auch mal ein Ausflug sein. Hier sind wir an einem Dienstag den ganzen Tag ins Freibad gegangen, einfach um mal richtig sauber zu werden.'}]},
  wanderung:{l:'Wanderung',items:[{src:'fotos/wanderung-1.jpg',alt:'Gruppe wandert auf einem Weg zwischen Bauernhöfen',t:'Manchmal gibt es auch einen längeren Spaziergang oder eine kleine Wanderung. Gerade im Schwarzwald kommt man immer wieder an wunderschönen Bauernhöfen vorbei.'}]},
+ platz:{l:'Unser Lagerplatz',items:[{src:'fotos/platz-1.jpg',alt:'Weiße Gruppenzelte auf einer Wiese am Waldrand',t:'Unser Lagerplatz am Waldrand mit den großen Zelten.'}]},
+ grill:{l:'Am Grill',items:[{src:'fotos/kueche-3.jpg',alt:'Zwei Teamer mit roten Schürzen stehen an den Grillplatten im Küchenzelt',t:'Zwei aus dem Küchenteam an den Grillplatten.'}]},
+ vorbereitung:{l:'Küchenteam',items:[{src:'fotos/kueche-2.jpg',alt:'Vier Leute aus dem Küchenteam schneiden Fleisch an einem langen Tisch im Küchenzelt',t:'Im Küchenzelt wird gemeinsam geschnippelt und das nächste Essen vorbereitet.'}]},
  rutsche:{l:'Wasserrutsche',items:[{src:'fotos/rutsche-1.jpg',alt:'Kind rutscht auf einer langen weißen Plane über die Wiese',t:'Eine Wasserrutsche auf einer Spargelplane. Auch so kann man sich zwischendurch abkühlen.'}]}};
 const S=[
  {a:0,b:.05,stop:0,l:'Start',h:'Ein Tag in der VKF',d:'Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel.',intro:1,info:[{x:1500,y:700,photo:'bus'}]},
@@ -1113,7 +1116,7 @@ const S=[
    {x:560,y:800,photo:'gruppenkreis'}]},
  {a:.12,b:.20,stop:.177,l:'Frühstück',h:'Frühstück',d:'Papas und Kinder sitzen zusammen an den Bierbänken. Kakao, Brötchen und die ersten Pläne für den Tag.',info:[
    {x:612,y:636,d:'Papas und Kinder sitzen zusammen an den Bierbänken.'},
-   {x:800,y:630,d:'Kakao, Brötchen und die ersten Pläne für den Tag.'}]},
+   {x:800,y:630,d:'Kakao, Brötchen und die ersten Pläne für den Tag.'},{x:500,y:830,photo:'platz'}]},
  {a:.20,b:.29,stop:.268,l:'Morgenkreis',h:'Morgenkreis',d:'Alle kommen im großen Kreis zusammen. Die Lagerleitung erzählt, was heute ansteht.',info:[
    {x:520,y:700,d:'Alle kommen im großen Kreis zusammen.'},
    {x:800,y:672,d:'Die Lagerleitung erzählt, was heute ansteht.'},
@@ -1126,7 +1129,7 @@ const S=[
  {a:.40,b:.48,stop:.457,l:'Mittagessen',h:'Mittagessen',d:'Das Küchenteam tischt auf. Wer Nachschlag möchte, stellt sich einfach noch einmal an.',info:[
    {x:1090,y:682,d:'Das Küchenteam tischt auf.'},
    {x:800,y:630,d:'Wer Nachschlag möchte, stellt sich einfach noch einmal an.'},
-   {x:480,y:780,photo:'essen'}]},
+   {x:480,y:780,photo:'essen'},{x:1215,y:648,photo:'grill'}]},
  {a:.48,b:.60,stop:.577,l:'Freibad oder Tour',h:'Ab ins Freibad oder auf Tour',d:'Nachmittags ziehen alle gemeinsam los: ins Schwimmbad, in den Wald oder auf eine Wanderung.',info:[
    {x:850,y:690,d:'Nachmittags ziehen alle gemeinsam los.'},
    {x:1210,y:640,d:'Ins Schwimmbad, in den Wald oder auf eine Wanderung.'},
@@ -1141,7 +1144,7 @@ const S=[
    {x:915,y:700,photo:'lagerfeuer'}]},
  {a:.87,b:1.01,stop:.96,l:'Gute Nacht',h:'Gute Nacht, VKF',d:'Mond und Sterne stehen über den Zelten. Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.',info:[
    {f:'moon',d:'Mond und Sterne stehen über den Zelten.'},
-   {x:1100,y:546,d:'Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.'}]}
+   {x:1100,y:546,d:'Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.'},{x:1240,y:630,photo:'vorbereitung'}]}
 ];
 /* Banner-Info: nur in der zweiten Szene (Sonnenaufgang) an der Fahne */
 [S[1]].forEach(s=>{(s.info=s.info||[]).push({x:BANNER.x+60*BANNER.s,y:BANNER.y-470*BANNER.s,d:'Der Banner: ein baumhoher, entasteter Baumstamm, tief in die Erde eingegraben. Daran hängt die Wieslocher Fahne mit dem Wappen. Die VKF Wiesloch gehört übrigens zur KJG-Gemeinde. Im Zeltlager ist es durchaus üblich, dass man die Fahne bewachen muss, damit sie nicht von anderen Zeltlagern geklaut wird.'})});
