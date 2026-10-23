@@ -894,13 +894,13 @@ function lion(g,d){
 const V=[];
 function vig(id,a,b,html){const g=document.createElementNS(NS,'g');g.id=id;g.innerHTML=html;g.style.opacity=0;$('vigs').appendChild(g);V.push({g,a,b});return g}
 
-function table(x0,x1,y,items){let h='';
+function table(x0,x1,y,items,light){let h='';
   for(let x=x0+34,i=0;x<x1-20;x+=78,i++)h+=P(x,y+14,{seat:1,kid:i%2==1});
   h+=`<rect x="${x0}" y="${y-4}" width="${x1-x0}" height="10" rx="3" fill="url(#wood)"/>`;
   h+=`<rect x="${x0+6}" y="${y+6}" width="${x1-x0-12}" height="26" fill="url(#check)"/>`;
   h+=`<rect x="${x0+24}" y="${y+30}" width="7" height="44" fill="#7a4a24"/><rect x="${x1-31}" y="${y+30}" width="7" height="44" fill="#7a4a24"/>`;
   h+=items;
-  for(let x=x0+50,i=0;x<x1-30;x+=90,i++)h+=P(x,y+104,{seat:1,kid:i%2==0});
+  for(let x=x0+50,i=0;x<x1-30;x+=90,i++)h+=P(x,y+104,{seat:1,kid:i%2==0,...(light&&light.includes(i)?{skin:(pick(SK),'#f5d4b3')}:{})});
   h+=`<rect x="${x0-6}" y="${y+88}" width="${x1-x0+12}" height="9" rx="3" fill="url(#wood)"/><rect x="${x0+20}" y="${y+97}" width="6" height="18" fill="#7a4a24"/><rect x="${x1-26}" y="${y+97}" width="6" height="18" fill="#7a4a24"/>`;
   return h}
 function mugs(x0,x1,y,skip){let h='';for(let x=x0;x<x1;x+=62)if(x!==skip)h+=`<rect x="${x}" y="${y-16}" width="10" height="12" rx="2" fill="${pick(['#fff','#3b8fd0','#f2c230','#d9124a'])}"/>`;return h}
@@ -910,11 +910,11 @@ const steam=(x,y)=>[0,1,2].map(i=>`<path class="steam" style="animation-delay:${
 const RUNS=[
  {L:'b',dir:-1,y:670,per:15,ph:2,kid:0,c:'#ef3a62',s:.92},
  {L:'b',dir:1,y:674,per:11,ph:7,kid:1,c:'#8cbf26',s:.92},
- {L:'f',dir:-1,y:864,per:8,ph:0,kid:1,c:'#ff8a2a',roll:1},
+ {L:'f',dir:-1,y:864,per:8,ph:0,kid:1,c:'#ff8a2a',roll:1,skin:'#f5d4b3'},
  {L:'f',dir:1,y:884,per:13,ph:5,kid:0,c:'#3a7bd5'},
  {L:'f',dir:-1,y:852,per:17,ph:11,kid:1,c:'#9b5bd4'}];
 const runHTML=L=>RUNS.map((r,i)=>{if(r.L!==L)return '';const k=(r.kid?.64:1)*(r.s||1)*BIG;
-  return `<g id="run${i}"><ellipse cx="0" cy="1" rx="${(15*k).toFixed(1)}" ry="${(4*k).toFixed(1)}" fill="#1a1030" opacity=".18"/><g class="in">${P(0,0,{kid:r.kid,c:r.c,s:r.s,nosh:1,run:1})}</g>`+
+  return `<g id="run${i}"><ellipse cx="0" cy="1" rx="${(15*k).toFixed(1)}" ry="${(4*k).toFixed(1)}" fill="#1a1030" opacity=".18"/><g class="in">${P(0,0,{kid:r.kid,c:r.c,s:r.s,nosh:1,run:1,...(r.skin?{skin:(pick(SK),r.skin)}:{})})}</g>`+
    (r.roll?`<g class="rl"><circle r="11" fill="#e6b36a"/><path d="M-4,-2 Q0,-6 4,-2" stroke="#c8913e" stroke-width="2" fill="none" stroke-linecap="round"/></g>`:'')+`</g>`}).join('');
 /* Lagerleiter Kalle und Hadl (docs/teamer-figuren.md) */
 const KALLE={c:'#7a1f35',arms:'clip',hs:'capback',capc:'#1c1c22',hair:'#8a6a48',beard:'stub',mous:1,beardc:'#b8794a',glasses:'round',skin:'#f3c6a6',lanyard:1,sleeve:'short',m:'grin',eyes:'dot',deco:''};
@@ -998,8 +998,7 @@ const CLAUDI={c:'#232a45',hs:'long',hair:'#cfa84e',beard:'',sleeve:'short',skin:
 
 vig('fruehstueck',.13,.20, runHTML('b')+table(560,1040,700,
   mugs(595,1020,700,719)+`<path d="M770,697 h60 l-8,-16 h-44z" fill="#c8913e"/><circle cx="785" cy="680" r="7" fill="#e6b36a"/><circle cx="800" cy="677" r="7" fill="#e6b36a"/><circle cx="815" cy="680" r="7" fill="#e6b36a"/>
-  <rect x="890" y="672" width="18" height="25" rx="4" fill="#6b4a2a"/>${steam(899,668)}`)+runHTML('f')+
-  solo(()=>PA(1085,788,CLAUDI,'sway',0,3.1,grow(1085,788,`<g transform="translate(1103,758)"><rect x="-7" y="-9" width="14" height="13" rx="3.5" fill="#8e98a8"/><rect x="-8" y="-11" width="16" height="3" rx="1.5" fill="#6f7888"/><path d="M7,-5 l6,-5" stroke="#8e98a8" stroke-width="3.2" stroke-linecap="round"/><path d="M-7,-5 q-8,0 -8,7" stroke="#6f7888" stroke-width="2.2" fill="none" stroke-linecap="round"/></g>`)))+steam(1138,716)+
+  <rect x="890" y="672" width="18" height="25" rx="4" fill="#6b4a2a"/>${steam(899,668)}`,[0,4])+solo(()=>PA(1085,788,CLAUDI,'sway',0,3.1,grow(1085,788,`<g transform="translate(1103,758)"><rect x="-7" y="-9" width="14" height="13" rx="3.5" fill="#8e98a8"/><rect x="-8" y="-11" width="16" height="3" rx="1.5" fill="#6f7888"/><path d="M7,-5 l6,-5" stroke="#8e98a8" stroke-width="3.2" stroke-linecap="round"/><path d="M-7,-5 q-8,0 -8,7" stroke="#6f7888" stroke-width="2.2" fill="none" stroke-linecap="round"/></g>`)))+steam(1138,716)+runHTML('f')+
   `<ellipse id="pud" cx="758" cy="828" rx="0" ry="0" fill="#6b4226" opacity="0"/><g id="mug" transform="translate(724,696)"><rect x="-5" y="-12" width="10" height="12" rx="2" fill="#3b8fd0"/></g>
    <text id="huch" x="0" y="0" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="34" fill="#fff" stroke="#0f2a4a" stroke-width="6" paint-order="stroke" stroke-linejoin="round" opacity="0">Huch!</text>`);
 
