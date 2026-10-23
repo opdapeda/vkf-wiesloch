@@ -35,7 +35,7 @@
 1. Die Interessenten-Phase läuft jedes Jahr von Januar bis Ende März. Das Interesse muss jedes Jahr neu bekundet werden, es gibt keine Warteliste.
 2. Familien, die schon dabei waren, haben ein Vorbuchungsrecht.
 3. Die freien Plätze vergibt die Teamleitung, und zwar nicht nach dem Windhund-Prinzip, sondern so, dass die Gruppe gut zusammenpasst.
-4. Die Zu- oder Absage kommt zwischen Februar und März. Eine Interessensbekundung ist keine Platzgarantie.
+4. Die Zu- oder Absage kommt von Ende März bis Ende April. Eine Interessensbekundung ist keine Platzgarantie.
 
 Was die Chancen erhöht: ein kurzer Einblick, wer man ist, die Motivation und gegebenenfalls eine Empfehlung durch eine teilnehmende Familie oder jemanden aus dem Team.
 
