@@ -65,6 +65,10 @@ a{color:inherit}
 .top nav{display:flex;gap:2px;margin-left:auto}
 .top nav a{text-decoration:none;font-weight:800;font-size:16px;padding:8px 14px;border-radius:999px}
 .top nav a:hover{background:rgba(163,63,160,.12)}
+.ext-link{display:inline-flex;align-items:center;gap:6px}
+.ext{width:.8em;height:.8em;flex:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+footer .ext-link{font-weight:700;color:#ffd27a}
 .cta{background:linear-gradient(180deg,#ff4a7a,#e0245e);color:#fff !important;text-decoration:none;font-family:var(--f-display);font-weight:800;font-size:18px;padding:9px 20px 7px;border-radius:999px;white-space:nowrap;box-shadow:0 4px 0 #a8123f}
 .cta:hover{transform:translateY(1px);box-shadow:0 3px 0 #a8123f}
 @media (max-width:820px){.top nav{display:none}.top .cta{margin-left:auto}}
@@ -353,7 +357,7 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
     <span>VKF Wiesloch<small>Väter-Kinder-Freizeit</small></span>
   </a>
   <nav aria-label="Seitenbereiche">
-    <a href="#ueber">Über uns</a><a href="#team">Team</a><a href="#packliste">Packliste</a>
+    <a href="#ueber">Über uns</a><a href="#team">Team</a><a href="#packliste">Packliste</a><a class="ext-link" href="/foerderverein" target="_blank" rel="noopener">Förderverein<svg class="ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M9 2h5v5M14 2 7.5 8.5M12 9.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr">(öffnet in neuem Tab)</span></a>
   </nav>
   <a class="cta" href="#anmeldung">Anmeldung</a>
 </header>
@@ -577,7 +581,7 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
     <div class="wrap">
       <div class="cols">
         <span class="logo foot-logo" role="img" aria-label="Logo VKF Wiesloch"></span>
-        <div><h3>Förderverein „Freunde der VKF Wiesloch“</h3><p>Seit 2023 unterstützt der Förderverein die VKF, zum Beispiel mit zusätzlichen Mitteln für Material und Programm.</p></div>
+        <div><h3>Förderverein „Freunde der VKF Wiesloch“</h3><p>Seit 2023 unterstützt der Förderverein die VKF, zum Beispiel mit zusätzlichen Mitteln für Material und Programm. <a class="ext-link" href="/foerderverein" target="_blank" rel="noopener">Zum Förderverein<svg class="ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M9 2h5v5M14 2 7.5 8.5M12 9.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr">(öffnet in neuem Tab)</span></a></p></div>
         <div><h3>Kontakt</h3><p>info@vkf-wiesloch.de</p></div>
         <nav aria-label="Rechtliches"><a href="#">Impressum</a><a href="#">Datenschutz</a></nav>
       </div>

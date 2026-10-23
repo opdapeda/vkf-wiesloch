@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Freunde der Väter-Kinder-Freizeit Wiesloch e. V.: der Förderverein für Ehemalige, Freunde und Unterstützer der VKF.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/foerderverein/logo-foerderverein.png?v=2">
+<title>Förderverein – Freunde der VKF Wiesloch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Lexend:wght@400;600;700;800&display=swap">
+<style>
+/* Förderverein-Unterseite: gleiche Tokens, Schriften und Hügelbänder wie die Startseite, aber nur ein Zelt: Gestänge steht, Plane liegt im Sack, das Feuer ist aus. */
+:root{
+  --ink:#2a1f3d; --muted:#5e5470; --ember:#e0245e; --night:#14102b; --moss:#7fa82a; --flame:#ff9a2e; --dusk:#a33fa0; --sky:#3f8fd8;
+  --card:#ffffff; --line:rgba(42,31,61,.12);
+  --b1:#ffe7d4; --b2:#efe3fb; --b3:#ddeffb; --b4:#e5f3d3;
+  --bg:#fff8f1; --tile:#f6f1fb;
+  --f-display:"Baloo 2","Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Lexend","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#f6efe6; --muted:#c4b9d4; --ember:#ff5a86; --moss:#a8d14a; --card:rgba(255,255,255,.07); --line:rgba(255,255,255,.12);
+    --b1:#2b1a2c; --b2:#211a3a; --b3:#13213a; --b4:#15251c; --tile:rgba(255,255,255,.06); --bg:#14102b; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#f6efe6; --muted:#c4b9d4; --ember:#ff5a86; --moss:#a8d14a; --card:rgba(255,255,255,.07); --line:rgba(255,255,255,.12);
+  --b1:#2b1a2c; --b2:#211a3a; --b3:#13213a; --b4:#15251c; --tile:rgba(255,255,255,.06); --bg:#14102b; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:19px;line-height:1.6;margin:0}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.05;margin:0;font-weight:800}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--flame);outline-offset:3px;border-radius:6px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+
+/* Header (wie Startseite) */
+.top{position:fixed;z-index:20;top:calc(env(safe-area-inset-top,0px) + 12px);left:12px;right:12px;display:flex;align-items:center;gap:12px;
+  padding:8px 8px 8px 12px;border-radius:999px;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  color:#2a1f3d;box-shadow:0 6px 24px rgba(20,16,43,.18);max-width:1100px;margin-inline:auto}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:800;font-size:20px;line-height:1;white-space:nowrap}
+.brand small{display:block;font-family:var(--f-body);font-weight:700;font-size:13px;color:#7a5a8a;margin-top:2px;letter-spacing:.02em}
+.brand img{width:48px;height:48px;flex:none;filter:drop-shadow(0 2px 4px rgba(20,16,43,.25))}
+.top nav{display:flex;gap:2px;margin-left:auto}
+.top nav a{text-decoration:none;font-weight:800;font-size:16px;padding:8px 14px;border-radius:999px}
+.top nav a:hover{background:rgba(163,63,160,.12)}
+.cta{background:linear-gradient(180deg,#ff4a7a,#e0245e);color:#fff !important;text-decoration:none;font-family:var(--f-display);font-weight:800;font-size:18px;padding:9px 20px 7px;border-radius:999px;white-space:nowrap;box-shadow:0 4px 0 #a8123f;border:0;cursor:pointer}
+.cta:hover{transform:translateY(1px);box-shadow:0 3px 0 #a8123f}
+.cta.alt{background:#fff;color:#2a1f3d !important;box-shadow:0 4px 0 rgba(20,16,43,.25)}
+.cta.alt:hover{box-shadow:0 3px 0 rgba(20,16,43,.25)}
+@media (max-width:820px){.top nav{display:none}.top .cta{margin-left:auto}}
+@media (max-width:440px){.brand{font-size:18px}.brand small{font-size:12px}.cta{font-size:16px;padding:8px 14px 6px}}
+
+/* Hero: Dämmerhimmel, Text oben, Zeltplatz-Szene unten */
+.hero{background:linear-gradient(180deg,#2a1f4a 0%,#5b2f78 60%,#8a3a8e 100%);color:#fff;text-align:center;padding:clamp(104px,14vw,140px) 16px 0;position:relative;overflow:hidden}
+.hero .badge{width:clamp(112px,14vw,156px);height:clamp(112px,14vw,156px);display:grid;place-items:center;overflow:hidden;border-radius:50%;background:#fff8f1;padding:0;margin:0 auto 14px;box-shadow:0 8px 28px rgba(0,0,0,.35)}
+.hero .badge img{display:block;width:92%;height:92%;object-fit:contain}
+.eyebrow{display:inline-block;font-family:var(--f-display);font-weight:800;font-size:18px;letter-spacing:.04em;background:rgba(255,255,255,.14);padding:6px 16px 3px;border-radius:999px;color:#ffd27a}
+.hero h1{font-size:clamp(40px,7vw,88px);margin:12px 0 10px;text-shadow:0 2px 24px rgba(0,0,0,.3)}
+.hero .lead{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,2.6vw,32px);line-height:1.2;max-width:32ch;margin:0 auto 22px;color:#ffe9c4}
+.hero .btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:8px}
+.scene{display:block;width:100%;height:clamp(400px,48vw,620px);margin-top:-6px}
+.hero .scene{margin:8px -16px 0;width:calc(100% + 32px)}
+
+/* Szenen-Animationen */
+.wave{transform-box:fill-box;transform-origin:20% 90%;animation:wave 2.4s ease-in-out infinite}
+.wave.b{animation-delay:-1.1s;animation-duration:2.9s}
+@keyframes wave{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(16deg)}}
+.smoke{animation:smoke 6s ease-in-out infinite;opacity:.0}
+@keyframes smoke{0%{opacity:0;transform:translateY(6px)}30%{opacity:.35}100%{opacity:0;transform:translateY(-22px)}}
+.tear{animation:tear 3.2s ease-in infinite;opacity:0}
+@keyframes tear{0%,40%{opacity:0;transform:translateY(0)}55%{opacity:.9}100%{opacity:0;transform:translateY(12px)}}
+.tw{animation:tw 3.6s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:1}50%{opacity:.35}}
+@media (prefers-reduced-motion: reduce){.wave,.smoke,.tear,.tw{animation:none}.smoke{opacity:.3}}
+
+/* Bänder mit Hügelkante */
+.band{position:relative;padding-inline:16px;padding-block:clamp(64px,9vw,120px)}
+.band .hills{position:absolute;left:0;right:0;bottom:calc(100% - 1px);width:100%;height:clamp(40px,6vw,90px);display:block}
+#hintergrund{background:var(--b1)} #hintergrund .hills{fill:var(--b1)}
+#spenden{background:var(--b2)} #spenden .hills{fill:var(--b2)}
+#mitmachen{background:var(--b3)} #mitmachen .hills{fill:var(--b3)}
+#vorstand{background:var(--b4)} #vorstand .hills{fill:var(--b4)}
+.wrap{max-width:1080px;margin-inline:auto}
+.sticker{display:inline-block;font-family:var(--f-display);font-weight:800;font-size:19px;line-height:1;color:#fff;padding:10px 16px 7px;border-radius:999px;transform:rotate(-2deg);box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.band h2{font-size:clamp(38px,5.4vw,66px);margin:16px 0 18px}
+.band p{max-width:62ch;margin:0 0 16px}
+.band .lede{font-size:clamp(20px,1.9vw,23px)}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:28px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:26px 26px 22px;box-shadow:0 6px 0 rgba(42,31,61,.07)}
+.card h3{font-size:clamp(26px,2.6vw,32px);margin-bottom:8px}
+.card p{margin:0 0 10px}
+.card .n{display:inline-grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--ember);color:#fff;font-family:var(--f-display);font-weight:800;font-size:26px;margin-bottom:10px;padding-top:3px}
+@media (max-width:760px){.cards{grid-template-columns:1fr}}
+.reasons{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px;max-width:780px}
+.reasons li{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px 20px 14px 64px;position:relative}
+.reasons li::before{content:"";position:absolute;left:20px;top:20px;width:28px;height:28px;border-radius:50%;background:var(--flame);box-shadow:inset 0 0 0 8px var(--flame),inset 0 0 0 28px #fff3}
+.reasons strong{font-family:var(--f-display);font-size:23px;display:block;line-height:1.15;margin-bottom:2px}
+.gifts{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 0;padding:0;list-style:none}
+.gifts li{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 16px 5px;font-weight:700;font-size:17px}
+
+/* Spendenkonto */
+.konto{margin-top:34px;background:var(--night);color:#f6efe6;border-radius:30px;padding:28px 28px 24px;max-width:780px;position:relative;box-shadow:0 8px 0 rgba(42,31,61,.18)}
+.konto h3{color:#ffd27a;font-size:clamp(28px,3vw,36px);margin-bottom:12px}
+.konto dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;margin:0 0 18px}
+.konto dt{font-weight:700;color:#c4b9d4}
+.konto dd{margin:0;font-weight:700;overflow-wrap:anywhere}
+.konto .iban{font-family:var(--f-display);font-size:clamp(22px,3.4vw,30px);letter-spacing:.04em;color:#fff}
+.konto .todo{background:#ffd27a;color:#2a1f3d;border-radius:8px;padding:0 8px;font-size:16px}
+.konto small{display:block;color:#c4b9d4;font-size:16px;line-height:1.45;margin-top:14px}
+.copy{font:inherit;font-family:var(--f-display);font-weight:800;font-size:18px;background:#ffd27a;color:#2a1f3d;border:0;border-radius:999px;padding:9px 20px 7px;cursor:pointer;box-shadow:0 4px 0 #b88a2a}
+.copy:hover{transform:translateY(1px);box-shadow:0 3px 0 #b88a2a}
+@media (max-width:520px){.konto dl{grid-template-columns:1fr;gap:0}.konto dd{margin-bottom:10px}}
+
+/* Mitmachen */
+.price{font-family:var(--f-display);font-weight:800;font-size:clamp(46px,6vw,72px);line-height:1;color:var(--ember)}
+.price small{font-size:.38em;color:var(--muted);font-weight:700}
+.linkbtn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:800;font-size:19px;text-decoration:none;background:var(--ink);color:var(--bg);padding:10px 20px 8px;border-radius:999px;margin-top:6px}
+.linkbtn:hover{opacity:.88}
+.ext{width:.8em;height:.8em;flex:none;vertical-align:-.04em}
+
+/* Vorstand */
+.board{list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.board li{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px 18px 14px;display:flex;gap:14px;align-items:center}
+.board .av{flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--f-display);font-weight:800;font-size:22px;padding-top:3px}
+.board b{display:block;font-family:var(--f-display);font-size:21px;line-height:1.1}
+.board span.r{display:block;font-size:16px;color:var(--muted);line-height:1.3;margin-top:3px}
+.contact{margin-top:40px;text-align:center}
+.contact a.mail{display:inline-block;font-family:var(--f-display);font-weight:800;font-size:clamp(26px,4.2vw,44px);text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:12px 30px 8px;box-shadow:0 6px 0 rgba(42,31,61,.1);overflow-wrap:anywhere}
+.contact p{margin:0 auto 16px}
+
+/* Footer */
+footer{background:#14102b;color:#f6efe6;padding:36px 16px calc(40px + env(safe-area-inset-bottom,0px))}
+footer .cols{max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;gap:20px 48px;align-items:center;justify-content:space-between}
+footer nav{display:flex;gap:20px;flex-wrap:wrap;font-weight:700}
+footer a{color:#ffd27a}
+footer .small{max-width:1080px;margin:22px auto 0;font-size:15px;opacity:.7;border-top:1px solid rgba(255,255,255,.18);padding-top:16px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="/" aria-label="Zur Startseite der VKF Wiesloch">
+    <img src="/docs/logo-vkf.png" alt="" width="48" height="48">
+    <span>VKF Wiesloch<small>Förderverein</small></span>
+  </a>
+  <nav aria-label="Seitenbereiche">
+    <a href="#hintergrund">Hintergrund</a><a href="#mitmachen">Mitmachen</a><a href="#vorstand">Vorstand</a><a href="/">Zur VKF</a>
+  </nav>
+  <a class="cta" href="#spenden">Spenden</a>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="h1">
+  <div class="badge"><img src="/foerderverein/logo-foerderverein.png?v=2" alt="Logo: Freunde der Väter-Kinder-Freizeit Wiesloch e. V." width="410" height="410"></div>
+  <span class="eyebrow">Förderverein für Ehemalige und Freunde</span>
+  <h1 id="h1">Freunde der VKF&nbsp;Wiesloch</h1>
+  <p class="lead">Ohne euch bleibt das Lagerfeuer aus.</p>
+  <div class="btns"><a class="cta" href="#spenden">Jetzt spenden</a><a class="cta alt" href="#mitmachen">Mitglied werden</a></div>
+
+  <svg class="scene" id="scene" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMax slice" role="img"
+       aria-label="Illustration: Ein Zeltplatz in der Dämmerung. Von einem Zelt steht nur das Aluminium-Gestänge, die Plane liegt eingepackt im Sack daneben. Die Lagerfeuerstelle ist kalt und verkohlt. Zwei Teamer stehen traurig daneben und winken.">
+    <defs>
+      <linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a3a8e"/><stop offset=".55" stop-color="#d9607a"/><stop offset="1" stop-color="#f2a56a"/></linearGradient>
+      <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a3a7e"/><stop offset="1" stop-color="#b8527e"/></linearGradient>
+      <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a2e6a"/><stop offset="1" stop-color="#8a4278"/></linearGradient>
+      <linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5f8f4a"/><stop offset="1" stop-color="#2f5a3a"/></linearGradient>
+      <radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe3a0" stop-opacity=".95"/><stop offset="1" stop-color="#ffb060" stop-opacity="0"/></radialGradient>
+    </defs>
+    <rect width="1000" height="560" fill="url(#sk)"/>
+    <circle cx="760" cy="300" r="150" fill="url(#sun)"/>
+    <g fill="#fff"><path class="tw" d="M110,60 l3,9 9,3 -9,3 -3,9 -3,-9 -9,-3 9,-3z"/><path class="tw" style="animation-delay:-1.2s" d="M330,30 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2z" opacity=".8"/><path class="tw" style="animation-delay:-2.2s" d="M560,70 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3z" opacity=".9"/><path class="tw" style="animation-delay:-.6s" d="M900,50 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2z" opacity=".7"/></g>
+    <path d="M0,330 L90,262 Q110,248 130,262 L260,340 L420,236 Q440,224 460,238 L610,330 L760,250 Q780,240 800,252 L920,320 L1000,284 V420 H0Z" fill="url(#m1)"/>
+    <path d="M0,370 L140,300 Q160,290 180,302 L330,372 L520,296 Q540,288 560,298 L720,372 L880,306 Q900,298 920,308 L1000,346 V440 H0Z" fill="url(#m2)"/>
+    <!-- Bäume -->
+    <g fill="#2f5a3a"><path d="M60,400 l24,-70 24,70z M70,380 l14,-34 14,34z" opacity=".9"/><path d="M880,396 l22,-64 22,64z M888,376 l14,-32 14,32z" opacity=".9"/><path d="M930,404 l18,-52 18,52z" opacity=".8"/></g>
+    <path d="M0,388 C200,368 380,380 560,372 C740,364 880,376 1000,366 V560 H0Z" fill="url(#gr)"/>
+    <path d="M0,450 C220,432 420,448 620,438 C800,430 920,442 1000,436 V560 H0Z" fill="#2f5a3a" opacity=".35"/>
+    <!-- Zeltplatz-Schatten -->
+    <ellipse cx="450" cy="486" rx="190" ry="16" fill="#14102b" opacity=".22"/>
+
+    <!-- Zelt-Gestänge (Alu, 6 Füße, 4 Holme, 6 Dachschrägen) -->
+    <g id="frame" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <!-- hinterer Rahmen -->
+      <g stroke="#9aa2ae" stroke-width="5">
+        <path d="M492,314 L562,374"/><path d="M492,314 L422,374"/><path d="M422,374 V454"/><path d="M562,374 V454"/>
+      </g>
+      <!-- mittlerer Rahmen: Dachschrägen laufen bis zu den Füßen -->
+      <g stroke="#b4bbc6" stroke-width="5.5">
+        <path d="M446,332 L361,472"/><path d="M446,332 L531,472"/>
+      </g>
+      <!-- Firststange -->
+      <path d="M400,350 L446,332 L492,314" stroke="#d3d8e0" stroke-width="5.5"/>
+      <!-- vorderer Rahmen -->
+      <g stroke="#dfe3ea" stroke-width="6.5">
+        <path d="M400,350 L470,410"/><path d="M400,350 L330,410"/><path d="M330,410 V490"/><path d="M470,410 V490"/>
+      </g>
+      <!-- Glanzlichter -->
+      <g stroke="#fff" stroke-width="1.6" opacity=".7"><path d="M398,353 L328,412 M402,353 L468,412 M332,414 V486 M472,414 V486"/></g>
+    </g>
+    <!-- Füße: gelb-weiße Kunststofffüße -->
+    <g id="feet">
+      <g transform="translate(330,490)"><path d="M-9,-6 h18 l3,8 h-24z" fill="#fff"/><path d="M-12,2 h24 l2,6 h-28z" fill="#ffd23a"/></g>
+      <g transform="translate(470,490)"><path d="M-9,-6 h18 l3,8 h-24z" fill="#fff"/><path d="M-12,2 h24 l2,6 h-28z" fill="#ffd23a"/></g>
+      <g transform="translate(361,472)"><path d="M-8,-5 h16 l3,7 h-22z" fill="#fff"/><path d="M-11,2 h22 l2,5 h-26z" fill="#ffd23a"/></g>
+      <g transform="translate(531,472)"><path d="M-8,-5 h16 l3,7 h-22z" fill="#fff"/><path d="M-11,2 h22 l2,5 h-26z" fill="#ffd23a"/></g>
+      <g transform="translate(422,454)"><path d="M-7,-5 h14 l3,6 h-20z" fill="#fff"/><path d="M-10,1 h20 l2,5 h-24z" fill="#ffd23a"/></g>
+      <g transform="translate(562,454)"><path d="M-7,-5 h14 l3,6 h-20z" fill="#fff"/><path d="M-10,1 h20 l2,5 h-24z" fill="#ffd23a"/></g>
+    </g>
+
+    <!-- Zeltsack mit eingepackter Plane -->
+    <g id="bag" transform="translate(520,508) rotate(-4)">
+      <ellipse cx="0" cy="14" rx="62" ry="8" fill="#14102b" opacity=".3"/>
+      <rect x="-60" y="-24" width="120" height="40" rx="18" fill="#7f8f3e"/>
+      <rect x="-60" y="-24" width="40" height="40" rx="18" fill="#98a94c"/>
+      <rect x="-60" y="-24" width="120" height="14" rx="7" fill="#fff" opacity=".12"/>
+      <rect x="-14" y="-26" width="10" height="44" rx="3" fill="#4c5a22"/><rect x="26" y="-26" width="10" height="44" rx="3" fill="#4c5a22"/>
+      <path d="M-6,-24 C-6,-40 22,-40 22,-24" stroke="#4c5a22" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M40,-20 l16,-8 6,8z" fill="#efe3cc"/>
+    </g>
+
+    <!-- Lagerfeuerstelle: aus, schwarz, verkohlt -->
+    <g id="pit" transform="translate(634,510) scale(.82)">
+      <ellipse cx="0" cy="4" rx="62" ry="15" fill="#14102b" opacity=".3"/>
+      <ellipse cx="0" cy="0" rx="52" ry="14" fill="#1a1414"/>
+      <ellipse cx="0" cy="-1" rx="40" ry="9" fill="#2a2222"/>
+      <g fill="#8c8794"><ellipse cx="-50" cy="2" rx="10" ry="6"/><ellipse cx="-38" cy="11" rx="10" ry="6"/><ellipse cx="-16" cy="15" rx="10" ry="6"/><ellipse cx="10" cy="15" rx="10" ry="6"/><ellipse cx="34" cy="11" rx="10" ry="6"/><ellipse cx="50" cy="2" rx="10" ry="6"/><ellipse cx="40" cy="-10" rx="9" ry="5.5"/><ellipse cx="-40" cy="-9" rx="9" ry="5.5"/><ellipse cx="-14" cy="-15" rx="9" ry="5"/><ellipse cx="14" cy="-15" rx="9" ry="5"/></g>
+      <g fill="#a9a4b2" opacity=".6"><ellipse cx="-52" cy="0" rx="6" ry="3"/><ellipse cx="-14" cy="12" rx="6" ry="3"/><ellipse cx="36" cy="9" rx="6" ry="3"/></g>
+      <!-- verkohlte Scheite -->
+      <g transform="rotate(14)"><rect x="-30" y="-8" width="56" height="11" rx="5" fill="#0d0a0a"/></g>
+      <g transform="rotate(-12)"><rect x="-26" y="-12" width="54" height="11" rx="5" fill="#161111"/></g>
+      <g transform="rotate(78)"><rect x="-18" y="-5" width="38" height="9" rx="4" fill="#0d0a0a"/></g>
+      <g stroke="#3a3030" stroke-width="1.5" stroke-linecap="round"><path d="M-18,-4 l4,2 M-4,-3 l5,2 M10,-6 l4,2 M-12,-12 l4,2 M12,-14 l5,2"/></g>
+      <path d="M-20,-4 q10,-5 22,-1 q8,3 20,-2" stroke="#6a6270" stroke-width="3" fill="none" opacity=".35" stroke-linecap="round"/>
+      <!-- Rest-Rauch -->
+      <path class="smoke" d="M0,-18 C-9,-36 9,-46 0,-66" stroke="#d9d2e2" stroke-width="5" fill="none" stroke-linecap="round"/>
+    </g>
+
+    <!-- Teamer -->
+    <g id="t1" transform="translate(292,530) scale(1.1)"></g>
+    <g id="t2" transform="translate(716,524) scale(1.02) scale(-1,1)"></g>
+  </svg>
+</section>
+
+<section class="band" id="hintergrund" aria-labelledby="hH">
+  <svg class="hills" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,90 V40 C180,70 330,10 520,34 C720,60 860,6 1060,30 C1220,48 1340,20 1440,44 V90Z"/></svg>
+  <div class="wrap">
+    <span class="sticker" style="background:#e8823a">Hintergrund</span>
+    <h2 id="hH">Warum es uns gibt</h2>
+    <p class="lede">Die Väter-Kinder-Freizeit lebt vom Ehrenamt. Rund 30 Teamerinnen und Teamer planen fast ein ganzes Jahr, damit etwa 95 Papas und Kinder eine unvergessliche Zeltwoche erleben. Doch Zeltplätze werden knapper, Anschaffungen teurer, die Vorgaben strenger. Damit die VKF so bleiben kann, wie ihr sie kennt, gibt es den Förderverein.</p>
+    <p>Er steht allen offen: ehemaligen Papas, ehemaligen Kindern (inzwischen schon fast erwachsen), Freunden und Firmen. Wir nennen euch „Alumni“ der VKF.</p>
+    <div class="cards">
+      <article class="card"><span class="n" aria-hidden="true">1</span><h3>Kontakt halten</h3><p>Ein Funke VKF lodert noch in vielen Herzen. Mitglieder treffen sich einmal im Jahr beim Sommerfest und kehren für einen Abend zurück ins Zeltlager.</p></article>
+      <article class="card"><span class="n" aria-hidden="true">2</span><h3>Die VKF sichern</h3><p>Der Verein schafft Strukturen und Geld, damit wir auch bei sinkenden Zuschüssen investieren können und die Teilnahme nicht vom Einkommen abhängt.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="spenden" aria-labelledby="sH">
+  <svg class="hills" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,90 V50 C200,10 380,62 600,34 C800,10 960,60 1160,36 C1280,22 1380,40 1440,30 V90Z"/></svg>
+  <div class="wrap">
+    <span class="sticker" style="background:#a33fa0">Spenden</span>
+    <h2 id="sH">Warum wir Spenden brauchen</h2>
+    <p class="lede">Das Gestänge steht, aber ohne Plane wird es kein Zelt. Und ohne Geld keine Plane.</p>
+    <ul class="reasons">
+      <li><strong>Alles wird teurer</strong>Zeltplatzmiete, Bustransport, Verpflegung, Zelte, Kochutensilien und Spiele. Mit den Teilnehmerbeiträgen allein sind sie absehbar nicht mehr zu bezahlen.</li>
+      <li><strong>Zuschüsse sind unsicher</strong>Wir hängen spürbar an Zuschüssen von Kirche und öffentlicher Hand. Die sind nicht mehr so planbar wie früher.</li>
+      <li><strong>Für alle bezahlbar bleiben</strong>Die Teilnahme soll nicht vom Einkommen abhängen. Deshalb haben wir die Preise über viele Jahre kaum angehoben. Spenden helfen, dass das so bleibt.</li>
+    </ul>
+    <h3 style="margin:34px 0 4px;font-size:clamp(26px,2.8vw,34px)">Auch Sachspenden helfen</h3>
+    <p style="margin-bottom:0">Euer Unternehmen stellt etwas her, das wir im Zeltlager gut brauchen können?</p>
+    <ul class="gifts"><li>Spiele</li><li>Bälle und Sportgeräte</li><li>Küchenutensilien</li><li>Werkzeug</li><li>Verbrauchsmaterial</li><li>Lebensmittel</li></ul>
+
+    <div class="konto" id="konto">
+      <h3>Spendenkonto</h3>
+      <dl>
+        <dt>Kontoinhaber</dt><dd><span class="todo">Platzhalter: Kontoinhaber ergänzen</span></dd>
+        <dt>Bank</dt><dd>Volksbank Kraichgau eG</dd>
+        <dt>IBAN</dt><dd class="iban" id="iban">DE86 6729 2200 0047 2766 08</dd>
+        <dt>BIC</dt><dd>GENODE61WIE</dd>
+      </dl>
+      <button class="copy" type="button" id="copyIban" aria-live="polite">IBAN kopieren</button>
+      <small>Für Spenden und Mitgliedsbeiträge erhaltet ihr selbstverständlich eine Spendenbescheinigung. Schreibt dafür bitte eure Anschrift in den Verwendungszweck oder an verein@vkf-wiesloch.de.</small>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="mitmachen" aria-labelledby="mH">
+  <svg class="hills" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,90 V30 C160,60 340,14 540,40 C760,68 900,10 1100,34 C1250,52 1360,26 1440,40 V90Z"/></svg>
+  <div class="wrap">
+    <span class="sticker" style="background:#3f8fd8">Mitmachen</span>
+    <h2 id="mH">Werde Mitglied</h2>
+    <div class="cards">
+      <article class="card"><div class="price">15&nbsp;€ <small>pro Jahr, mindestens</small></div><p style="margin-top:12px">Das kostet quasi nichts und hilft sehr. Dafür gibt es das jährliche Alumni-Sommerfest, ein Wiedersehen mit dem Team und eine Spendenbescheinigung.</p>
+        <a class="linkbtn" href="https://vkf-wiesloch.de/wp-content/uploads/2026/05/221129_Beitrittserklaerung_FdVKF-1.pdf" target="_blank" rel="noopener">Beitrittserklärung (PDF)<svg class="ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M9 2h5v5M14 2 7.5 8.5M12 9.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></article>
+      <article class="card"><h3>Für Firmen</h3><p>Viele Unternehmen suchen sinnvolle Spendenzwecke. Ob Geld- oder Sachspende: Wir melden uns gern und stellen eine Spendenbescheinigung aus. Ansprechpartner für Sponsoring ist Christian Schubert aus dem Vorstand.</p>
+        <a class="linkbtn" href="mailto:verein@vkf-wiesloch.de?subject=Firmenspende%20f%C3%BCr%20die%20VKF">Per E-Mail melden</a></article>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="vorstand" aria-labelledby="vH">
+  <svg class="hills" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,90 V44 C220,12 400,60 620,36 C820,14 980,58 1180,32 C1290,18 1380,38 1440,26 V90Z"/></svg>
+  <div class="wrap">
+    <span class="sticker" style="background:#5f9a3a">Vorstand</span>
+    <h2 id="vH">Wer hinter dem Verein steht</h2>
+    <p class="lede">Viele von ihnen kennt ihr noch aus eurer VKF-Zeit.</p>
+    <ul class="board" id="board"></ul>
+    <div class="contact">
+      <p>Fragen, Ideen oder Lust mitzuhelfen? Wir freuen uns über jede Nachricht.</p>
+      <a class="mail" href="mailto:verein@vkf-wiesloch.de">verein@vkf-wiesloch.de</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="cols">
+    <p style="margin:0"><strong style="font-family:var(--f-display);font-size:24px;color:#ffd27a">Freunde der VKF Wiesloch e.&nbsp;V.</strong><br>Sup-Sup-Sup! Nach der VKF ist vor der VKF.</p>
+    <nav aria-label="Weiterführend"><a href="/">Zur VKF-Startseite</a><a href="#">Impressum</a><a href="#">Datenschutz</a></nav>
+  </div>
+  <div class="small">Entwurf. Impressum, Datenschutz und Kontoinhaber sind noch Platzhalter.</div>
+</footer>
+
+<script>
+/* Teamer: vorne, traurig, winkend. Aufbau wie die Figuren der Startseite (rund, ohne Kontur). */
+function teamer(o){
+  return `
+  <ellipse cx="0" cy="3" rx="26" ry="5" fill="#14102b" opacity=".3"/>
+  <rect x="-13" y="-50" width="11" height="48" rx="5.5" fill="${o.pants}"/><rect x="2" y="-50" width="11" height="48" rx="5.5" fill="${o.pants}"/>
+  <ellipse cx="-8" cy="-2" rx="9.5" ry="4.5" fill="#5a3a22"/><ellipse cx="9" cy="-2" rx="9.5" ry="4.5" fill="#5a3a22"/>
+  <rect x="-35" y="-96" width="11" height="42" rx="5.5" fill="${o.shirt}"/><circle cx="-29.5" cy="-54" r="6" fill="${o.skin}"/>
+  <rect x="-24" y="-102" width="48" height="58" rx="20" fill="${o.shirt}"/>
+  <rect x="-24" y="-102" width="15" height="58" rx="7.5" fill="#fff" opacity=".15"/>
+  <rect x="-5" y="-108" width="10" height="9" fill="${o.skin}"/>
+  <g class="wave ${o.cls||''}"><rect x="21" y="-146" width="11" height="52" rx="5.5" fill="${o.shirt}" transform="rotate(8 26 -96)"/><circle cx="29" cy="-148" r="6.5" fill="${o.skin}"/></g>
+  <circle cx="-16" cy="-123" r="4.5" fill="${o.skin}"/><circle cx="16" cy="-123" r="4.5" fill="${o.skin}"/>
+  <circle cx="0" cy="-124" r="18" fill="${o.skin}"/>
+  ${o.hair}
+  <ellipse cx="-6.5" cy="-124" rx="2.2" ry="2.8" fill="#2a1f3d"/><ellipse cx="6.5" cy="-124" rx="2.2" ry="2.8" fill="#2a1f3d"/>
+  <path d="M-12,-129 l8,-3 M12,-129 l-8,-3" stroke="#2a1f3d" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M-6,-111 Q0,-117 6,-111" stroke="#7a2a2a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <circle class="tear" cx="-8" cy="-120" r="2.2" fill="#8fd0ff"/>
+  <circle cx="-11" cy="-116" r="3" fill="#ef7a7a" opacity=".3"/><circle cx="11" cy="-116" r="3" fill="#ef7a7a" opacity=".3"/>`;
+}
+document.getElementById('t1').innerHTML=teamer({shirt:'#e0245e',pants:'#3a3358',skin:'#f2c9a0',hair:'<path d="M-18,-126 Q-19,-146 0,-145 Q19,-146 18,-126 Q10,-136 0,-135 Q-10,-136 -18,-126Z" fill="#6b4a2a"/>'});
+document.getElementById('t2').innerHTML=teamer({shirt:'#2f8f7a',pants:'#2e3346',skin:'#c98d62',cls:'b',hair:'<path d="M-18,-124 Q-21,-146 0,-146 Q21,-146 18,-124 Q12,-138 0,-137 Q-12,-138 -18,-124Z" fill="#2b2019"/><circle cx="-12" cy="-142" r="5" fill="#2b2019"/><circle cx="2" cy="-146" r="5.5" fill="#2b2019"/><circle cx="13" cy="-141" r="5" fill="#2b2019"/>'});
+
+/* Vorstand (Stand: Webseite des Fördervereins) */
+const BOARD=[
+ ['Andrea Mengesdorf','1. Vorsitzende'],['Jan-Peter Oppenheimer','Stellvertretender Vorsitzender'],['Tobias Heger','Kassenwart'],
+ ['Claudia Kahnt','Mitglieder-Beauftragte'],['Lothar Zörkler','Schriftführer'],['Christian Schubert','Drittmittelakquise und Sponsoring'],
+ ['Holger Mengesdorf','Pressewart'],['Anja Zörkler','Beisitzerin'],['Andreas Becker','Beisitzer'],['Kai Seewöster','Beisitzer']];
+const COL=['#e0245e','#a33fa0','#3f8fd8','#2f8f7a','#e8823a','#7fa82a'];
+document.getElementById('board').innerHTML=BOARD.map((b,i)=>{
+  const ini=b[0].split(' ').map(w=>w[0]).slice(0,2).join('');
+  return `<li><span class="av" style="background:${COL[i%COL.length]}" aria-hidden="true">${ini}</span><span><b>${b[0]}</b><span class="r">${b[1]}</span></span></li>`}).join('');
+
+/* IBAN kopieren */
+const cb=document.getElementById('copyIban');
+cb.addEventListener('click',async()=>{
+  const t=document.getElementById('iban').textContent.trim();
+  try{await navigator.clipboard.writeText(t);cb.textContent='Kopiert!'}catch(e){
+    const r=document.createRange();r.selectNodeContents(document.getElementById('iban'));const s=getSelection();s.removeAllRanges();s.addRange(r);cb.textContent='Markiert, bitte kopieren'}
+  setTimeout(()=>cb.textContent='IBAN kopieren',2200);
+});
+</script>
+</body>
+</html>
