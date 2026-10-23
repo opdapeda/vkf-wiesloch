@@ -85,7 +85,7 @@ a{color:inherit}
 @media (prefers-reduced-motion: reduce){.wave,.flag,.smoke,.tear,.tw{animation:none}.smoke{opacity:.3}}
 
 /* Bänder mit Hügelkante */
-.band{position:relative;padding-inline:16px;padding-block:clamp(64px,9vw,120px)}
+.band{position:relative;z-index:2;padding-inline:16px;padding-block:clamp(64px,9vw,120px)}
 .band .hills{position:absolute;left:0;right:0;bottom:calc(100% - 1px);width:100%;height:clamp(40px,6vw,90px);display:block}
 #hintergrund{background:var(--b1)} #hintergrund .hills{fill:var(--b1)}
 #spenden{background:var(--b2)} #spenden .hills{fill:var(--b2)}
@@ -169,7 +169,7 @@ footer .small{max-width:1080px;margin:22px auto 0;font-size:15px;opacity:.7;bord
   <p class="lead">Ohne euch bleibt das Lagerfeuer aus.</p>
   <div class="btns"><a class="cta" href="#spenden">Jetzt spenden</a><a class="cta alt" href="#mitmachen">Mitglied werden</a></div>
 
-  <svg class="scene" id="scene" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMax slice" role="img"
+  <svg class="scene" id="scene" viewBox="-167 -187 1333 827" preserveAspectRatio="xMidYMax slice" role="img"
        aria-label="Illustration: Ein Zeltplatz in der Dämmerung. Von einem Zelt steht nur das Aluminium-Gestänge, die Plane liegt eingepackt im Sack daneben. Die Lagerfeuerstelle ist kalt und verkohlt. Zwei Teamer stehen traurig daneben und winken.">
     <defs>
       <linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a3a8e"/><stop offset=".55" stop-color="#d9607a"/><stop offset="1" stop-color="#f2a56a"/></linearGradient>
@@ -180,12 +180,17 @@ footer .small{max-width:1080px;margin:22px auto 0;font-size:15px;opacity:.7;bord
     </defs>
         <circle cx="760" cy="300" r="150" fill="url(#sun)"/>
     <g fill="#fff"><path class="tw" d="M110,60 l3,9 9,3 -9,3 -3,9 -3,-9 -9,-3 9,-3z"/><path class="tw" style="animation-delay:-1.2s" d="M330,30 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2z" opacity=".8"/><path class="tw" style="animation-delay:-2.2s" d="M560,70 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3z" opacity=".9"/><path class="tw" style="animation-delay:-.6s" d="M900,50 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2z" opacity=".7"/></g>
+    <g id="bg">
     <path d="M0,330 L90,262 Q110,248 130,262 L260,340 L420,236 Q440,224 460,238 L610,330 L760,250 Q780,240 800,252 L920,320 L1000,284 V420 H0Z" fill="url(#m1)"/>
     <path d="M0,370 L140,300 Q160,290 180,302 L330,372 L520,296 Q540,288 560,298 L720,372 L880,306 Q900,298 920,308 L1000,346 V440 H0Z" fill="url(#m2)"/>
     <!-- Bäume -->
     <g fill="#2f5a3a"><path d="M60,400 l24,-70 24,70z M70,380 l14,-34 14,34z" opacity=".9"/><path d="M880,396 l22,-64 22,64z M888,376 l14,-32 14,32z" opacity=".9"/><path d="M930,404 l18,-52 18,52z" opacity=".8"/></g>
     <path d="M0,388 C200,368 380,380 560,372 C740,364 880,376 1000,366 V560 H0Z" fill="url(#gr)"/>
     <path d="M0,450 C220,432 420,448 620,438 C800,430 920,442 1000,436 V560 H0Z" fill="#2f5a3a" opacity=".35"/>
+    <rect x="0" y="555" width="1000" height="90" fill="#2f5a3a"/>
+    </g>
+    <use href="#bg" transform="scale(-1,1)"/>
+    <use href="#bg" transform="translate(2000,0) scale(-1,1)"/>
     <!-- Zwei Zelte: halb abgebaut (mit halber Plane) und nur Gestänge -->
     <g id="banner" transform="translate(688,426) scale(.52)"></g>
     <g id="wegweiser" transform="translate(112,440) scale(1.12)"></g>
