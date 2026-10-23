@@ -1765,6 +1765,7 @@ function F(st,o){
 
   if(A==='clip'){const l=[sL,[-tw/2-6,-th*.32],[-tw*.22,-th*.55]],r=[sR,[tw/2+11,-th*.72],[tw/2+13,-th-al*.45]];
     armsS=arm(C,l,o,aw,sk)+rect(-tw*.5,-th*.85,tw*.42,th*.55,'#8e5a2c',2)+rect(-tw*.46,-th*.8,tw*.34,th*.45,'#fff',1)+`<path d="M${f1(-tw*.42)},${f1(-th*.68)} h${f1(tw*.24)} M${f1(-tw*.42)},${f1(-th*.58)} h${f1(tw*.2)} M${f1(-tw*.42)},${f1(-th*.48)} h${f1(tw*.24)}" stroke="#b8b0c8" stroke-width="1.6"/>`+hand(C,l[2],hr,sk)+`<g class="gest">${arm(C,r,o,aw,sk)+hand(C,r[2],hr,sk)}</g>`}
+  if(A==='clasp'){const l=[sL,[-tw/2-5,-th*.4],[-2.5,-th*.2]],r=[sR,[tw/2+5,-th*.4],[2.5,-th*.2]];armsS=both(l,r)}
   if(A==='hips'){const l=[sL,[-tw/2-15,-th*.5],[-tw/2+2,-th*.24]],r=l.map(p=>[-p[0],p[1]]);r[0]=sR;armsS=both(l,r)}
   if(A==='eyes'){const l=[sL,[-tw/2-7,-th*.55],[-6*k,hy-1*k]],r=[sR,[tw/2+7,-th*.55],[6*k,hy-1*k]];armsS=both(l,r)}
   if(A==='ladle'){const r=[sR,[tw/2+8,-th*.45],[tw/2+al*.55,-th*.35]];armsS=arm(C,down(-1),o,aw,sk)+hand(C,down(-1)[1],hr,sk)+arm(C,r,o,aw,sk)+`<line x1="${f1(r[2][0])}" y1="${f1(r[2][1])}" x2="${f1(r[2][0]+12)}" y2="${f1(r[2][1]+24)}" stroke="#8e98a8" stroke-width="3" stroke-linecap="round"/><circle cx="${f1(r[2][0]+13)}" cy="${f1(r[2][1]+26)}" r="5" fill="#8e98a8"/>`+hand(C,r[2],hr,sk)}
@@ -1784,6 +1785,8 @@ function F(st,o){
   if(o.hood)front+=`<path d="M-4,${f1(-th+3)} v${f1(th*.25)} M4,${f1(-th+3)} v${f1(th*.22)}" stroke="#f4f3ef" stroke-width="1.4" stroke-linecap="round"/>`;
   if(o.necklace)front+=`<path d="M${f1(-6.5*k)},${f1(-th+1)} Q0,${f1(-th*(o.necklace==='long'?.62:.8))} ${f1(6.5*k)},${f1(-th+1)}" stroke="#e6e1d6" stroke-width=".9" fill="none"/><circle cx="0" cy="${f1(-th*(o.necklace==='long'?.67:.83))}" r="${o.necklace==='long'?2.2:1.3}" fill="#e6e1d6"/>`;
   if(o.strap)front+=`<path d="M${f1(-tw*.3)},${f1(-th)} L${f1(tw*.48)},${f1(-th*.12)}" stroke="#1c1c22" stroke-width="4.2"/>${rect(-tw*.22,-th*.84,5,6,'#d9d4cc',1)}`;
+  if(o.scarf){const c=o.scarf,c2=shade(c,1.28),c3=shade(c,.78),end=(x,w,b)=>{const y0=-th+1,y1=-th*b;return rect(x,y0,w,y1-y0,c,3)+rect(x,y1-9,w,2.2,c2,0)+rect(x,y1-5.5,w,1.2,c3,0)+rect(x,y1-14,w,1.3,c2,0)+`<path d="M${x+1.5},${f1(y1-.5)} v3 M${x+w/2},${f1(y1-.5)} v3 M${x+w-1.5},${f1(y1-.5)} v3" stroke="${c}" stroke-width="1.2" stroke-linecap="round"/>`};front+=`<path d="M-12,${f1(-th-3)} Q0,${f1(-th+8)} 12,${f1(-th-3)}" stroke="${c}" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M-11,${f1(-th-1)} Q0,${f1(-th+6)} 11,${f1(-th-1)}" stroke="${c3}" stroke-width="1" fill="none" opacity=".6"/>`+end(-11,9,.5)+end(1,9.5,.36)}
+  if(o.deco==='knit')body+=`<g stroke="${shade(sh,.88)}" stroke-width=".8" opacity=".45">${[-.3,-.1,.1,.3].map(k=>`<path d="M${f1(tw*k)},${f1(-th*.92)} V${f1(-th*.08)}" stroke-dasharray="2 2"/>`).join('')}</g>`+rect(-tw/2+1,-6,tw-2,5,shade(sh,.92),2);
   if(o.ntowel)front+=`<path d="M-13,${f1(-th-2)} Q0,${f1(-th+9)} 13,${f1(-th-2)}" stroke="${o.ntowel}" stroke-width="7" fill="none" stroke-linecap="round"/>`+rect(-tw*.34,-th-1,10,th*.72,o.ntowel,3)+rect(tw*.34-10,-th-1,10,th*.72,o.ntowel,3)+rect(-tw*.34,-th*.42,10,5,'#6fb6d8',0)+rect(tw*.34-10,-th*.42,10,5,'#6fb6d8',0)+`<g fill="${shade(o.ntowel,.8)}">${rect(-tw*.34+2,-th*.97,1.5,th*.5,shade(o.ntowel,.8),1)}${rect(tw*.34-4,-th*.97,1.5,th*.5,shade(o.ntowel,.8),1)}</g>`;
   if(o.cord&&o.cordc)front+=`<circle cx="1" cy="${f1(-th*.6)}" r="2.4" fill="${o.cordc}"/>`+(o.cordc2?`<path d="M1,${f1(-th*.6)} L1,${f1(-th*.3)}" stroke="#c9a86a" stroke-width="1.1"/><circle cx="1" cy="${f1(-th*.27)}" r="3.6" fill="${o.cordc2}"/>`:'');
   if(o.ring)front+=`<g><ellipse cx="0" cy="${f1(-th*.18)}" rx="${f1(tw*.8)}" ry="${f1(8*k)}" fill="${o.ring}"/><ellipse cx="0" cy="${f1(-th*.18-2*k)}" rx="${f1(tw*.5)}" ry="${f1(3*k)}" fill="${shade(o.ring,.7)}"/>${rect(-tw*.55,-th*.18-1,5*k,9*k,'#fff',1)}${rect(tw*.45,-th*.18-1,5*k,9*k,'#fff',1)}</g>`;
@@ -1804,6 +1807,7 @@ const sparkle=(x,y,r)=>`<path d="M${x},${y-r} Q${x},${y} ${x+r},${y} Q${x},${y} 
 
 const T=[
  {n:'Alex',t:'Runde Sonnenbrille, Strubbelhaar, gestreiftes Tanktop',o:{arms:'wave',hs:'swoop',hair:'#6b3f22',glasses:'sunround',beard:'stub',beardc:'#8a5a3a',tank:1,sleeve:'none',shirt:'#9a9da6',deco:'bands',decoc:'#2b3150',skin:'#f0c09a',m:'grin',pants:'#3a4a6a'}},
+ {n:'Andrea',t:'Zurückgebundene braune Haare, Brille, Strickpulli, karierter Schal',o:{arms:'clasp',hs:'tail',hair:'#6b4430',glasses:'round',slim:1,shirt:'#e9e3d8',deco:'knit',scarf:'#8f7f74',skin:'#f3c8ae',m:'grin',pants:'#2a2a36'}},
  {n:'Claudi',t:'Blonder Bob mit Seitenscheitel, Kette, Taschengurt',o:{hs:'bob',hair:'#d9c49a',slim:1,shirt:'#232a45',sleeve:'short',necklace:'long',strap:1,skin:'#f3c4a8',m:'smile',eyes:'happy',pants:'#4a5a7a'}},
  {n:'Dirk',t:'Nasse Locken, Handtuch um den Hals, rote Backen',o:{arms:'hips',hs:'curlytop',hair:'#4a3220',beard:'stub',beardc:'#7a5236',ruddy:1,ntowel:'#3fa59a',shirt:'#2a2340',stout:1,skin:'#f0b494',m:'smile',eyes:'happy',pants:'#33354a'}},
  {n:'Hadl',t:'Glatze, hoher runder Kopf, breites Lachen, breite Schultern, weißes Shirt',o:{arms:'wave',hs:'shaved',tall:1,hair:'#8a6a52',nose:'pointy',broad:1,shortneck:1,eyes:'happy',m:'big',skin:'#f2bf9e',shirt:'#f6f5f1',deco:'finzza',sleeve:'short',pants:'#2e3346'}},
@@ -1826,7 +1830,7 @@ const T=[
 
 const byName=n=>T.find(x=>x.n===n);
 const ROWS=[
- {y:300,s:.95,x0:225,dx:150,names:['Tommy','Henri','Tyler','Niklas','Luca','Timbo']},
+ {y:300,s:.95,x0:225,dx:125,names:['Tommy','Henri','Tyler','Andrea','Niklas','Luca','Timbo']},
  {y:362,s:1.05,x0:150,dx:150,names:['Simon','Katha','Hanna','Alex','Jan','Paula','JPO']},
  {y:432,s:1.15,x0:225,dx:150,names:['Timo','Dirk','Kalle','Hadl','Claudi','Mu']}
 ];
