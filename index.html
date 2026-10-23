@@ -71,7 +71,7 @@ a{color:inherit}
 @media (max-width:440px){.brand{font-size:18px}.brand small{font-size:12px}.cta{font-size:16px;padding:8px 14px 6px}}
 
 /* Story */
-#story{position:relative;height:1000vh;background:#14102b}
+#story{position:relative;height:1090vh;background:#14102b}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 #scene{position:absolute;inset:0;width:100%;height:100%;display:block}
 .caps{position:absolute;left:50%;top:clamp(92px,12vh,140px);width:min(1080px,calc(100% - 32px));transform:translateX(-50%);pointer-events:none;
@@ -144,7 +144,7 @@ a{color:inherit}
 .pv-card h3{margin:0 0 4px;font:800 26px/1.15 'Baloo 2',system-ui,sans-serif}
 .pv-card p{margin:0;font-size:18px;line-height:1.45;font-weight:600;max-width:62ch;text-wrap:pretty}
 .pv-card.port figcaption{max-width:min(100%,520px)}
-.vcard{position:relative;display:block;pointer-events:auto;width:clamp(128px,20vh,210px);margin:28px auto 22px;padding:9px 9px 0;border:0;border-radius:6px;background:#fffdf8;color:#2a1f3d;text-align:center;font:inherit;cursor:pointer;
+.vcard{position:relative;left:calc(-1*min(22vw,320px));top:-64px;display:block;pointer-events:auto;width:clamp(128px,20vh,210px);margin:28px auto 22px;padding:9px 9px 0;border:0;border-radius:6px;background:#fffdf8;color:#2a1f3d;text-align:center;font:inherit;cursor:pointer;
   box-shadow:0 14px 34px rgba(10,6,30,.45);transform:rotate(3.5deg);transition:transform .25s,box-shadow .25s,opacity .3s}
 .vcard:hover,.vcard:focus-visible{transform:rotate(0) translateY(-4px) scale(1.04);box-shadow:0 20px 42px rgba(10,6,30,.5)}
 .vcard:focus-visible{outline:4px solid #ffc93a;outline-offset:4px}
@@ -155,7 +155,7 @@ a{color:inherit}
 .vcard .play i::before{content:"";margin-left:4px;border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #e8890c}
 .vcard .lbl{display:block;padding:9px 2px 26px;font:800 19px/1.1 'Baloo 2',system-ui,sans-serif}
 .vcard .go{position:absolute;left:50%;bottom:-17px;transform:translateX(-50%);white-space:nowrap;padding:7px 16px;border-radius:999px;background:#ffc93a;color:#2a1f3d;font:800 16px/1.1 'Baloo 2',system-ui,sans-serif;box-shadow:0 4px 12px rgba(0,0,0,.35)}
-@media (max-width:700px){.vcard{width:clamp(104px,16vh,132px);margin-top:26px;padding:5px 5px 0}.vcard .play{left:5px;right:5px;top:5px}.vcard .play i{width:28px;height:28px}.vcard .play i::before{border-width:5px 0 5px 9px;margin-left:2px}.vcard .tape{width:44px;height:16px;margin-left:-22px;top:-8px}
+@media (max-width:700px){.vcard{left:-104px;top:-30px;width:clamp(104px,16vh,132px);margin-top:26px;padding:5px 5px 0}.vcard .play{left:5px;right:5px;top:5px}.vcard .play i{width:28px;height:28px}.vcard .play i::before{border-width:5px 0 5px 9px;margin-left:2px}.vcard .tape{width:44px;height:16px;margin-left:-22px;top:-8px}
   .vcard .lbl{font-size:12px;padding:5px 0 18px}.vcard .go{font-size:12px;padding:4px 9px;bottom:-12px}}
 @media (max-height:800px){.vcard{width:clamp(108px,17vh,140px);margin:18px auto 20px;padding:6px 6px 0}.vcard .play{left:6px;right:6px;top:6px}.vcard .play i{width:34px;height:34px}.vcard .play i::before{border-width:7px 0 7px 12px}
   .vcard .lbl{font-size:14px;padding:6px 0 20px}.vcard .go{font-size:13px;padding:5px 12px;bottom:-14px}}
@@ -224,6 +224,12 @@ a{color:inherit}
 @keyframes hop{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-13px)}}
 .sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 2.4s ease-in-out infinite}
 @keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.pump{animation:pump .55s ease-in-out infinite alternate}
+@keyframes pump{to{transform:translateY(9px)}}
+.puff{transform-box:fill-box;transform-origin:50% 100%;animation:puff .55s ease-in-out infinite alternate}
+@keyframes puff{from{transform:scaleY(.88)}to{transform:scaleY(1.06)}}
+.sweat{animation:sweat 1.5s ease-in infinite;opacity:0}
+@keyframes sweat{0%{transform:translate(0,0);opacity:0}20%{opacity:.95}100%{transform:translate(var(--dx,12px),30px);opacity:0}}
 .peek{animation:peek 3.6s ease-in-out infinite}
 @keyframes peek{0%,45%,100%{transform:translateX(0)}60%,85%{transform:translateX(-9px)}}
 .ksteam{transform-box:fill-box;transform-origin:center;animation:ksteam 3.2s ease-out infinite;opacity:0}
@@ -231,9 +237,13 @@ a{color:inherit}
 .zz{transform-box:fill-box;transform-origin:center;animation:zz 4.5s ease-out infinite;opacity:0;font:800 24px 'Baloo 2',system-ui,sans-serif}
 @keyframes zz{0%{transform:translate(0,0) scale(.6);opacity:0}20%{opacity:.9}100%{transform:translate(26px,-80px) scale(1.2);opacity:0}}
 @media (prefers-reduced-motion: reduce){
-  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span,.ib .halo,.hop,.sway,.peek,.ksteam,.zz,.blink,.strum,.sing,.legA,.legB,.walkA,.walkB{animation:none}
+  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span,.ib .halo,.hop,.sway,.pump,.puff,.sweat,.peek,.ksteam,.zz,.blink,.strum,.sing,.legA,.legB,.walkA,.walkB,.wave{animation:none}
   .spark,.note,.steam,.ksteam,.zz{opacity:0}
 }
+
+/* Banner: Fahne weht leicht */
+.wave{transform-box:fill-box;transform-origin:100% 0;animation:wave 2.6s ease-in-out infinite alternate}
+@keyframes wave{from{transform:skewY(-1.5deg) scaleX(1)}to{transform:skewY(2deg) scaleX(.97)}}
 
 /* Info bands: each band rises out of the one above with its own hill silhouette */
 main{display:block}
@@ -396,6 +406,7 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
       <g id="kitchen"></g>
       <g id="kfx"></g>
       <g id="edgeTrees"></g>
+      <g id="banner"></g>
       <g id="arrival"><g id="luggage"></g><g id="bus"></g></g>
 
       <g id="vigs"></g>
@@ -610,33 +621,39 @@ const figure=(function(){
     if(hs==='pig')s+=`<circle cx="-21" cy="3" r="6.5" fill="${hr}"/><circle cx="21" cy="3" r="6.5" fill="${hr}"/><circle cx="-16.5" cy="1" r="2.4" fill="#3a7bd5"${N}/><circle cx="16.5" cy="1" r="2.4" fill="#3a7bd5"${N}/>`;
     if(hs==='pony')s+=`<path d="M-15,-10 Q-30,-6 -24,10 Q-20,0 -12,-4Z" fill="${hr}"/>`;
     s+=`<circle cx="-16" cy="1" r="4.3" fill="${shade(sk,.92)}"/><circle cx="16" cy="1" r="4.3" fill="${shade(sk,.92)}"/><circle r="17" fill="${sk}"/>`;
-    if(o.beard==='full')s+=`<path d="M-16,2 Q-17,21 0,23 Q17,21 16,2 Q12,11 0,11 Q-12,11 -16,2Z" fill="${hr}"/>`;
-    if(o.beard==='stub')s+=`<path d="M-16,2 Q-17,19 0,21 Q17,19 16,2 Q12,11 0,11 Q-12,11 -16,2Z" fill="${hr}" opacity=".3"${N}/>`;
+    const bh=o.beardc||hr;
+    if(o.beard==='full')s+=`<path d="M-16,2 Q-17,21 0,23 Q17,21 16,2 Q12,11 0,11 Q-12,11 -16,2Z" fill="${bh}"/>`;
+    if(o.beard==='stub')s+=`<path d="M-16,2 Q-17,19 0,21 Q17,19 16,2 Q12,11 0,11 Q-12,11 -16,2Z" fill="${bh}" opacity=".${o.beardc?45:3}"${N}/>`;
     if('short long pig pony messy'.includes(hs))s+=`<path d="M-17,0 Q-19,-19 0,-19 Q19,-19 17,0 Q15,-10 5,-12 Q-1,-8 -7,-12 Q-15,-10 -17,0Z" fill="${hr}"/>`;
     if(hs==='messy')s+=`<g fill="${hr}"><path d="M-8,-17 l-6,-9 l9,4Z"/><path d="M1,-18 l1,-12 l5,10Z"/><path d="M9,-16 l9,-6 l-4,10Z"/></g>`;
     if(hs==='curly')s+=`<g fill="${hr}"><circle cx="-16" cy="-1" r="3.4"/><circle cx="16" cy="-3" r="3.4"/><circle cx="-14" cy="-8" r="4.8"/><circle cx="13" cy="-11" r="4.8"/><circle cx="-9" cy="-15" r="5.4"/><circle cx="6" cy="-17" r="5.4"/><circle cx="-1" cy="-18" r="5.6"/></g>`;
     if(hs==='spiky')s+=`<path d="M-17,-1 L-16,-13 L-10,-11 L-8,-22 L-2,-15 L3,-24 L6,-15 L13,-20 L12,-11 L17,-5 L17,-1 Q10,-10 0,-10 Q-10,-10 -17,-1Z" fill="${hr}"/>`;
     if(hs==='bald')s+=`<ellipse cx="-5" cy="-11" rx="6" ry="3" fill="#fff" opacity=".35"${N}/><path d="M-17,-5 q-4,4 -1,11 q2,-6 3,-9Z M17,-5 q4,4 1,11 q-2,-6 -3,-9Z" fill="${hr}"/>`;
     if(hs==='cap')s+=`<path d="M-17,-2 Q-18,-22 0,-22 Q18,-22 17,-2Z" fill="${cap}"/><ellipse cx="0" cy="-3" rx="19" ry="4.2" fill="${shade(cap,.75)}"/>`;
+    if(hs==='capback')s+=`<g fill="${hr}"><path d="M-17,-4 q-2,7 1,10 l3,-9Z"/><path d="M17,-4 q2,7 -1,10 l-3,-9Z"/></g><g transform="translate(0,-4.5)"><path d="M-17.5,-2 Q-18.5,-23 0,-23 Q18.5,-23 17.5,-2 Q0,-7 -17.5,-2Z" fill="${cap}"/><path d="M-8,-5.5 Q0,-15 8,-5.5Z" fill="${hr}"/>${rect(-10,-8.5,20,4.4,'#c9ccd2',2.2)}<g fill="#8e929a">${[-6,-2,2,6].map(x=>`<circle cx="${x}" cy="-6.3" r=".9"/>`).join('')}</g></g>`;
     if(hs==='beanie')s+=`<path d="M-17,-3 Q-18,-23 0,-23 Q18,-23 17,-3Z" fill="${cap}"/>${rect(-18.5,-8,37,7,shade(cap,.78),3.5)}<circle cy="-24" r="4.5" fill="#fff"/>`;
     if(E==='dot')s+=`<g class="blink" style="animation-delay:${(-o.blink).toFixed(2)}s"><ellipse cx="-6" cy="-2" rx="2.1" ry="2.8" fill="#1f1830"${N}/><ellipse cx="6" cy="-2" rx="2.1" ry="2.8" fill="#1f1830"${N}/></g>`;
     if(E==='wide')s+=`<circle cx="-6" cy="-2" r="4" fill="#fff"/><circle cx="6" cy="-2" r="4" fill="#fff"/><circle cx="-5" cy="-2" r="1.8" fill="#1f1830"${N}/><circle cx="7" cy="-2" r="1.8" fill="#1f1830"${N}/>`;
     if(E==='happy')s+=`<path d="M-9,-1 q3,-3.4 6,0 M3,-1 q3,-3.4 6,0" fill="none" stroke="#1f1830" stroke-width="1.9" stroke-linecap="round"/>`;
     s+=`<path d="M-9,-8.5 l5,-1 M4,-9.5 l5,1" stroke="${hr}" stroke-width="1.9" stroke-linecap="round"/>`;
     s+=`<ellipse cx="0" cy="4" rx="3.2" ry="2.6" fill="${shade(sk,.87)}"/><circle cx="-9.5" cy="5.5" r="2.8" fill="#ff7a7a" opacity=".38"${N}/><circle cx="9.5" cy="5.5" r="2.8" fill="#ff7a7a" opacity=".38"${N}/>`;
-    if(o.beard==='mous')s+=`<path d="M-9,8.5 Q-3,4.5 0,8 Q3,4.5 9,8.5 Q4,12 0,10 Q-4,12 -9,8.5Z" fill="${hr}"/>`;
-    const my=o.beard==='mous'?13:10,mf='#6a1f1f';
+    if(o.beard==='mous'||o.mous)s+=`<path d="M-9,8.5 Q-3,4.5 0,8 Q3,4.5 9,8.5 Q4,12 0,10 Q-4,12 -9,8.5Z" fill="${o.beardc||hr}"/>`;
+    const my=(o.beard==='mous'||o.mous)?13:10,mf='#6a1f1f';
     if(M==='smile')s+=`<path d="M-4.5,${my} Q0,${my+5.5} 4.5,${my}Z" fill="${mf}"/>`;
     if(M==='grin')s+=`<path d="M-6.5,${my-1} Q0,${my+8} 6.5,${my-1}Z" fill="${mf}"/><rect x="-4.5" y="${my-1}" width="9" height="2.4" fill="#fff"${N}/>`;
     if(M==='sing')s+=`<ellipse class="sing" cx="0" cy="${my+1}" rx="3.2" ry="4.2" fill="${mf}"/>`;
     if(M==='o')s+=`<circle cx="0" cy="${my+1}" r="2.6" fill="${mf}"/>`;
-    if(o.glasses)s+=`<g fill="#fff" fill-opacity=".25" stroke="#2a1f3d" stroke-width="1.6"><circle cx="-6" cy="-2" r="5.2"/><circle cx="6" cy="-2" r="5.2"/></g><path d="M-1,-2.5 h2" stroke="#2a1f3d" stroke-width="1.6"/>`;
+    if(o.glasses==='round')s+=`<g fill="none" stroke="#6a5236" stroke-width="1.3"><circle cx="-6.5" cy="-2" r="5.8"/><circle cx="6.5" cy="-2" r="5.8"/><path d="M-.7,-3 q.7,-1.2 1.4,0 M-12.3,-2.5 L-16,-3.5 M12.3,-2.5 L16,-3.5"/></g>`;
+    else if(o.glasses)s+=`<g fill="#fff" fill-opacity=".25" stroke="#2a1f3d" stroke-width="1.6"><circle cx="-6" cy="-2" r="5.2"/><circle cx="6" cy="-2" r="5.2"/></g><path d="M-1,-2.5 h2" stroke="#2a1f3d" stroke-width="1.6"/>`;
+    if(o.hat==='straw'){s+=`<path d="M-15,-9 Q-15,10 -4,18 M15,-9 Q15,10 4,18" fill="none" stroke="#2a2420" stroke-width="1"/>`;
+      s+=`<ellipse cx="0" cy="-12" rx="31" ry="6.5" fill="#d8b06a" stroke="#2a2420" stroke-width="1.3"/><path d="M-14,-12 Q-15,-31 0,-31 Q15,-31 14,-12Z" fill="#cfa45c"/><path d="M-14,-15 Q0,-18 14,-15 L14,-12 Q0,-15 -14,-12Z" fill="#b8894a"/><g stroke="#b8894a" stroke-width=".8" fill="none" opacity=".7"><path d="M-10,-20 Q0,-23 10,-20 M-11,-25 Q0,-28 11,-25 M-24,-12 Q-12,-8 0,-8 Q12,-8 24,-12"/></g>`}
     return s}
 
   /* Figur: o.seat = sitzend (Ursprung Sitzfläche), sonst stehend (o.run = Lauf-, o.walk = Gehbeine) */
   return function(o){
     const kid=!!o.kid,sk=o.skin,sh=o.shirt,pa=o.pants||(kid?'#2f8f7a':'#3a3358'),sc=kid?SCK:SCA;
     const D=kid?{tw:28,th:32,tr:12,hr:15.5,nk:2,aw:7,al:24,ll:26,lw:8}:{tw:48,th:56,tr:20,hr:17,nk:6,aw:11,al:40,ll:46,lw:12};
+    if(o.stout&&!kid)D.tw=55;
     const tw=D.tw,th=D.th,k=D.hr/17,hy=-(th+D.nk+D.hr*.92),ry=D.lw*.42,shoe=o.shoes||(kid?'#ef3a62':'#5a3a22');
     let legs='';
     if(!o.seat){
@@ -655,6 +672,9 @@ const figure=(function(){
     let body=rect(-tw/2,-th,tw,th,sh,D.tr)+rect(-tw/2,-th,tw*.33,th,'#fff',D.tr*.5,' opacity=".15"');
     if(o.deco==='stripes')body+=rect(-tw/2+2,-th*.6,tw-4,th*.09,shade(sh,1.45),0,N)+rect(-tw/2+2,-th*.42,tw-4,th*.09,shade(sh,1.45),0,N);
     if(o.deco==='star')body+=`<path transform="translate(0,${f1(-th*.55)}) scale(${f1(th/32)})" d="M0,-5 l1.6,3.4 3.7,.4 -2.8,2.5 .8,3.7 -3.3,-1.9 -3.3,1.9 .8,-3.7 -2.8,-2.5 3.7,-.4Z" fill="#fff"${N}/>`;
+    if(o.cord)body+=`<path d="M-2,${f1(-th)} L1,${f1(-th*.5)} M2,${f1(-th)} L1,${f1(-th*.5)}" stroke="#2a2420" stroke-width="1.1" fill="none"/><circle cx="1" cy="${f1(-th*.6)}" r="1.6" fill="#2a2420"/>`;
+    if(o.deco==='logo')body+=rect(tw*.12,-th*.78,tw*.2,th*.05,'#e0245e',1)+rect(tw*.14,-th*.71,tw*.16,th*.12,'#7aa8e0',3);
+    if(o.lanyard)body+=`<path d="M${f1(-6*k)},${f1(-th+1)} L${f1(-1.5)},${f1(-th*.42)} L${f1(1.5)},${f1(-th*.42)} L${f1(6*k)},${f1(-th+1)}" stroke="#1c1c1c" stroke-width="1.4" fill="none"/>`;
     const neck=rect(-4.5*k,-th-D.nk-3,9*k,D.nk+6,shade(sk,.88),2);
     /* Arme */
     const sL=[-tw/2+D.aw/2-.5,-th+D.aw/2+2],sR=[-sL[0],sL[1]],al=D.al,aw=D.aw,hr=aw*.56;
@@ -664,6 +684,8 @@ const figure=(function(){
     if(A==='down')armsS=both(down(-1),down(1));
     if(A==='up'){const l=[sL,[-tw/2-8,-th-al*.35],[-tw/2-4,-th-al*.85]],r=l.map(p=>[-p[0],p[1]]);r[0]=sR;armsS=both(l,r)}
     if(A==='wave'){const r=[sR,[tw/2+9,-th-al*.3],[tw/2+6,-th-al*.82]];armsS=both(down(-1),r)}
+    if(A==='clip'){const l=[sL,[-tw/2-6,-th*.32],[-tw*.22,-th*.55]],r=[sR,[tw/2+11,-th*.72],[tw/2+13,-th-al*.45]];
+      armsS=arm(l,o,aw,sk)+rect(-tw*.5,-th*.85,tw*.42,th*.55,'#8e5a2c',2)+rect(-tw*.46,-th*.8,tw*.34,th*.45,'#fff',1)+`<path d="M${f1(-tw*.42)},${f1(-th*.68)} h${f1(tw*.24)} M${f1(-tw*.42)},${f1(-th*.58)} h${f1(tw*.2)} M${f1(-tw*.42)},${f1(-th*.48)} h${f1(tw*.24)}" stroke="#b8b0c8" stroke-width="1.6"/>`+hand(l[2],hr,sk)+arm(r,o,aw,sk)+hand(r[2],hr,sk)}
     if(A==='guitar'){
       const g=[tw*.1,-th*.3],n=[-tw*1.0,-th*.98],gc=o.gc||'#e0913a',rot=`rotate(-32 ${f1(g[0])} ${f1(g[1])})`;
       const gu=`<line x1="${f1(g[0])}" y1="${f1(g[1])}" x2="${f1(n[0])}" y2="${f1(n[1])}" stroke="#5b3a1e" stroke-width="${f1(6*k)}" stroke-linecap="round"/>`+
@@ -692,6 +714,7 @@ function look(o,c,skin,hair){
   v.deco=o.deco!==undefined?o.deco:(r()<.22?ch(['stripes','star']):'');
   v.pants=o.pants||(kid?ch(['#2f6fb0','#2f8f7a','#7a4fa0','#3a3358']):'#3a3358');
   v.arms=o.arms||(o.seat||o.run||o.walk?'down':ch(['down','down','down','wave','up']));
+  v.mous=o.mous;v.beardc=o.beardc;v.lanyard=o.lanyard;v.hat=o.hat;v.cord=o.cord;v.stout=o.stout;
   return v}
 /* figures are drawn BIG times the old size (the camp-fire round uses o.big 1.5); seated ones keep their seat height and grow around it */
 const BIG=2,grow=(x,y,h)=>`<g transform="translate(${x},${y}) scale(${BIG}) translate(${-x},${-y})">${h}</g>`; /* props made for the old size: scale them around the figure's feet */
@@ -794,6 +817,72 @@ $('edgeTrees').innerHTML=[[-60,905,1.9],[40,890,1.5],[1660,905,1.9],[1560,892,1.
 
   seed=s0})();
 
+const BANNER={x:972,y:655,s:.45};  /* Fuß des Stamms in Szenenkoordinaten, Maßstab */
+/* Banner: baumhoher Stamm mit Wieslocher Fahne (docs/banner-referenz.html). Er steht fest auf der Wiese, hinter den Vignetten; die Tageszeit kommt wie bei Zelten und Bäumen über die Overlays #dusk und #dark. */
+(function(){const f1=n=>(+n).toFixed(1);
+function bannerSVG(id,o){o=o||{};const N=!!o.night,P='bn'+id;
+  const wood=N?'#6b4a3a':'#9a6a40',woodD=N?'#4a3028':'#6e4a2a',woodL=N?'#7e5a48':'#b88454';
+  const white=N?'#cfd2e2':'#f6f6f2',blue=N?'#28449a':'#2f5fc4',rope=N?'#8a6a50':'#c48a52';
+  const black='#1c1a20',gold=N?'#c99a2a':'#f2b81e',goldD=N?'#8a6418':'#b8840e';
+  let s=`<defs>
+    <pattern id="${P}r" width="9" height="13" patternUnits="userSpaceOnUse" patternTransform="skewX(-20)"><rect width="9" height="13" fill="${white}"/><path d="M4.5,0 L9,6.5 L4.5,13 L0,6.5Z" fill="${N?'#3a5ab8':'#2a7fd4'}"/></pattern>
+    <clipPath id="${P}c"><path d="M-28,0 H28 V34 Q28,58 0,66 Q-28,58 -28,34Z"/></clipPath>
+  </defs>`;
+  // Spannseile nach rechts
+  s+=`<g stroke="${rope}" stroke-width="2.2" fill="none"><path d="M3,-548 Q170,-300 330,-10"/><path d="M3,-540 Q190,-270 380,-6" opacity=".8"/></g>`;
+  // Stamm (leicht konisch), Astansätze, Maserung
+  s+=`<path d="M-11,0 L-6,-552 Q0,-560 6,-552 L11,0Z" fill="${wood}"/><path d="M-11,0 L-6,-552 Q-3,-556 0,-556 L-2,0Z" fill="${woodL}" opacity=".55"/>`;
+  s+=`<g fill="${woodD}">${[[-2,-470],[3,-400],[-3,-330],[2,-250],[-1,-180]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="2.4" ry="3.6"/>`).join('')}</g>`;
+  s+=`<path d="M5,-250 l14,-12 l-12,16Z" fill="${woodD}"/>`;
+  // Fahne mit Querstange
+  s+=`<g transform="translate(-6,-536)"><rect x="-86" y="-6" width="88" height="6" rx="3" fill="${woodD}"/>
+    <g class="wave"><path d="M-84,0 H0 V196 Q-20,204 -42,196 Q-64,188 -84,198Z" fill="${white}"/>
+      <path d="M-42,0 H0 V196 Q-20,204 -42,196Z" fill="${blue}"/>
+      <path d="M-84,0 H0" stroke="${woodD}" stroke-width="2"/>`;
+  // Wappen
+  s+=`<g transform="translate(-42,12)"><g clip-path="url(#${P}c)">
+        <rect x="-28" y="0" width="28" height="70" fill="url(#${P}r)"/>
+        <rect x="0" y="0" width="28" height="70" fill="${black}"/>
+        <g transform="translate(13.5,33) scale(.262,.3)">${lion(gold,goldD)}</g>
+      </g><path d="M-28,0 H28 V34 Q28,58 0,66 Q-28,58 -28,34Z" fill="none" stroke="${goldD}" stroke-width="1.6"/></g>`;
+  // KJG
+  const L=(t,y)=>`<text x="-42" y="${y}" text-anchor="middle" font-family="'Baloo 2','Arial Rounded MT Bold',system-ui,sans-serif" font-weight="800" font-size="36" fill="${N?'#e8eaf4':'#fff'}" stroke="${N?'#14204a':'#1a2a6a'}" stroke-width="6" paint-order="stroke" stroke-linejoin="round">${t}</text>`;
+  s+=L('K',116)+L('J',150)+L('G',184);
+  s+=`</g></g>`;
+  // Wegweiser
+  const signs=[[-520+0,'r','#e6c27a'],[-500,'l','#d9a85a'],[-480,'r','#e8d08a'],[-460,'r','#c8924a']];
+  s+=`<g>${[[-118,1,'#e6c27a',40],[-100,-1,'#d9a85a',36],[-84,1,'#e8d08a',30],[-68,1,'#c8924a',26]].map(([y,d,c,w])=>{const x0=d>0?-6:6,x1=x0+d*w;
+      return `<path d="M${x0},${y-6} H${x1} L${x1+d*8},${y} L${x1},${y+6} H${x0}Z" fill="${N?'#7a6250':c}"/><path d="M${x0+d*5},${y} h${d*(w-10)}" stroke="${N?'#4a3a30':'#7a4a24'}" stroke-width="1.6" stroke-dasharray="5 3"/>`}).join('')}</g>`;
+  // Äste am Fuß, kleiner Erdhügel
+  s+=`<ellipse cx="0" cy="2" rx="30" ry="6" fill="${N?'#1a2a20':'#6e9a3a'}" opacity=".6"/><g stroke="${woodD}" stroke-width="3.2" stroke-linecap="round"><path d="M-14,2 L-5,-46"/><path d="M14,2 L5,-42"/><path d="M-6,4 L-2,-34"/><path d="M8,4 L1,-30"/><path d="M-18,2 L-9,-30"/></g>`;
+  return s}
+
+/* Steigender Löwe (heraldisch), schaut nach links zu den Rauten. Zeichenbox ca. 0..100 x 0..140 */
+function lion(g,d){
+  const L=(pts,w)=>{const p='M'+pts.map(q=>q.join(',')).join(' L');return `<path d="${p}" stroke="${d}" stroke-width="${w+3}" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="${p}" stroke="${g}" stroke-width="${w}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`};
+  const claw=(x,y,dx)=>`<path d="M${x},${y} l${dx*5},-3 M${x},${y} l${dx*6},1 M${x},${y} l${dx*4},4" stroke="#c8202a" stroke-width="1.6" stroke-linecap="round"/>`;
+  let s='';
+  // Schwanz (hinter dem Körper)
+  s+=`<path d="M68,88 C88,80 96,60 88,46 C82,36 88,24 98,24" stroke="${d}" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M68,88 C88,80 96,60 88,46 C82,36 88,24 98,24" stroke="${g}" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+  s+=`<path d="M96,26 q-2,-12 6,-16 q-2,8 4,10 q-4,2 2,8 q-6,0 -6,6 q-3,-4 -6,-8Z" fill="${g}" stroke="${d}" stroke-width="1.5" stroke-linejoin="round"/>`;
+  // Hinterbeine
+  s+=L([[64,96],[72,114],[64,130],[56,132]],9)+claw(56,132,-1);
+  s+=L([[54,92],[42,108],[30,124],[22,126]],10)+claw(22,126,-1);
+  // Körper
+  s+=`<path d="M28,42 Q44,34 56,50 Q68,68 72,90 Q68,104 54,100 Q44,88 38,74 Q28,60 28,42Z" fill="${g}" stroke="${d}" stroke-width="1.8" stroke-linejoin="round"/>`;
+  s+=`<path d="M44,62 q6,8 8,18 M50,56 q6,10 8,20" stroke="${d}" stroke-width="1.2" fill="none" opacity=".6"/>`;
+  // Vorderbeine
+  s+=L([[36,58],[20,58],[8,64]],8)+claw(8,64,-1);
+  s+=L([[32,46],[18,36],[6,26]],8)+claw(6,26,-1);
+  // Mähne
+  s+=`<path d="M26,14 L34,6 L36,14 L44,8 L44,17 L53,15 L48,23 L56,26 L48,31 L54,38 L45,38 L46,47 L38,42 L34,50 L30,42 L24,44Z" fill="${g}" stroke="${d}" stroke-width="1.6" stroke-linejoin="round"/>`;
+  // Kopf mit offenem Maul
+  s+=`<path d="M36,20 Q30,14 22,18 L12,20 L10,26 L16,28 L8,32 L12,37 L24,38 Q34,38 38,30 Q40,24 36,20Z" fill="${g}" stroke="${d}" stroke-width="1.6" stroke-linejoin="round"/>`;
+  s+=`<path d="M12,31 l-8,2 l7,2Z" fill="#c8202a"/>`;
+  s+=`<circle cx="24" cy="23" r="1.8" fill="${d}"/><path d="M28,16 l3,-6 l3,6" fill="${g}" stroke="${d}" stroke-width="1.4" stroke-linejoin="round"/>`;
+  return `<g transform="translate(-50,-70)">${s}</g>`}
+  $('banner').innerHTML=`<g transform="translate(${BANNER.x},${BANNER.y}) scale(${BANNER.s})">${bannerSVG('s')}</g>`})();
+
 /* vignettes */
 const V=[];
 function vig(id,a,b,html){const g=document.createElementNS(NS,'g');g.id=id;g.innerHTML=html;g.style.opacity=0;$('vigs').appendChild(g);V.push({g,a,b});return g}
@@ -820,18 +909,83 @@ const RUNS=[
 const runHTML=L=>RUNS.map((r,i)=>{if(r.L!==L)return '';const k=(r.kid?.64:1)*(r.s||1)*BIG;
   return `<g id="run${i}"><ellipse cx="0" cy="1" rx="${(15*k).toFixed(1)}" ry="${(4*k).toFixed(1)}" fill="#1a1030" opacity=".18"/><g class="in">${P(0,0,{kid:r.kid,c:r.c,s:r.s,nosh:1,run:1})}</g>`+
    (r.roll?`<g class="rl"><circle r="11" fill="#e6b36a"/><path d="M-4,-2 Q0,-6 4,-2" stroke="#c8913e" stroke-width="2" fill="none" stroke-linecap="round"/></g>`:'')+`</g>`}).join('');
-vig('fruehstueck',.10,.20, runHTML('b')+table(560,1040,700,
+/* Lagerleiter Kalle und Hadl (docs/teamer-figuren.md) */
+const KALLE={c:'#7a1f35',arms:'clip',hs:'capback',capc:'#1c1c22',hair:'#8a6a48',beard:'stub',mous:1,beardc:'#b8794a',glasses:'round',skin:'#f3c6a6',lanyard:1,sleeve:'short',m:'grin',eyes:'dot',deco:''};
+const HADL={c:'#f4f3ef',arms:'wave',hs:'short',hair:'#6b5a4a',hat:'straw',cord:1,beard:'stub',beardc:'#8a8580',skin:'#f0bfa0',deco:'logo',stout:1,pants:'#2e3346',sleeve:'short',m:'grin',eyes:'happy',glasses:false,f:1};
+/* Gruppenkreis: Ring aus Papas und Kindern, die beiden Lagerleiter stehen in der Mitte */
+(function(){const s0=seed,n0=figN,C=[800,774],RX=430,RY=84,N=16,items=[];
+  for(let i=0;i<N;i++){const t=(i+.5)/N*Math.PI*2,sn=Math.sin(t),k=.84+.16*(sn+1)/2,x=C[0]+RX*Math.cos(t),y=C[1]+RY*sn;
+    const h=PA(x,y,{kid:i%3==1,s:k,arms:i%4==1?'wave':'down'},i%2?'hop':'sway',(i*.37)%1,i%2?(.8+(i%3)*.17).toFixed(2):(2.2+(i%3)*.5).toFixed(2));
+    if(Math.abs(t-Math.PI/2)>=.45)items.push({y,h})}   /* vorne offen, damit Kalle und Hadl frei stehen */
+  items.push({y:C[1]+2,h:PA(745,C[1]+2,{...KALLE,s:1.2},'sway',0,1.7)});
+  items.push({y:C[1]+10,h:PA(855,C[1]+8,{...HADL,s:1.2},'sway',.6,1.5)});
+  items.sort((a,b)=>a.y-b.y);
+  vig('gruppe',.09,.128,`<ellipse cx="${C[0]}" cy="${C[1]+4}" rx="${RX+34}" ry="${RY+22}" fill="#fff" opacity=".1"/>`+items.map(o=>o.h).join('')+
+   `<g transform="translate(745,575)"><rect x="-8" y="-74" width="282" height="72" rx="18" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
+   <text text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="25" fill="#0f2a4a"><tspan x="133" y="-44">Herzlich willkommen</tspan><tspan x="133" y="-17">bei der VKF!</tspan></text></g>`);
+  seed=s0;figN=n0})();
+
+/* Ankunft: das Gepäck aus dem Bus wird verstaut. Ein Papa pumpt eine Luftmatratze auf und schwitzt, ein anderer klappt den Campingstuhl auf, die Kinder schleppen Taschen zu den Zelten. */
+(function(){const s0=seed,n0=figN;
+  const say=(x,y,t)=>`<text x="${x}" y="${y}" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="30" fill="#fff" stroke="#0f2a4a" stroke-width="6" paint-order="stroke" stroke-linejoin="round">${t}</text>`;
+  const shadow=(x,y,rx)=>`<ellipse cx="${x}" cy="${y+1}" rx="${rx}" ry="6" fill="#1a1030" opacity=".18"/>`;
+  const bag=(w,h,c)=>`<g><rect x="${-w/2}" y="0" width="${w}" height="${h}" rx="${h/2.4}" fill="${c}"/><rect x="${-w*.2}" y="0" width="6" height="${h}" fill="#000" opacity=".14"/><rect x="${w*.1}" y="0" width="6" height="${h}" fill="#000" opacity=".14"/><rect x="${-w/2}" y="0" width="${w}" height="6" rx="3" fill="#fff" opacity=".22"/><path d="M${-w*.28},3 Q0,-16 ${w*.28},3" stroke="#2a2438" stroke-width="4" fill="none"/></g>`;
+  /* Gehender Träger: Hände auf Taschenhöhe, Körper lehnt sich vom Gewicht weg. back = Teil hinter dem Körper, front = Teil vor den Händen */
+  const haul=(x,y,dir,o,delay,lean,back,front)=>{const kid=!!o.kid,hx=dir*(kid?16.5:27.5),hy=kid?-40:-72.6;
+    return shadow(x,y,kid?24:34)+`<g transform="translate(${x},${y}) rotate(${lean*-dir})"><g class="bob" style="animation-delay:${-delay}s">${back?back(hx,hy):''}${P(0,0,{...o,f:dir<0,walk:1,nosh:1,arms:'down'})}${front?front(hx,hy):''}</g></g>`};
+  const hang=(w,h,c)=>(hx,hy)=>`<g transform="translate(${hx},${hy+9})">${bag(w,h,c)}</g>`;
+  const rollMat=(hx,hy)=>`<g transform="translate(0,-46)"><rect x="-38" y="-14" width="76" height="28" rx="14" fill="#29b0c8"/><rect x="-38" y="-14" width="76" height="8" rx="4" fill="#fff" opacity=".25"/><rect x="-18" y="-14" width="6" height="28" fill="#2a2438" opacity=".5"/><rect x="14" y="-14" width="6" height="28" fill="#2a2438" opacity=".5"/><circle cx="-38" cy="0" r="9" fill="#1f8fa5"/><circle cx="-38" cy="0" r="4" fill="#29b0c8"/></g>`;
+  const pack=dir=>()=>`<g transform="translate(${-dir*23},-52)"><rect x="-16" y="-24" width="32" height="48" rx="13" fill="#ff8a2a"/><rect x="-11" y="2" width="22" height="14" rx="5" fill="#000" opacity=".16"/><rect x="-16" y="-6" width="32" height="5" fill="#2a2438" opacity=".35"/></g>`;
+  const items=[];
+
+  /* Kinder mit Taschen, auf dem Weg zu den Zelten */
+  items.push({y:712,h:haul(430,712,1,{kid:1,c:'#ffc93a',hs:'spiky',m:'o',eyes:'wide'},0,9,null,hang(58,38,'#3a7bd5'))});
+  items.push({y:690,h:haul(550,690,1,{kid:1,c:'#8cbf26',hs:'pony',m:'grin',eyes:'dot'},.25,0,null,rollMat)});
+  items.push({y:702,h:haul(880,702,-1,{kid:1,c:'#9b5bd4',hs:'beanie',m:'o',eyes:'wide'},.4,12,pack(-1),hang(54,36,'#ef3a62'))});
+
+  /* Papa mit Handpumpe: Körper und Griff wippen zusammen, die Matratze wird dicker, Schweiß fliegt */
+  (function(){const px=660,py=775,hx=27.5,hy=-72.6,mx=px+88;
+    const drops=[[-26,-150,-14,0],[24,-152,16,.5],[-8,-168,-4,1]].map(([dx,dy,sx,d])=>`<g transform="translate(${px+dx},${py+dy})"><path class="sweat" style="--dx:${sx}px;animation-delay:${-d}s" d="M0,-9 Q7,0 0,6 Q-7,0 0,-9Z" fill="#7fd0ff"/></g>`).join('');
+    items.push({y:py,h:shadow(px,py,34)
+     +`<g transform="translate(${mx},${py+6})"><ellipse cx="82" cy="20" rx="92" ry="9" fill="#1a1030" opacity=".18"/><g class="puff"><rect x="0" y="-12" width="164" height="34" rx="17" fill="#19b1a0"/><rect x="0" y="-12" width="164" height="10" rx="5" fill="#fff" opacity=".25"/>${[1,2,3,4,5].map(i=>`<rect x="${i*27}" y="-12" width="4" height="34" fill="#0b6f66" opacity=".35"/>`).join('')}</g><circle cx="0" cy="4" r="5" fill="#ffc93a"/></g>`
+     +`<path d="M${px+10},${py-8} C${px+44},${py-2} ${px+60},${py+14} ${mx-2},${py+10}" stroke="#2a2438" stroke-width="4" fill="none" stroke-linecap="round"/>`
+     +`<g class="pump">${P(px,py,{c:'#ef3a62',hs:'bald',hair:'#4a3526',beard:'full',m:'o',eyes:'wide',sleeve:'short',nosh:1,arms:'down'})}`
+     +`<rect x="${px-4}" y="${py-72}" width="8" height="30" rx="3" fill="#8e929a"/><rect x="${px-hx-3}" y="${py+hy-6}" width="${hx*2+6}" height="9" rx="4.5" fill="#2a2438"/></g>`
+     +`<rect x="${px-11}" y="${py-50}" width="22" height="50" rx="5" fill="#f0a020"/><rect x="${px-11}" y="${py-50}" width="22" height="8" rx="4" fill="#fff" opacity=".3"/><rect x="${px-11}" y="${py-30}" width="22" height="5" fill="#2a2438" opacity=".4"/><rect x="${px-16}" y="${py-5}" width="32" height="7" rx="3.5" fill="#6a4a1a"/>`
+     +drops+say(px,py-196,'Puh!')});
+  })();
+
+  /* Kind schaut zu */
+  items.push({y:722,h:shadow(745,722,24)+P(745,722,{kid:1,c:'#3a7bd5',hs:'curly',m:'grin',eyes:'happy',arms:'up',f:1,nosh:1})});
+
+  /* Papa baut den Campingstuhl auf und setzt sich */
+  (function(){const cx=1010,gy=745;
+    items.push({y:gy,h:shadow(cx,gy,44)
+     +`<rect x="${cx-130}" y="${gy-10}" width="62" height="15" rx="7.5" fill="#3a3358" transform="rotate(-5 ${cx-100} ${gy})"/>`
+     +`<g transform="translate(${cx},${gy})"><path d="M-30,-22 L20,0 M20,-22 L-30,0" stroke="#4a4660" stroke-width="5" stroke-linecap="round"/><rect x="-38" y="-30" width="76" height="9" rx="4" fill="#e0245e"/><g transform="rotate(8 30 -24)"><rect x="24" y="-112" width="12" height="90" rx="6" fill="#e0245e"/></g></g>`
+     +P(cx,gy-12,{seat:1,f:1,c:'#29b0c8',hs:'short',hair:'#6b4a2a',glasses:true,m:'smile',eyes:'dot',beard:'stub',nosh:1})
+     +`<rect x="${cx-38}" y="${gy-30}" width="12" height="9" rx="4" fill="#e0245e"/>`
+     +say(cx-78,gy-112,'Ahhh!')});
+  })();
+
+  items.sort((a,b)=>a.y-b.y);
+  vig('ankunft',.045,.09,items.map(o=>o.h).join(''));
+  seed=s0;figN=n0})();
+
+vig('fruehstueck',.13,.20, runHTML('b')+table(560,1040,700,
   mugs(595,1020,700,719)+`<path d="M770,697 h60 l-8,-16 h-44z" fill="#c8913e"/><circle cx="785" cy="680" r="7" fill="#e6b36a"/><circle cx="800" cy="677" r="7" fill="#e6b36a"/><circle cx="815" cy="680" r="7" fill="#e6b36a"/>
   <rect x="890" y="672" width="18" height="25" rx="4" fill="#6b4a2a"/>${steam(899,668)}`)+runHTML('f')+
   `<ellipse id="pud" cx="758" cy="828" rx="0" ry="0" fill="#6b4226" opacity="0"/><g id="mug" transform="translate(724,696)"><rect x="-5" y="-12" width="10" height="12" rx="2" fill="#3b8fd0"/></g>
    <text id="huch" x="0" y="0" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="34" fill="#fff" stroke="#0f2a4a" stroke-width="6" paint-order="stroke" stroke-linejoin="round" opacity="0">Huch!</text>`);
 
 (function(){const C=[800,770],items=[];
-  for(let i=0;i<16;i++){const t=i/16*Math.PI*2+.2;items.push({y:C[1]+66*Math.sin(t),h:PA(C[0]+215*Math.cos(t),C[1]+66*Math.sin(t),{kid:i%2==0},i%2==0?'hop':'sway',(i*.37)%1,i%2==0?(.78+(i%3)*.17).toFixed(2):(2.2+(i%3)*.5).toFixed(2))})}
-  items.push({y:C[1],h:PA(800,770,{c:'#d9124a'},'sway',0,1.6)});
+  for(let i=0;i<16;i++){const t=i/16*Math.PI*2+.2,h=PA(C[0]+215*Math.cos(t),C[1]+66*Math.sin(t),{kid:i%2==0},i%2==0?'hop':'sway',(i*.37)%1,i%2==0?(.78+(i%3)*.17).toFixed(2):(2.2+(i%3)*.5).toFixed(2));
+    if(Math.abs(t-Math.PI/2)>=.45)items.push({y:C[1]+66*Math.sin(t),h})}   /* vorne offen, damit Kalle und Hadl frei stehen */
+  PA(800,770,{c:'#d9124a'},'sway',0,1.6);   /* verbraucht Zufallswerte und Figurennummer wie die frühere Figur, damit alle späteren Figuren gleich bleiben */
+  const n1=figN;items.push({y:C[1],h:PA(765,770,KALLE,'sway',0,1.6)+PA(840,771,HADL,'sway',.5,1.4)});figN=n1;
   items.sort((a,b)=>a.y-b.y);
   vig('kreis',.20,.29, items.map(o=>o.h).join('')+
-   `<g transform="translate(812,566)"><rect id="bubR" x="-8" y="-46" width="330" height="44" rx="14" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
+   `<g transform="translate(772,566)"><rect id="bubR" x="-8" y="-46" width="330" height="44" rx="14" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
    <text id="bubT" x="157" y="-17" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="24" fill="#0f2a4a">Heute: Fußball &amp; Freibad!</text></g>`)})();
 
 vig('spiele',.29,.40,
@@ -905,6 +1059,8 @@ const guitars=[0,1,2].map(i=>{const g=document.createElementNS(NS,'g');g.setAttr
 /* photo spots: items = one or more photos (blättern), t = caption of the spot, an item can bring its own t */
 const FOTO={
  drohne:{l:'Das Lager von oben',items:[{video:'video/drohne.mp4',poster:'video/drohne-poster.jpg',alt:'Drohnenflug'}]},
+ gruppenkreis:{l:'Gruppenkreis',items:[{src:'fotos/gruppenkreis-1.jpg',alt:'Kinder und Papas stehen Hand in Hand in einer langen Reihe auf der Wiese vor den Zelten',t:'Alle fassen sich an den Händen und bilden einen großen Kreis.'}]},
+ bus:{l:'Bus entladen',items:[{src:'fotos/bus-1.jpg',alt:'Papas stehen vor dem Reisebus und reichen Gepäck vom Anhänger und aus dem Busbauch',t:'Kaum angekommen, gibt es keine Verschnaufpause: Die Papas packen sofort mit an und entladen den Bus und den Anhänger.'}]},
  zelte:{l:'Ankunft',items:[{src:'fotos/zelte-1.jpg',alt:'Kinder sitzen auf einer Bank, dahinter die Zeltreihe',t:'Die Kinder sind gerade auf dem Platz angekommen. Sie reisen mit zwei Reisebussen an und sind schon ganz gespannt darauf, bald in die Zelte einzuziehen.'}]},
  kueche:{l:'Küche und Grillbereich',items:[{src:'fotos/kueche-1.jpg',alt:'Küchenzelt mit Spülstation, dahinter das Vorratszelt',t:'Der Grillbereich mit dem Küchenzelt, im Hintergrund das Vorratszelt. Hier wird für das leibliche Wohl gesorgt: Es wird gebacken, gekocht und gebraten.'}]},
  laternen:{l:'Öllampen',items:[{src:'fotos/laternen-1.jpg',alt:'Öllampen auf einem Tisch am Abend',t:'Unsere Öllampen sorgen abends für ganz besondere Stimmung. Wir haben kein oder nur selten elektrischen Strom, deshalb ergänzen sie nachts die Beleuchtung.'}]},
@@ -917,12 +1073,16 @@ const FOTO={
  wanderung:{l:'Wanderung',items:[{src:'fotos/wanderung-1.jpg',alt:'Gruppe wandert auf einem Weg zwischen Bauernhöfen',t:'Manchmal gibt es auch einen längeren Spaziergang oder eine kleine Wanderung. Gerade im Schwarzwald kommt man immer wieder an wunderschönen Bauernhöfen vorbei.'}]},
  rutsche:{l:'Wasserrutsche',items:[{src:'fotos/rutsche-1.jpg',alt:'Kind rutscht auf einer langen weißen Plane über die Wiese',t:'Eine Wasserrutsche auf einer Spargelplane. Auch so kann man sich zwischendurch abkühlen.'}]}};
 const S=[
- {a:0,b:.05,stop:0,l:'Start',h:'Ein Tag in der VKF',d:'Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel.',intro:1},
- {a:.05,b:.11,stop:.085,l:'Sonnenaufgang',h:'Die Sonne geht auf',d:'Über den Bergen wird es hell. Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.',info:[
+ {a:0,b:.05,stop:0,l:'Start',h:'Ein Tag in der VKF',d:'Scroll dich durch einen Tag bei der Väter-Kinder-Freizeit, vom ersten Sonnenstrahl bis zum Sternenhimmel.',intro:1,info:[{x:1500,y:700,photo:'bus'}]},
+ {a:.05,b:.09,stop:.072,l:'Sonnenaufgang',h:'Die Sonne geht auf',d:'Über den Bergen wird es hell. Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.',info:[
    {f:'sun',d:'Über den Bergen wird es hell.'},
    {x:1090,y:546,d:'Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.'},
    {x:515,y:512,photo:'zelte'},{x:1030,y:604,photo:'kueche'}]},
- {a:.11,b:.20,stop:.177,l:'Frühstück',h:'Frühstück',d:'Papas und Kinder sitzen zusammen an den Bierbänken. Kakao, Brötchen und die ersten Pläne für den Tag.',info:[
+ {a:.09,b:.12,stop:.108,l:'Begrüßung',h:'Begrüßung',d:'Alle stellen sich zu einem großen Kreis auf. In der Mitte stehen die beiden Lagerleiter.',info:[
+   {x:800,y:668,d:'Hier seht ihr die beiden Lagerleiter, Kalle und HDL. Die beiden begrüßen die Kinder und Papas jeden Morgen vor dem Frühstück.'},
+   {x:1195,y:800,d:'Alle stellen sich zu einem großen Kreis auf.'},
+   {x:560,y:800,photo:'gruppenkreis'}]},
+ {a:.12,b:.20,stop:.177,l:'Frühstück',h:'Frühstück',d:'Papas und Kinder sitzen zusammen an den Bierbänken. Kakao, Brötchen und die ersten Pläne für den Tag.',info:[
    {x:612,y:636,d:'Papas und Kinder sitzen zusammen an den Bierbänken.'},
    {x:800,y:630,d:'Kakao, Brötchen und die ersten Pläne für den Tag.'}]},
  {a:.20,b:.29,stop:.268,l:'Morgenkreis',h:'Morgenkreis',d:'Alle kommen im großen Kreis zusammen. Die Lagerleitung erzählt, was heute ansteht.',info:[
@@ -937,7 +1097,7 @@ const S=[
  {a:.40,b:.48,stop:.457,l:'Mittagessen',h:'Mittagessen',d:'Das Küchenteam tischt auf. Wer Nachschlag möchte, stellt sich einfach noch einmal an.',info:[
    {x:1090,y:682,d:'Das Küchenteam tischt auf.'},
    {x:800,y:630,d:'Wer Nachschlag möchte, stellt sich einfach noch einmal an.'},
-   {x:700,y:692,photo:'essen'}]},
+   {x:480,y:780,photo:'essen'}]},
  {a:.48,b:.60,stop:.577,l:'Freibad oder Tour',h:'Ab ins Freibad oder auf Tour',d:'Nachmittags ziehen alle gemeinsam los: ins Schwimmbad, in den Wald oder auf eine Wanderung.',info:[
    {x:850,y:690,d:'Nachmittags ziehen alle gemeinsam los.'},
    {x:1210,y:640,d:'Ins Schwimmbad, in den Wald oder auf eine Wanderung.'},
@@ -954,6 +1114,8 @@ const S=[
    {f:'moon',d:'Mond und Sterne stehen über den Zelten.'},
    {x:1100,y:546,d:'Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.'}]}
 ];
+/* Banner-Info: nur in der zweiten Szene (Sonnenaufgang) an der Fahne */
+[S[1]].forEach(s=>{(s.info=s.info||[]).push({x:BANNER.x+60*BANNER.s,y:BANNER.y-470*BANNER.s,d:'Der Banner: ein baumhoher, entasteter Baumstamm, tief in die Erde eingegraben. Daran hängt die Wieslocher Fahne mit dem Wappen. Die VKF Wiesloch gehört übrigens zur KJG-Gemeinde. Im Zeltlager ist es durchaus üblich, dass man die Fahne bewachen muss, damit sie nicht von anderen Zeltlagern geklaut wird.'})});
 const caps=$('caps');
 S.forEach((s,i)=>{const d=document.createElement('div');d.className='cap'+(s.intro?' intro':'');
   d.innerHTML=(s.intro?'<div class="logo hero-logo" role="img" aria-label="Logo VKF Wiesloch, Väter-Kinder-Freizeit"></div>':'')+`<h2>${s.h}</h2>`+(s.intro?'<div class="tagline">Die VKF ist die Väter-Kinder-Freizeit Wiesloch.</div><p>'+s.d+'</p><div class="hint">Scrollen <span aria-hidden="true">↓</span></div>':`<p>${s.d}</p>`);
@@ -1056,7 +1218,11 @@ function fit(){const r=svg.getBoundingClientRect();if(r.width<1||r.height<1)retu
   svg.setAttribute('viewBox',`${VB.x.toFixed(1)} ${VB.y.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`)}
 
 let P0=0;
-function progress(){const top=story.offsetTop,len=story.offsetHeight-innerHeight;return clamp((scrollY-top)/len,0,1)}
+/* Scroll-Anteil q und Story-Zeit p: zwischen PA_ und PB_ läuft die Zeit langsamer, dort liegt der Gruppenkreis. Danach ist die Story um EXTRA länger. */
+const PA_=.09,PB_=.12,EXTRA=.09,NORM=1+EXTRA,SEG=PB_-PA_+EXTRA;
+const toP=q=>{q*=NORM;return q<=PA_?q:q<=PA_+SEG?PA_+(q-PA_)*(PB_-PA_)/SEG:q-EXTRA};
+const toQ=p=>(p<=PA_?p:p<=PB_?PA_+(p-PA_)*SEG/(PB_-PA_):p+EXTRA)/NORM;
+function progress(){const top=story.offsetTop,len=story.offsetHeight-innerHeight;return clamp(toP((scrollY-top)/len),0,1)}
 const setStop=(id,c)=>$(id).setAttribute('stop-color',c);
 function render(){
   const p=progress();P0=p;
@@ -1065,7 +1231,7 @@ function render(){
   setStop('m3a',kc(p,M3A));setStop('m3b',kc(p,M3B));setStop('g1',kc(p,GA));setStop('g2',kc(p,GB));
   const tc=kc(p,TREE);$('forest').setAttribute('fill',tc);$('edgeTrees').setAttribute('fill',tc);$('birds').setAttribute('stroke',tc);
   const ar=$('arrival');ar.style.display=p<.095?'':'none';
-  if(p<.095){const dv=clamp(p/.07,0,1),drive=dv*dv*1100,rt=VB.x+VB.w,lo=1-clamp((p-.04)/.04,0,1),A=n=>`translate(${(rt+n).toFixed(1)},806)`,B=90;
+  if(p<.095){const dv=clamp(p/.07,0,1),drive=dv*dv*1100,rt=VB.x+VB.w,lo=1-clamp((p-.02)/.04,0,1),A=n=>`translate(${(rt+n).toFixed(1)},806)`,B=90;
     $('bus').setAttribute('transform',A(B+drive));['spin1','spin2','spin3'].forEach(i=>$(i).setAttribute('transform',`rotate(${(drive/24*57.3).toFixed(1)})`));
     $('luggage').setAttribute('transform',A(-82)+' scale(.65)');$('luggage').setAttribute('opacity',lo.toFixed(3));}
   const t=p/.84,sun=$('sun');
@@ -1075,7 +1241,7 @@ function render(){
   $('dark').setAttribute('opacity',kf(p,[[0,.22],[.1,0],[.66,0],[.78,.18],[.88,.4],[1,.46]]));
   $('dusk').setAttribute('opacity',kf(p,[[0,.1],[.1,0],[.62,0],[.72,.14],[.82,.05],[.9,0]]));
   $('klight').setAttribute('opacity',kf(p,[[.74,0],[.88,1]]));
-  V.forEach(v=>{const f=.018;let o=0;if(p>v.a-f&&p<v.b+f)o=Math.min(clamp((p-(v.a-f))/(2*f),0,1),clamp(((v.b+f)-p)/(2*f),0,1));
+  V.forEach(v=>{const f=.018;let o=0;if(p>v.a-f&&p<v.b+f)o=Math.min(clamp((p-(v.a-f))/(2*f)*1.05,0,1),clamp(((v.b+f)-p)/(2*f)*1.05,0,1));
     v.g.style.opacity=o;v.g.style.display=o>0?'':'none';v.g.style.transform=`translateY(${((1-o)*16).toFixed(1)}px)`;
     if(o>0){const lp=clamp((p-v.a)/(v.b-v.a),0,1);
       if(v.g.id==='ausflug')$('walkers').setAttribute('transform',`translate(${(560+lp*520).toFixed(1)},${(792-lp*30).toFixed(1)})`);
@@ -1113,10 +1279,10 @@ addEventListener('resize',()=>{fit();render()});
 /* step navigation: one gesture (wheel, swipe, arrow key, button, dot) moves exactly one scene, then the story holds still so every info button can be explored.
    Inertia of the same gesture is swallowed; after the last scene the page is released. */
 let anim=0,busy=false,busyT=0,lastInput=-1e9,touchY=null;
-const geo=()=>{const top=story.offsetTop,len=story.offsetHeight-innerHeight;return {top,len,p:(scrollY-top)/len}};
+const geo=()=>{const top=story.offsetTop,len=story.offsetHeight-innerHeight;return {top,len,p:toP((scrollY-top)/len)}};
 const nearest=p=>{let k=0;S.forEach((s,i)=>{if(Math.abs(s.stop-p)<Math.abs(S[k].stop-p))k=i});return k};
 const inRange=()=>{const {p}=geo();return p>=-.001&&p<=1};
-function goTo(i,done){i=clamp(i,0,S.length-1);const {top,len}=geo(),from=scrollY,to=top+S[i].stop*len,t0=performance.now(),dur=reduce?0:Math.min(1100,500+Math.abs(to-from)/len*5000);
+function goTo(i,done){i=clamp(i,0,S.length-1);const {top,len}=geo(),from=scrollY,to=top+toQ(S[i].stop)*len,t0=performance.now(),dur=reduce?0:Math.min(1100,500+Math.abs(to-from)/len*5000);
   cancelAnimationFrame(anim);busy=true;hidePop();clearTimeout(busyT);busyT=setTimeout(()=>{busy=false},dur+400);
   const tick=now=>{const t=dur?clamp((now-t0)/dur,0,1):1,e=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;jumpTo(from+(to-from)*e);
     if(t<1)anim=requestAnimationFrame(tick);else{busy=false;lastInput=performance.now();if(done)done()}};
@@ -1151,7 +1317,7 @@ addEventListener('touchmove',e=>{if(phOpen){if(!e.target.closest('.pv-card'))e.p
   e.preventDefault();if(busy||Math.abs(dy)<36)return;touchY=null;if(dy>0&&atEnd())release();else step(dy>0?1:-1)},{passive:false});
 /* fallback for scrollbar drags: settle on the nearest scene after a pause */
 let held=false,snapT=0;
-const snapLater=()=>{clearTimeout(snapT);snapT=setTimeout(()=>{if(held||busy)return;const {p}=geo();if(p<0||p>S[S.length-1].stop)return;const k=nearest(p),{top,len}=geo();if(Math.abs(top+S[k].stop*len-scrollY)>2)goTo(k)},600)};
+const snapLater=()=>{clearTimeout(snapT);snapT=setTimeout(()=>{if(held||busy)return;const {p}=geo();if(p<0||p>S[S.length-1].stop)return;const k=nearest(p),{top,len}=geo();if(Math.abs(top+toQ(S[k].stop)*len-scrollY)>2)goTo(k)},600)};
 ['mousedown'].forEach(e=>addEventListener(e,()=>{held=true}));
 ['mouseup'].forEach(e=>addEventListener(e,()=>{held=false;snapLater()}));
 
