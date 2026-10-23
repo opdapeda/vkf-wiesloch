@@ -56,10 +56,13 @@ a{color:inherit}
 @media (max-width:440px){.brand{font-size:18px}.brand small{font-size:12px}.cta{font-size:16px;padding:8px 14px 6px}}
 
 /* Hero: Dämmerhimmel, Text oben, Zeltplatz-Szene unten */
-.hero{background:linear-gradient(180deg,#2a1f4a 0%,#5b2f78 60%,#8a3a8e 100%);color:#fff;text-align:center;padding:clamp(104px,14vw,140px) 16px 0;position:relative;overflow:hidden}
+.hero{background:linear-gradient(180deg,#241a45 0%,#4b2a74 22%,#8a3a8e 48%,#d9607a 76%,#f2a56a 100%);color:#fff;text-align:center;padding:clamp(104px,14vw,140px) 16px 0;position:relative;overflow:hidden}
 .hero .badge{width:clamp(112px,14vw,156px);height:clamp(112px,14vw,156px);display:grid;place-items:center;overflow:hidden;border-radius:50%;background:#fff8f1;padding:0;margin:0 auto 14px;box-shadow:0 8px 28px rgba(0,0,0,.35)}
 .hero .badge img{display:block;width:92%;height:92%;object-fit:contain}
 .eyebrow{display:inline-block;font-family:var(--f-display);font-weight:800;font-size:18px;letter-spacing:.04em;background:rgba(255,255,255,.14);padding:6px 16px 3px;border-radius:999px;color:#ffd27a}
+.hero>*{position:relative;z-index:1}
+.hero .sky{position:absolute;inset:0;z-index:0;pointer-events:none}
+.hero .sky i{position:absolute;background:#fff;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);animation:tw 3.6s ease-in-out infinite}
 .hero h1{font-size:clamp(40px,7vw,88px);margin:12px 0 10px;text-shadow:0 2px 24px rgba(0,0,0,.3)}
 .hero .lead{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,2.6vw,32px);line-height:1.2;max-width:32ch;margin:0 auto 22px;color:#ffe9c4}
 .hero .btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:8px}
@@ -68,15 +71,18 @@ a{color:inherit}
 
 /* Szenen-Animationen */
 .wave{transform-box:fill-box;transform-origin:20% 90%;animation:wave 2.4s ease-in-out infinite}
+.wave.c{animation-delay:-.5s;animation-duration:2.6s}
 .wave.b{animation-delay:-1.1s;animation-duration:2.9s}
 @keyframes wave{0%,100%{transform:rotate(-14deg)}50%{transform:rotate(16deg)}}
+.flag{transform-box:fill-box;transform-origin:100% 0;animation:flag 2.6s ease-in-out infinite alternate}
+@keyframes flag{from{transform:skewY(-1.5deg) scaleX(1)}to{transform:skewY(2deg) scaleX(.97)}}
 .smoke{animation:smoke 6s ease-in-out infinite;opacity:.0}
 @keyframes smoke{0%{opacity:0;transform:translateY(6px)}30%{opacity:.35}100%{opacity:0;transform:translateY(-22px)}}
 .tear{animation:tear 3.2s ease-in infinite;opacity:0}
 @keyframes tear{0%,40%{opacity:0;transform:translateY(0)}55%{opacity:.9}100%{opacity:0;transform:translateY(12px)}}
 .tw{animation:tw 3.6s ease-in-out infinite}
 @keyframes tw{0%,100%{opacity:1}50%{opacity:.35}}
-@media (prefers-reduced-motion: reduce){.wave,.smoke,.tear,.tw{animation:none}.smoke{opacity:.3}}
+@media (prefers-reduced-motion: reduce){.wave,.flag,.smoke,.tear,.tw{animation:none}.smoke{opacity:.3}}
 
 /* Bänder mit Hügelkante */
 .band{position:relative;padding-inline:16px;padding-block:clamp(64px,9vw,120px)}
@@ -156,6 +162,7 @@ footer .small{max-width:1080px;margin:22px auto 0;font-size:15px;opacity:.7;bord
 
 <main>
 <section class="hero" aria-labelledby="h1">
+  <div class="sky" id="sky" aria-hidden="true"></div>
   <div class="badge"><img src="/foerderverein/logo-foerderverein.png?v=2" alt="Logo: Freunde der Väter-Kinder-Freizeit Wiesloch e. V." width="410" height="410"></div>
   <span class="eyebrow">Förderverein für Ehemalige und Freunde</span>
   <h1 id="h1">Freunde der VKF&nbsp;Wiesloch</h1>
@@ -171,8 +178,7 @@ footer .small{max-width:1080px;margin:22px auto 0;font-size:15px;opacity:.7;bord
       <linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5f8f4a"/><stop offset="1" stop-color="#2f5a3a"/></linearGradient>
       <radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe3a0" stop-opacity=".95"/><stop offset="1" stop-color="#ffb060" stop-opacity="0"/></radialGradient>
     </defs>
-    <rect width="1000" height="560" fill="url(#sk)"/>
-    <circle cx="760" cy="300" r="150" fill="url(#sun)"/>
+        <circle cx="760" cy="300" r="150" fill="url(#sun)"/>
     <g fill="#fff"><path class="tw" d="M110,60 l3,9 9,3 -9,3 -3,9 -3,-9 -9,-3 9,-3z"/><path class="tw" style="animation-delay:-1.2s" d="M330,30 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2z" opacity=".8"/><path class="tw" style="animation-delay:-2.2s" d="M560,70 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3z" opacity=".9"/><path class="tw" style="animation-delay:-.6s" d="M900,50 l2,6 6,2 -6,2 -2,6 -2,-6 -6,-2 6,-2z" opacity=".7"/></g>
     <path d="M0,330 L90,262 Q110,248 130,262 L260,340 L420,236 Q440,224 460,238 L610,330 L760,250 Q780,240 800,252 L920,320 L1000,284 V420 H0Z" fill="url(#m1)"/>
     <path d="M0,370 L140,300 Q160,290 180,302 L330,372 L520,296 Q540,288 560,298 L720,372 L880,306 Q900,298 920,308 L1000,346 V440 H0Z" fill="url(#m2)"/>
@@ -180,40 +186,13 @@ footer .small{max-width:1080px;margin:22px auto 0;font-size:15px;opacity:.7;bord
     <g fill="#2f5a3a"><path d="M60,400 l24,-70 24,70z M70,380 l14,-34 14,34z" opacity=".9"/><path d="M880,396 l22,-64 22,64z M888,376 l14,-32 14,32z" opacity=".9"/><path d="M930,404 l18,-52 18,52z" opacity=".8"/></g>
     <path d="M0,388 C200,368 380,380 560,372 C740,364 880,376 1000,366 V560 H0Z" fill="url(#gr)"/>
     <path d="M0,450 C220,432 420,448 620,438 C800,430 920,442 1000,436 V560 H0Z" fill="#2f5a3a" opacity=".35"/>
-    <!-- Zeltplatz-Schatten -->
-    <ellipse cx="450" cy="486" rx="190" ry="16" fill="#14102b" opacity=".22"/>
-
-    <!-- Zelt-Gestänge (Alu, 6 Füße, 4 Holme, 6 Dachschrägen) -->
-    <g id="frame" stroke-linecap="round" stroke-linejoin="round" fill="none">
-      <!-- hinterer Rahmen -->
-      <g stroke="#9aa2ae" stroke-width="5">
-        <path d="M492,314 L562,374"/><path d="M492,314 L422,374"/><path d="M422,374 V454"/><path d="M562,374 V454"/>
-      </g>
-      <!-- mittlerer Rahmen: Dachschrägen laufen bis zu den Füßen -->
-      <g stroke="#b4bbc6" stroke-width="5.5">
-        <path d="M446,332 L361,472"/><path d="M446,332 L531,472"/>
-      </g>
-      <!-- Firststange -->
-      <path d="M400,350 L446,332 L492,314" stroke="#d3d8e0" stroke-width="5.5"/>
-      <!-- vorderer Rahmen -->
-      <g stroke="#dfe3ea" stroke-width="6.5">
-        <path d="M400,350 L470,410"/><path d="M400,350 L330,410"/><path d="M330,410 V490"/><path d="M470,410 V490"/>
-      </g>
-      <!-- Glanzlichter -->
-      <g stroke="#fff" stroke-width="1.6" opacity=".7"><path d="M398,353 L328,412 M402,353 L468,412 M332,414 V486 M472,414 V486"/></g>
-    </g>
-    <!-- Füße: gelb-weiße Kunststofffüße -->
-    <g id="feet">
-      <g transform="translate(330,490)"><path d="M-9,-6 h18 l3,8 h-24z" fill="#fff"/><path d="M-12,2 h24 l2,6 h-28z" fill="#ffd23a"/></g>
-      <g transform="translate(470,490)"><path d="M-9,-6 h18 l3,8 h-24z" fill="#fff"/><path d="M-12,2 h24 l2,6 h-28z" fill="#ffd23a"/></g>
-      <g transform="translate(361,472)"><path d="M-8,-5 h16 l3,7 h-22z" fill="#fff"/><path d="M-11,2 h22 l2,5 h-26z" fill="#ffd23a"/></g>
-      <g transform="translate(531,472)"><path d="M-8,-5 h16 l3,7 h-22z" fill="#fff"/><path d="M-11,2 h22 l2,5 h-26z" fill="#ffd23a"/></g>
-      <g transform="translate(422,454)"><path d="M-7,-5 h14 l3,6 h-20z" fill="#fff"/><path d="M-10,1 h20 l2,5 h-24z" fill="#ffd23a"/></g>
-      <g transform="translate(562,454)"><path d="M-7,-5 h14 l3,6 h-20z" fill="#fff"/><path d="M-10,1 h20 l2,5 h-24z" fill="#ffd23a"/></g>
-    </g>
-
+    <!-- Zwei Zelte: halb abgebaut (mit halber Plane) und nur Gestänge -->
+    <g id="banner" transform="translate(688,426) scale(.52)"></g>
+    <g id="wegweiser" transform="translate(112,440) scale(1.12)"></g>
+    <g id="tentC" transform="translate(786,436) scale(1.2)"></g>
+    <g id="platz" transform="translate(0,-60)">
     <!-- Zeltsack mit eingepackter Plane -->
-    <g id="bag" transform="translate(520,508) rotate(-4)">
+    <g id="bag" transform="translate(196,570) rotate(-4)">
       <ellipse cx="0" cy="14" rx="62" ry="8" fill="#14102b" opacity=".3"/>
       <rect x="-60" y="-24" width="120" height="40" rx="18" fill="#7f8f3e"/>
       <rect x="-60" y="-24" width="40" height="40" rx="18" fill="#98a94c"/>
@@ -224,7 +203,7 @@ footer .small{max-width:1080px;margin:22px auto 0;font-size:15px;opacity:.7;bord
     </g>
 
     <!-- Lagerfeuerstelle: aus, schwarz, verkohlt -->
-    <g id="pit" transform="translate(634,510) scale(.82)">
+    <g id="pit" transform="translate(640,566) scale(.85)">
       <ellipse cx="0" cy="4" rx="62" ry="15" fill="#14102b" opacity=".3"/>
       <ellipse cx="0" cy="0" rx="52" ry="14" fill="#1a1414"/>
       <ellipse cx="0" cy="-1" rx="40" ry="9" fill="#2a2222"/>
@@ -239,10 +218,11 @@ footer .small{max-width:1080px;margin:22px auto 0;font-size:15px;opacity:.7;bord
       <!-- Rest-Rauch -->
       <path class="smoke" d="M0,-18 C-9,-36 9,-46 0,-66" stroke="#d9d2e2" stroke-width="5" fill="none" stroke-linecap="round"/>
     </g>
-
     <!-- Teamer -->
-    <g id="t1" transform="translate(292,530) scale(1.1)"></g>
-    <g id="t2" transform="translate(716,524) scale(1.02) scale(-1,1)"></g>
+    <g id="t1" transform="translate(300,566) scale(1.1)"></g>
+    <g id="t2" transform="translate(394,580) scale(1.14)"></g>
+    <g id="t3" transform="translate(488,566) scale(1.1)"></g>
+    </g>
   </svg>
 </section>
 
@@ -278,7 +258,7 @@ footer .small{max-width:1080px;margin:22px auto 0;font-size:15px;opacity:.7;bord
     <div class="konto" id="konto">
       <h3>Spendenkonto</h3>
       <dl>
-        <dt>Kontoinhaber</dt><dd><span class="todo">Platzhalter: Kontoinhaber ergänzen</span></dd>
+        <dt>Kontoinhaber</dt><dd>Freunde der Väter-Kinder-Freizeit Wiesloch e.&nbsp;V.</dd>
         <dt>Bank</dt><dd>Volksbank Kraichgau eG</dd>
         <dt>IBAN</dt><dd class="iban" id="iban">DE86 6729 2200 0047 2766 08</dd>
         <dt>BIC</dt><dd>GENODE61WIE</dd>
@@ -333,22 +313,133 @@ function teamer(o){
   <ellipse cx="0" cy="3" rx="26" ry="5" fill="#14102b" opacity=".3"/>
   <rect x="-13" y="-50" width="11" height="48" rx="5.5" fill="${o.pants}"/><rect x="2" y="-50" width="11" height="48" rx="5.5" fill="${o.pants}"/>
   <ellipse cx="-8" cy="-2" rx="9.5" ry="4.5" fill="#5a3a22"/><ellipse cx="9" cy="-2" rx="9.5" ry="4.5" fill="#5a3a22"/>
-  <rect x="-35" y="-96" width="11" height="42" rx="5.5" fill="${o.shirt}"/><circle cx="-29.5" cy="-54" r="6" fill="${o.skin}"/>
+  <rect x="-35" y="-96" width="11" height="42" rx="5.5" fill="${o.shirt}"/><circle cx="-29.5" cy="-54" r="6" fill="${o.skin}"/>${o.short?`<rect x="-35" y="-72" width="11" height="22" rx="5.5" fill="${o.skin}"/>`:''}
   <rect x="-24" y="-102" width="48" height="58" rx="20" fill="${o.shirt}"/>
   <rect x="-24" y="-102" width="15" height="58" rx="7.5" fill="#fff" opacity=".15"/>
   <rect x="-5" y="-108" width="10" height="9" fill="${o.skin}"/>
-  <g class="wave ${o.cls||''}"><rect x="21" y="-146" width="11" height="52" rx="5.5" fill="${o.shirt}" transform="rotate(8 26 -96)"/><circle cx="29" cy="-148" r="6.5" fill="${o.skin}"/></g>
+  ${o.calm?'':`<g class="wave ${o.cls||''}"><rect x="21" y="-146" width="11" height="52" rx="5.5" fill="${o.shirt}" transform="rotate(8 26 -96)"/>${o.short?`<rect x="21" y="-146" width="11" height="34" rx="5.5" fill="${o.skin}" transform="rotate(8 26 -96)"/>`:''}<circle cx="29" cy="-148" r="6.5" fill="${o.skin}"/></g>`}
   <circle cx="-16" cy="-123" r="4.5" fill="${o.skin}"/><circle cx="16" cy="-123" r="4.5" fill="${o.skin}"/>
   <circle cx="0" cy="-124" r="18" fill="${o.skin}"/>
   ${o.hair}
   <ellipse cx="-6.5" cy="-124" rx="2.2" ry="2.8" fill="#2a1f3d"/><ellipse cx="6.5" cy="-124" rx="2.2" ry="2.8" fill="#2a1f3d"/>
-  <path d="M-12,-129 l8,-3 M12,-129 l-8,-3" stroke="#2a1f3d" stroke-width="2.2" stroke-linecap="round"/>
-  <path d="M-6,-111 Q0,-117 6,-111" stroke="#7a2a2a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-  <circle class="tear" cx="-8" cy="-120" r="2.2" fill="#8fd0ff"/>
-  <circle cx="-11" cy="-116" r="3" fill="#ef7a7a" opacity=".3"/><circle cx="11" cy="-116" r="3" fill="#ef7a7a" opacity=".3"/>`;
+  <path d="${o.calm?'M-11,-132 l8,-1 M11,-132 l-8,-1':'M-12,-129 l8,-3 M12,-129 l-8,-3'}" stroke="#2a1f3d" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="${o.calm?'M-6,-114 Q0,-108 6,-114':'M-6,-111 Q0,-117 6,-111'}" stroke="#7a2a2a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  ${o.calm?'':'<circle class="tear" cx="-8" cy="-120" r="2.2" fill="#8fd0ff"/>'}
+  <circle cx="-11" cy="-116" r="3" fill="#ef7a7a" opacity=".3"/><circle cx="11" cy="-116" r="3" fill="#ef7a7a" opacity=".3"/>${o.over||''}`;
 }
-document.getElementById('t1').innerHTML=teamer({shirt:'#e0245e',pants:'#3a3358',skin:'#f2c9a0',hair:'<path d="M-18,-126 Q-19,-146 0,-145 Q19,-146 18,-126 Q10,-136 0,-135 Q-10,-136 -18,-126Z" fill="#6b4a2a"/>'});
-document.getElementById('t2').innerHTML=teamer({shirt:'#2f8f7a',pants:'#2e3346',skin:'#c98d62',cls:'b',hair:'<path d="M-18,-124 Q-21,-146 0,-146 Q21,-146 18,-124 Q12,-138 0,-137 Q-12,-138 -18,-124Z" fill="#2b2019"/><circle cx="-12" cy="-142" r="5" fill="#2b2019"/><circle cx="2" cy="-146" r="5.5" fill="#2b2019"/><circle cx="13" cy="-141" r="5" fill="#2b2019"/>'});
+document.getElementById('t1').innerHTML=teamer({shirt:'#e9e3d8',pants:'#2a2a36',skin:'#f3c8ae',hair:'<circle cx="15" cy="-140" r="7" fill="#6b4430"/><path d="M-18,-124 Q-20,-146 0,-145 Q20,-146 18,-125 Q10,-136 0,-135 Q-10,-136 -18,-124Z" fill="#6b4430"/>',over:'<g stroke="#2a2a36" stroke-width="1.6" fill="none"><circle cx="-6.5" cy="-124" r="5.6"/><circle cx="6.5" cy="-124" r="5.6"/><path d="M-1,-124 h2 M-12,-125 l-5,-1 M12,-125 l5,-1"/></g><rect x="-15" y="-110" width="30" height="9" rx="4.5" fill="#8f7f74"/><path d="M-12,-90 h24 M-12,-80 h24 M-12,-70 h24" stroke="#cfc6b6" stroke-width="1.4" opacity=".7"/>'});
+document.getElementById('t2').innerHTML=teamer({shirt:'#7f9fcf',pants:'#d8c3a0',skin:'#f2bfa0',cls:'b',short:1,hair:'<path d="M-17,-122 Q-18,-100 0,-98 Q18,-100 17,-122 Q12,-110 0,-110 Q-12,-110 -17,-122Z" fill="#a35e2e"/><path d="M-19,-124 v-5 M19,-124 v-5" stroke="#7a4a2a" stroke-width="4" stroke-linecap="round"/><path d="M-19.5,-128 Q-21,-153 0,-153 Q21,-153 19.5,-128 Q0,-134 -19.5,-128Z" fill="#1c1c22"/><path d="M-19,-133 Q0,-139 19,-133" stroke="#3a3a46" stroke-width="1.6" fill="none"/>',over:'<rect x="-13" y="-27" width="11" height="25" rx="5.5" fill="#f2bfa0"/><rect x="2" y="-27" width="11" height="25" rx="5.5" fill="#f2bfa0"/><rect x="-13" y="-52" width="11" height="29" rx="5" fill="#d8c3a0"/><rect x="2" y="-52" width="11" height="29" rx="5" fill="#d8c3a0"/><rect x="-12" y="-42" width="7" height="9" rx="2" fill="#c3ac84"/><rect x="5" y="-42" width="7" height="9" rx="2" fill="#c3ac84"/><path d="M-18,-4 Q-8,-14 1,-4 Q-8,1 -18,-4Z M0,-4 Q9,-14 18,-4 Q9,1 0,-4Z" fill="#fbfbf8"/><path d="M-16,-3 Q-8,0 -1,-3 M2,-3 Q9,0 16,-3" stroke="#c9ccd2" stroke-width="1.2" fill="none"/><g stroke="#1c1c22" stroke-width="1.6" fill="none"><circle cx="-6.5" cy="-124" r="5.6"/><circle cx="6.5" cy="-124" r="5.6"/><path d="M-1,-124 h2 M-12,-125 l-5,-1 M12,-125 l5,-1"/></g><text x="0" y="-82" text-anchor="middle" font-family="Lexend,system-ui,sans-serif" font-size="9" fill="none" stroke="#f4f3ef" stroke-width=".6" letter-spacing="1">MOIN</text><text x="0" y="-70" text-anchor="middle" font-family="Baloo 2,system-ui,sans-serif" font-weight="800" font-size="11" fill="#f4f3ef">LIEBE</text>'});
+document.getElementById('t3').innerHTML=teamer({shirt:'#232a45',pants:'#4a5a7a',skin:'#f3c4a8',cls:'c',hair:'<path d="M-19,-122 Q-22,-148 0,-147 Q22,-148 19,-122 L19,-106 Q14,-103 13,-112 L13,-128 Q0,-137 -13,-128 L-13,-112 Q-14,-103 -19,-106Z" fill="#d9c49a"/>',over:'<path d="M-11,-102 Q0,-84 11,-102" stroke="#d8c9a0" stroke-width="1.8" fill="none"/><circle cx="0" cy="-90" r="2.6" fill="#d8c9a0"/><rect x="-24" y="-62" width="48" height="5" fill="#8a6a48"/>'});
+
+/* Zwei Zelte: halb abgebautes (halbe Plane noch drauf) und eines mit nur dem Gestänge. Je 3 Bögen = 6 Füße. */
+const f1=v=>(+v.toFixed(1)).toString();
+const P=(c,w,pts)=>`<path d="M${pts.map(p=>f1(p[0])+','+f1(p[1])).join(' L')}" stroke="${c}" stroke-width="${w}"/>`;
+const POLY=(f,pts,x='')=>`<path d="M${pts.map(p=>f1(p[0])+','+f1(p[1])).join(' L')}Z" fill="${f}" ${x}/>`;
+function tent(tarp){
+  const n=3,Wv=[120,-20],D=[90,-32],WH=62,RH=86,fr=[];
+  for(let i=0;i<n;i++){const t=i/(n-1),L=[D[0]*t,D[1]*t],R=[L[0]+Wv[0],L[1]+Wv[1]];
+    fr.push({L,R,eL:[L[0]+7,L[1]-WH],eR:[R[0]-7,R[1]-WH],ap:[(L[0]+R[0])/2,(L[1]+R[1])/2-RH]})}
+  const cols=['#dfe3ea','#c4cad3','#aeb5c0'];
+  let h=`<ellipse cx="${D[0]/2+Wv[0]/2}" cy="${D[1]/2+2}" rx="${Wv[0]/2+D[0]/2+22}" ry="13" fill="#14102b" opacity=".2"/><g stroke-linecap="round" stroke-linejoin="round" fill="none">`;
+  for(let i=n-1;i>=0;i--){const f=fr[i];
+    h+=P(cols[i],6.5-i*.9,[f.L,f.eL,f.ap,f.eR,f.R]);
+    if(i==n-1){h+=P('#c4cad3',4.5,[fr[0].ap,fr[n-1].ap]);h+=P('#c4cad3',4,fr.map(f=>f.eR));h+=P('#c4cad3',4,fr.map(f=>f.eL))}
+    if(tarp&&i==1){ /* Plane liegt noch auf dem hinteren Feld */
+      h+=POLY('#e2d2b0',[fr[1].R,fr[1].eR,fr[2].eR,fr[2].R],'stroke="none"');
+      h+=POLY('#f4ecda',[fr[1].eR,fr[1].ap,fr[2].ap,fr[2].eR],'stroke="none"');
+      h+=P('#c2b08c',2,[fr[1].eR,[fr[1].eR[0]+4,fr[1].eR[1]+30]]);
+    }}
+  h+='</g>';
+  for(const f of fr)for(const q of [f.L,f.R])h+=`<g transform="translate(${f1(q[0])},${f1(q[1])}) scale(.65)"><ellipse cx="0" cy="4" rx="17" ry="6.5" fill="#ecc986"/><ellipse cx="0" cy="2.6" rx="17" ry="6.5" fill="#fdeab8"/><ellipse cx="-5.5" cy="4.2" rx="5.6" ry="2.2" fill="#c9a064" transform="rotate(14 -5.5 4.2)"/><ellipse cx="0" cy="1.2" rx="6.8" ry="2.7" fill="#f2d594"/></g>`;
+  return h;
+}
+document.getElementById('tentC').innerHTML=tent(true);
+
+/* Holz-Wegweiser aus dem Lager: acht Pfeile, bunte Schrift auf einfarbigem Holz, flach ohne Konturen */
+(function(){
+  const B=[['VKF',1,'#4a2f1e'],['Illenberg',1,'#2f5fc0'],['St. Georgen',1,'#f2c230'],['Balingen',1,'#9be05a'],['Rot a. d. Rot',1,'#ff6aa8'],['Schutterquelle',1,'#3a6fd0'],['Orendelsall',-1,'#f2c230'],['Melchingen',1,'#9be05a']];
+  const GAP=4.5,tip=10;
+  const hs=B.map((_,i)=>i?22:15),fs=B.map((_,i)=>i?15:11.5);
+  const total=hs.reduce((a,v)=>a+v+GAP,0),top=-total-8;
+  let h=`<ellipse cx="0" cy="3" rx="24" ry="5" fill="#14102b" opacity=".2"/><rect x="-3.4" y="${top-6}" width="6.8" height="${-top+6}" rx="2" fill="#7a4a24"/>`;
+  let y=top+(0);
+  B.forEach((b,i)=>{
+    const [t,d,c]=b,H=hs[i],w=Math.round(t.length*fs[i]*.56+10+tip+(i?6:2));
+    const x0=d>0?-w*.45:-w*.55,x1=x0+w;
+    const pts=d>0?[[x0,y],[x1-tip,y],[x1,y+H/2],[x1-tip,y+H],[x0,y+H]]:[[x1,y],[x0+tip,y],[x0,y+H/2],[x0+tip,y+H],[x1,y+H]];
+    const rot=(i%3-1)*.6,tx=d>0?x0+7:x0+tip+5;
+    h+=`<g transform="rotate(${rot} 0 ${y+H/2})"><path d="M${pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L')}Z" fill="#b97a3c"/>`+
+       `<text x="${tx.toFixed(1)}" y="${(y+H*.73).toFixed(1)}" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="${fs[i]}" fill="${c}">${t}</text></g>`;
+    y+=H+GAP;
+  });
+  document.getElementById('wegweiser').innerHTML=h;
+})();
+
+/* Banner der VKF (wie auf der Startseite): Stamm mit Wieslocher Fahne, im hinteren Teil der Wiese */
+(function(){const f1=n=>(+n).toFixed(1);
+function bannerSVG(id,o){o=o||{};const N=!!o.night,P='bn'+id;
+  const wood=N?'#6b4a3a':'#9a6a40',woodD=N?'#4a3028':'#6e4a2a',woodL=N?'#7e5a48':'#b88454';
+  const white=N?'#cfd2e2':'#f6f6f2',blue=N?'#28449a':'#2f5fc4',rope=N?'#8a6a50':'#c48a52';
+  const black='#1c1a20',gold=N?'#c99a2a':'#f2b81e',goldD=N?'#8a6418':'#b8840e';
+  let s=`<defs>
+    <pattern id="${P}r" width="9" height="13" patternUnits="userSpaceOnUse" patternTransform="skewX(-20)"><rect width="9" height="13" fill="${white}"/><path d="M4.5,0 L9,6.5 L4.5,13 L0,6.5Z" fill="${N?'#3a5ab8':'#2a7fd4'}"/></pattern>
+    <clipPath id="${P}c"><path d="M-28,0 H28 V34 Q28,58 0,66 Q-28,58 -28,34Z"/></clipPath>
+  </defs>`;
+  // Spannseile nach rechts
+  s+=`<g stroke="${rope}" stroke-width="2.2" fill="none"><path d="M3,-548 Q170,-300 330,-10"/><path d="M3,-540 Q190,-270 380,-6" opacity=".8"/></g>`;
+  // Stamm (leicht konisch), Astansätze, Maserung
+  s+=`<path d="M-11,0 L-6,-552 Q0,-560 6,-552 L11,0Z" fill="${wood}"/><path d="M-11,0 L-6,-552 Q-3,-556 0,-556 L-2,0Z" fill="${woodL}" opacity=".55"/>`;
+  s+=`<g fill="${woodD}">${[[-2,-470],[3,-400],[-3,-330],[2,-250],[-1,-180]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="2.4" ry="3.6"/>`).join('')}</g>`;
+  s+=`<path d="M5,-250 l14,-12 l-12,16Z" fill="${woodD}"/>`;
+  // Fahne mit Querstange
+  s+=`<g transform="translate(-6,-536)"><rect x="-86" y="-6" width="88" height="6" rx="3" fill="${woodD}"/>
+    <g class="flag"><path d="M-84,0 H0 V196 Q-20,204 -42,196 Q-64,188 -84,198Z" fill="${white}"/>
+      <path d="M-42,0 H0 V196 Q-20,204 -42,196Z" fill="${blue}"/>
+      <path d="M-84,0 H0" stroke="${woodD}" stroke-width="2"/>`;
+  // Wappen
+  s+=`<g transform="translate(-42,12)"><g clip-path="url(#${P}c)">
+        <rect x="-28" y="0" width="28" height="70" fill="url(#${P}r)"/>
+        <rect x="0" y="0" width="28" height="70" fill="${black}"/>
+        <g transform="translate(13.5,33) scale(.262,.3)">${lion(gold,goldD)}</g>
+      </g><path d="M-28,0 H28 V34 Q28,58 0,66 Q-28,58 -28,34Z" fill="none" stroke="${goldD}" stroke-width="1.6"/></g>`;
+  // KJG
+  const L=(t,y)=>`<text x="-42" y="${y}" text-anchor="middle" font-family="'Baloo 2','Arial Rounded MT Bold',system-ui,sans-serif" font-weight="800" font-size="36" fill="${N?'#e8eaf4':'#fff'}" stroke="${N?'#14204a':'#1a2a6a'}" stroke-width="6" paint-order="stroke" stroke-linejoin="round">${t}</text>`;
+  s+=L('K',116)+L('J',150)+L('G',184);
+  s+=`</g></g>`;
+  // Wegweiser
+  const signs=[[-520+0,'r','#e6c27a'],[-500,'l','#d9a85a'],[-480,'r','#e8d08a'],[-460,'r','#c8924a']];
+  s+=`<g>${[[-118,1,'#e6c27a',40],[-100,-1,'#d9a85a',36],[-84,1,'#e8d08a',30],[-68,1,'#c8924a',26]].map(([y,d,c,w])=>{const x0=d>0?-6:6,x1=x0+d*w;
+      return `<path d="M${x0},${y-6} H${x1} L${x1+d*8},${y} L${x1},${y+6} H${x0}Z" fill="${N?'#7a6250':c}"/><path d="M${x0+d*5},${y} h${d*(w-10)}" stroke="${N?'#4a3a30':'#7a4a24'}" stroke-width="1.6" stroke-dasharray="5 3"/>`}).join('')}</g>`;
+  // Äste am Fuß, kleiner Erdhügel
+  s+=`<ellipse cx="0" cy="2" rx="30" ry="6" fill="${N?'#1a2a20':'#6e9a3a'}" opacity=".6"/><g stroke="${woodD}" stroke-width="3.2" stroke-linecap="round"><path d="M-14,2 L-5,-46"/><path d="M14,2 L5,-42"/><path d="M-6,4 L-2,-34"/><path d="M8,4 L1,-30"/><path d="M-18,2 L-9,-30"/></g>`;
+  return s}
+
+/* Steigender Löwe (heraldisch), schaut nach links zu den Rauten. Zeichenbox ca. 0..100 x 0..140 */
+function lion(g,d){
+  const L=(pts,w)=>{const p='M'+pts.map(q=>q.join(',')).join(' L');return `<path d="${p}" stroke="${d}" stroke-width="${w+3}" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="${p}" stroke="${g}" stroke-width="${w}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`};
+  const claw=(x,y,dx)=>`<path d="M${x},${y} l${dx*5},-3 M${x},${y} l${dx*6},1 M${x},${y} l${dx*4},4" stroke="#c8202a" stroke-width="1.6" stroke-linecap="round"/>`;
+  let s='';
+  // Schwanz (hinter dem Körper)
+  s+=`<path d="M68,88 C88,80 96,60 88,46 C82,36 88,24 98,24" stroke="${d}" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M68,88 C88,80 96,60 88,46 C82,36 88,24 98,24" stroke="${g}" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+  s+=`<path d="M96,26 q-2,-12 6,-16 q-2,8 4,10 q-4,2 2,8 q-6,0 -6,6 q-3,-4 -6,-8Z" fill="${g}" stroke="${d}" stroke-width="1.5" stroke-linejoin="round"/>`;
+  // Hinterbeine
+  s+=L([[64,96],[72,114],[64,130],[56,132]],9)+claw(56,132,-1);
+  s+=L([[54,92],[42,108],[30,124],[22,126]],10)+claw(22,126,-1);
+  // Körper
+  s+=`<path d="M28,42 Q44,34 56,50 Q68,68 72,90 Q68,104 54,100 Q44,88 38,74 Q28,60 28,42Z" fill="${g}" stroke="${d}" stroke-width="1.8" stroke-linejoin="round"/>`;
+  s+=`<path d="M44,62 q6,8 8,18 M50,56 q6,10 8,20" stroke="${d}" stroke-width="1.2" fill="none" opacity=".6"/>`;
+  // Vorderbeine
+  s+=L([[36,58],[20,58],[8,64]],8)+claw(8,64,-1);
+  s+=L([[32,46],[18,36],[6,26]],8)+claw(6,26,-1);
+  // Mähne
+  s+=`<path d="M26,14 L34,6 L36,14 L44,8 L44,17 L53,15 L48,23 L56,26 L48,31 L54,38 L45,38 L46,47 L38,42 L34,50 L30,42 L24,44Z" fill="${g}" stroke="${d}" stroke-width="1.6" stroke-linejoin="round"/>`;
+  // Kopf mit offenem Maul
+  s+=`<path d="M36,20 Q30,14 22,18 L12,20 L10,26 L16,28 L8,32 L12,37 L24,38 Q34,38 38,30 Q40,24 36,20Z" fill="${g}" stroke="${d}" stroke-width="1.6" stroke-linejoin="round"/>`;
+  s+=`<path d="M12,31 l-8,2 l7,2Z" fill="#c8202a"/>`;
+  s+=`<circle cx="24" cy="23" r="1.8" fill="${d}"/><path d="M28,16 l3,-6 l3,6" fill="${g}" stroke="${d}" stroke-width="1.4" stroke-linejoin="round"/>`;
+  return `<g transform="translate(-50,-70)">${s}</g>`}
+
+  document.getElementById('banner').innerHTML=bannerSVG('f')})();
 
 /* Vorstand (Stand: Webseite des Fördervereins) */
 const BOARD=[
@@ -359,6 +450,10 @@ const COL=['#e0245e','#a33fa0','#3f8fd8','#2f8f7a','#e8823a','#7fa82a'];
 document.getElementById('board').innerHTML=BOARD.map((b,i)=>{
   const ini=b[0].split(' ').map(w=>w[0]).slice(0,2).join('');
   return `<li><span class="av" style="background:${COL[i%COL.length]}" aria-hidden="true">${ini}</span><span><b>${b[0]}</b><span class="r">${b[1]}</span></span></li>`}).join('');
+
+/* Sterne über den ganzen Himmel */
+document.getElementById('sky').innerHTML=Array.from({length:22},(_,i)=>{const r=n=>{const x=Math.sin(i*97.1+n*13.7)*10000;return x-Math.floor(x)};
+  const z=6+r(3)*12;return `<i style="left:${(r(1)*96+2).toFixed(1)}%;top:${(r(2)*52+3).toFixed(1)}%;width:${z.toFixed(0)}px;height:${z.toFixed(0)}px;opacity:${(.45+r(4)*.5).toFixed(2)};animation-delay:-${(r(5)*3.6).toFixed(1)}s"></i>`}).join('');
 
 /* IBAN kopieren */
 const cb=document.getElementById('copyIban');
