@@ -1695,6 +1695,7 @@ function F(st,o){
       else if(o.sandals){g+=rect(x+.5,L*.36,D.lw-1,L*.3,sk,0,S)+rect(x+.5,L*.62,D.lw-1,L*.34,'#fff',2,S)+rect(x,-4,D.lw,L*.44,pa,4,S)}
       else g+=rect(x,-4,D.lw,L,pa,null,S);
       g+=`<ellipse cx="${f1(sd*lx+sd*1.5)}" cy="${f1(L-1)}" rx="${f1(D.lw*.85)}" ry="${f1(D.lw*.42)}" fill="${o.sandals?'#8a5a2b':(o.shoes||(kid?'#ef3a62':'#5a3a22'))}"${S}/>`;
+      if(o.sneakers)g+=`<path d="M${f1(sd*lx+sd*1.5-D.lw*.85)},${f1(L-1+D.lw*.1)} Q${f1(sd*lx+sd*1.5)},${f1(L-1+D.lw*.62)} ${f1(sd*lx+sd*1.5+D.lw*.85)},${f1(L-1+D.lw*.1)}" fill="none" stroke="#c9ccd2" stroke-width="2.2" stroke-linecap="round"/>`;
       legs+=o.pose==='run'?`<g class="${i?'legB':'legA'}">${g}</g>`:o.pose==='walk'?`<g class="${i?'walkB':'walkA'}">${g}</g>`:g});
   } else if(o.pose==='sit'){
     const L=D.ll*.62;
@@ -1815,7 +1816,7 @@ const T=[
  {n:'Hadl',t:'Glatze, hoher runder Kopf, breites Lachen, breite Schultern, weißes Shirt',o:{arms:'wave',hs:'shaved',tall:1,hair:'#8a6a52',nose:'pointy',broad:1,shortneck:1,eyes:'happy',m:'big',skin:'#f2bf9e',shirt:'#f6f5f1',deco:'finzza',sleeve:'short',pants:'#2e3346'}},
  {n:'Hanna',t:'Zopf mit Mittelscheitel, runde Brille, Kette',o:{arms:'wave',hs:'tail',hair:'#3a2418',glasses:'round',slim:1,shirt:'#1e1e24',sleeve:'short',necklace:'long',skin:'#f5d4b8',m:'grin',pants:'#3a4f7a'}},
  {n:'Henri',t:'Rotblonde Wuschellocken, Sommersprossen, schiefes Grinsen',o:{hs:'mop',hair:'#c98a3e',slim:1,shirt:'#1e1a22',sleeve:'short',freckles:1,skin:'#f5d0b5',m:'smirk',pants:'#2f3f5a'}},
- {n:'JPO',t:'Schwarze Docker-Mütze, roter Vollbart, „Moin Liebe“-Shirt',o:{arms:'down',hat:'docker',hs:'short',hair:'#7a4a2a',beard:'full',beardc:'#a35e2e',shirt:'#7f9fcf',deco:'moin',sleeve:'short',skin:'#f2bfa0',m:'grin',eyes:'happy',pants:'#d8c3a0',shorts:1}},
+ {n:'JPO',t:'Schwarze Docker-Mütze, roter Vollbart, „Moin Liebe“-Shirt',o:{arms:'down',hat:'docker',hs:'short',hair:'#7a4a2a',beard:'full',beardc:'#a35e2e',shirt:'#7f9fcf',deco:'moin',sleeve:'short',skin:'#f2bfa0',m:'grin',eyes:'happy',pants:'#d8c3a0',shorts:1,shoes:'#fbfbf8',sneakers:1}},
  {n:'Jan',t:'Schwarze Locken, runde Sonnenbrille, Astronauten-Shirt',o:{arms:'wave',hs:'curlytop',hair:'#17110e',glasses:'sunround',beard:'stub',beardc:'#2a1c14',shirt:'#262c5a',deco:'astro',sleeve:'short',skin:'#d6a07a',m:'grin',pants:'#c9b48e'}},
  {n:'Kalle',t:'Sombrero mit Kinnband, runde Brille, rotblonder Bart, Lanyard, Klemmbrett',o:{arms:'clip',hat:'sombrero',hs:'short',hair:'#7a4a2a',glasses:'round',beard:'stub',mous:1,beardc:'#b8794a',shirt:'#1e1e24',lanyard:1,lanyardc:'#c9ccd2',cord:1,cordc:'#ffc93a',cordc2:'#e0245e',sleeve:'short',skin:'#f3c6a6',m:'grin',pants:'#3a3358'}},
  {n:'Katha',t:'Lange dunkle Haare, Mittelscheitel, gelber Pulli',o:{arms:'wave',hs:'longmid',hair:'#5a3426',slim:1,shirt:'#f2b630',necklinec:'#2a3fa0',skin:'#f3c0a6',m:'grin',pants:'#3a4f7a'}},
