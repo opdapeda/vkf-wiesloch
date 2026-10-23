@@ -1051,8 +1051,10 @@ R.innerHTML=`<ellipse cx="${C[0]}" cy="${C[1]}" rx="560" ry="220" fill="url(#fir
  </g>
  ${sparks}<g id="gFront"></g><g>${front}</g>${notes}`;
 
-const guitars=[0,1,2].map(i=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','sitter');
-  g.innerHTML=`<g class="gflip">${P(0,0,{c:['#ef3a62','#20a68a','#3a7bd5'][i],arms:'guitar',m:'sing',eyes:'happy',big:1.5,...[{hs:'long',beard:'',glasses:false,sleeve:'long'},{hs:'pony',beard:'',glasses:false,sleeve:'long'},{hs:'short',beard:'full',glasses:false}][i]})}</g>`;
+/* Hanna mit Gitarre, Hadl und Kalle ohne Gitarre (Looks aus docs/teamer-figuren.md) */
+const HANNA={c:'#1e1e24',arms:'guitar',hs:'pony',hair:'#3a2418',glasses:'round',beard:'',sleeve:'short',skin:'#f5d4b8',m:'sing',eyes:'happy'};
+const guitars=[HANNA,{...HADL,f:0,arms:'wave',m:'sing'},{...KALLE,m:'sing'}].map((o,i)=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','sitter');
+  g.innerHTML=`<g class="gflip">${P(0,0,{big:1.5,...o})}</g>`;
   return {g,off:i*Math.PI*2/3}});
 
 /* captions: headline on the scene, info text lives in the round buttons (info: x/y in scene units, or f for sun/moon) */
@@ -1106,9 +1108,9 @@ const S=[
    {f:'sun',d:'Die Sonne steht schon tief.'},
    {x:800,y:630,d:'Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.'},
    {x:1000,y:690,photo:'laternen'},{x:1190,y:470,photo:'landschaft'}]},
- {a:.68,b:.87,stop:.83,l:'Lagerrunde',h:'Lagerrunde',d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer. Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.',info:[
+ {a:.68,b:.87,stop:.83,l:'Lagerrunde',h:'Lagerrunde',d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer. Hanna zieht mit der Gitarre ihre Runden ums Feuer, Hadl und Kalle laufen mit, und alle singen mit.',info:[
    {x:800,y:596,d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer.'},
-   {x:1190,y:730,d:'Die Gitarren ziehen ihre Runden ums Feuer, und alle singen mit.'},
+   {x:1190,y:730,d:'Hanna zieht mit der Gitarre ihre Runden ums Feuer, Hadl und Kalle laufen mit, und alle singen mit.'},
    {x:915,y:700,photo:'lagerfeuer'}]},
  {a:.87,b:1.01,stop:.96,l:'Gute Nacht',h:'Gute Nacht, VKF',d:'Mond und Sterne stehen über den Zelten. Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.',info:[
    {f:'moon',d:'Mond und Sterne stehen über den Zelten.'},
