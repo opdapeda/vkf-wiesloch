@@ -1890,11 +1890,11 @@ const T=[
 
 const byName=n=>T.find(x=>x.n===n);
 const ROWS=[
+ {y:285,s:.88,x0:725,dx:0,names:['Noah']},   /* zuerst, damit Schatten und Figur hinter allen Reihen liegen */
  {y:285,s:.88,x0:112,dx:175,names:['Tommy','Henri','Tyler','Andrea','Marc','Niklas','Julian']},
  {y:365,s:.98,x0:212,dx:175,names:['Luca','Timbo','Simon','Katha','Hanna','Alex']},
  {y:445,s:1.08,x0:112,dx:175,names:['Jan','Pascal','Paula','JPO','Klingi','Timo']},
- {y:525,s:1.18,x0:212,dx:175,names:['Dirk','Kalle','Hadl','Claudi','Mu','Helena']},
- {y:285,s:.88,x0:725,dx:0,names:['Noah']}
+ {y:525,s:1.18,x0:212,dx:175,names:['Dirk','Kalle','Hadl','Claudi','Mu','Helena']}
 ];
 const over={Timo:{arms:'down'},Noah:{float:85}};
 function tentS(x,y,s){return `<g transform="translate(${x},${y}) scale(${s})"><rect x="-40" y="-34" width="80" height="34" fill="var(--tentA)"/><path d="M-47,-30 L-30,-60 H30 L47,-30Z" fill="var(--tentB)"/><path d="M-11,0 L0,-27 L11,0Z" fill="var(--tentD)"/></g>`}
