@@ -196,8 +196,6 @@ a{color:inherit}
 @keyframes rise{0%{transform:translate(0,0);opacity:0}10%{opacity:1}100%{transform:translate(var(--dx,10px),-190px);opacity:0}}
 .note{animation:float 4s ease-in infinite;opacity:0;font-family:Georgia,serif}
 @keyframes float{0%{transform:translate(0,0);opacity:0}15%{opacity:.95}100%{transform:translate(var(--dx,20px),-150px);opacity:0}}
-.rub{animation:rub .45s ease-in-out infinite alternate}
-@keyframes rub{from{transform:translate(-3px,1px)}to{transform:translate(3px,-1px)}}
 .twinkle{transform-box:fill-box;transform-origin:center;animation:tw 3s ease-in-out infinite alternate}
 @keyframes tw{from{opacity:.35;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
 .kflick{animation:kf 2.3s steps(1) infinite}
@@ -239,7 +237,7 @@ a{color:inherit}
 .zz{transform-box:fill-box;transform-origin:center;animation:zz 4.5s ease-out infinite;opacity:0;font:800 24px 'Baloo 2',system-ui,sans-serif}
 @keyframes zz{0%{transform:translate(0,0) scale(.6);opacity:0}20%{opacity:.9}100%{transform:translate(26px,-80px) scale(1.2);opacity:0}}
 @media (prefers-reduced-motion: reduce){
-  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span,.ib .halo,.hop,.sway,.pump,.puff,.sweat,.peek,.ksteam,.zz,.blink,.strum,.sing,.rub,.legA,.legB,.walkA,.walkB,.wave{animation:none}
+  .flame,.spark,.note,.twinkle,.kflick,.shadowmove,.bob,.steam,.hint span,.ib .halo,.hop,.sway,.pump,.puff,.sweat,.peek,.ksteam,.zz,.blink,.strum,.sing,.legA,.legB,.walkA,.walkB,.wave{animation:none}
   .spark,.note,.steam,.ksteam,.zz{opacity:0}
 }
 
@@ -1038,11 +1036,12 @@ const bfly=(id,c)=>`<g id="${id}"><g class="wg"><ellipse cx="-4.5" cy="-2" rx="5
     <path d="M-6,-78 H70 L84,-66 L70,-54 H-6Z" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><text x="36" y="-60" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="13" fill="#0f2a4a">Freibad</text>
     <path d="M6,-48 H-70 L-84,-36 L-70,-24 H6Z" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><text x="-38" y="-30" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="700" font-size="12" fill="#0f2a4a">Wanderweg</text></g></g>
     <g id="walkers" transform="translate(900,790)">${w}</g>`+bfly('bf1','#ff8a2a')+bfly('bf2','#ffe14a')+
-   /* Timo sitzt links im Hintergrund auf dem Campingstuhl und poliert eine Öllampe */
-   (()=>{const cx=440,gy=708;return `<ellipse cx="${cx}" cy="${gy+1}" rx="44" ry="6" fill="#1a1030" opacity=".18"/>`
-     +`<g transform="translate(${cx},${gy}) scale(-1,1)"><path d="M-30,-22 L20,0 M20,-22 L-30,0" stroke="#4a4660" stroke-width="5" stroke-linecap="round"/><rect x="-38" y="-30" width="76" height="9" rx="4" fill="#29b0c8"/><g transform="rotate(8 30 -24)"><rect x="24" y="-112" width="12" height="90" rx="6" fill="#29b0c8"/></g></g>`
-     +solo(()=>P(cx,gy-12,{...TIMO,seat:1,nosh:1}))
-     +`<g transform="translate(${cx+16},${gy-46}) scale(1.35)"><ellipse cx="0" cy="13" rx="10" ry="3" fill="#b8862a"/><path d="M-10,13 Q-13,2 -6,-2 H6 Q13,2 10,13Z" fill="#e8b84a"/><path d="M-8,5 Q-9,0 -5,-1" stroke="#fff" stroke-width="1.4" fill="none" opacity=".6" stroke-linecap="round"/><path d="M-5,-2 Q-10,-13 -3.5,-22 H3.5 Q10,-13 5,-2Z" fill="#cfeaf5" opacity=".85" stroke="#9cc4d6" stroke-width="1"/><path d="M-4,-8 Q-5,-14 -2,-18" stroke="#fff" stroke-width="1.5" fill="none" opacity=".8" stroke-linecap="round"/><rect x="-4" y="-25" width="8" height="4" rx="1.5" fill="#d9a53a"/><path d="M11,3 q9,-1 8,7 q-1,4 -8,3" stroke="#d9a53a" stroke-width="2.4" fill="none" stroke-linecap="round"/><g class="rub"><rect x="-8" y="4" width="16" height="7" rx="3.5" fill="#f4f3ef" stroke="#c9ccd2" stroke-width=".8" transform="rotate(-12)"/></g>`+[[-14,-14,3.2,0],[12,-20,2.6,-1],[16,-4,2.2,-2]].map(([x,y,r,d])=>`<path class="twinkle" d="${spark(x,y,r)}" fill="#fff" style="animation-delay:${d}s"/>`).join('')+`</g>`})())})();
+   /* Timo sitzt links im Hintergrund auf einer Bank, in einer Hand die Öllampe, in der anderen einen Schraubenzieher */
+   (()=>{const cx=520,by=690,L=104;return `<ellipse cx="${cx}" cy="${by+19}" rx="56" ry="6" fill="#1a1030" opacity=".18"/>`
+     +`<g transform="translate(${cx},${by})"><rect x="${-L/2}" y="-3" width="${L}" height="10" rx="5" fill="url(#wood)"/><rect x="${-L/2+8}" y="6" width="6" height="12" rx="3" fill="#6b3e1e"/><rect x="${L/2-14}" y="6" width="6" height="12" rx="3" fill="#6b3e1e"/></g>`
+     +solo(()=>P(cx,by+10,{...TIMO,seat:1,nosh:1}))
+     +`<g transform="translate(${cx-14},${by-23}) scale(1.35)"><ellipse cx="0" cy="13" rx="10" ry="3" fill="#b8862a"/><path d="M-10,13 Q-13,2 -6,-2 H6 Q13,2 10,13Z" fill="#e8b84a"/><path d="M-8,5 Q-9,0 -5,-1" stroke="#fff" stroke-width="1.4" fill="none" opacity=".6" stroke-linecap="round"/><path d="M-5,-2 Q-10,-13 -3.5,-22 H3.5 Q10,-13 5,-2Z" fill="#cfeaf5" opacity=".85" stroke="#9cc4d6" stroke-width="1"/><path d="M-4,-8 Q-5,-14 -2,-18" stroke="#fff" stroke-width="1.5" fill="none" opacity=".8" stroke-linecap="round"/><rect x="-4" y="-25" width="8" height="4" rx="1.5" fill="#d9a53a"/><path d="M11,3 q9,-1 8,7 q-1,4 -8,3" stroke="#d9a53a" stroke-width="2.4" fill="none" stroke-linecap="round"/></g>`
+     +`<g transform="translate(${cx+25},${by-24}) rotate(-10) scale(1.2)"><rect x="-1.6" y="-30" width="3.2" height="22" rx="1.2" fill="#aeb4bf"/><rect x="-1.2" y="-33" width="2.4" height="4" fill="#8e929a"/><rect x="-3.6" y="-9" width="7.2" height="15" rx="3" fill="#e0245e"/><rect x="-3.6" y="-4" width="7.2" height="3" fill="#ffc93a"/></g>`})())})();
 
 vig('abend',.60,.68, table(560,1040,700,
   mugs(595,1020,700)+`<circle class="kflick" cx="800" cy="672" r="72" fill="url(#kGlow)"/><g transform="translate(800,697)"><rect x="-9" y="-30" width="18" height="30" rx="3" fill="#2b3346"/><rect x="-6" y="-26" width="12" height="20" fill="#ffd27a"/><path d="M-9,-30 Q0,-42 9,-30" stroke="#2b3346" stroke-width="3" fill="none"/></g>
