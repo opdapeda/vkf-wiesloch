@@ -298,6 +298,8 @@ main{display:block}
 @keyframes crewblink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
 .crew .gest{transform-box:fill-box;transform-origin:0 100%;animation:crewgest 1.2s ease-in-out infinite alternate}
 @keyframes crewgest{from{transform:rotate(-6deg)}to{transform:rotate(8deg)}}
+.crew .levit{animation:crewlevit 2.6s ease-in-out infinite alternate}
+@keyframes crewlevit{from{transform:translateY(0)}to{transform:translateY(-5px)}}
 .crew .clap{animation:crewclap .35s ease-in-out infinite alternate}
 @keyframes crewclap{from{transform:translateY(0)}to{transform:translateY(-2px)}}
 @media (prefers-reduced-motion:reduce){.crew *{animation:none!important;transition:none!important}}
@@ -457,7 +459,7 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
       <svg class="hills" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,90 V48 C160,24 300,30 460,46 C620,62 760,22 940,28 C1100,34 1240,62 1440,40 V90Z" opacity=".55"/><path d="M0,90 V66 C220,52 380,70 600,64 C820,58 960,46 1140,58 C1280,66 1380,62 1440,58 V90Z"/></svg>
       <div class="crew-head"><span class="sticker s-red">Das sind wir</span><h3>Das ist unser Team</h3><p class="crew-hint" id="crewHint">Fahr mit der Maus über uns, dann siehst du, wer wer ist.</p></div>
       <div class="crew-wrap" id="crewWrap">
-        <svg class="crew-stage" id="crewStage" viewBox="0 100 1200 370" role="group" aria-label="Gruppenbild des VKF-Teams"></svg>
+        <svg class="crew-stage" id="crewStage" viewBox="-60 78 1320 392" role="group" aria-label="Gruppenbild des VKF-Teams"></svg>
         <div class="crew-tip" id="crewTip" role="tooltip"></div>
       </div>
       <div class="crew-meadow" aria-hidden="true"></div>
@@ -1571,6 +1573,8 @@ function headParts(C,o){
   if(o.hs==='bob')s+=`<path d="M-20,-8 Q-23,12 -16,15 H16 Q23,12 20,-8Z" fill="${hr}"${S}/>`;
   if(o.hs==='tail')s+=`<path d="M13,-13 Q29,-10 27,8 Q25,16 21,19 Q23,6 15,-3Z" fill="${hr}"${S}/>`;
   if(o.hat==='sombrero')s+=`<path d="M-15,-9 Q-16,10 -3,19 M15,-9 Q16,10 3,19" fill="none" stroke="#8a6a3a" stroke-width=".9"/>`;
+  if(o.hs==='longtail')s+=`<path d="M-19,-6 Q-23,13 -18,19 Q-13,22 -10.5,17 L-10.5,4 H10.5 L10.5,17 Q13,22 18,19 Q23,13 19,-6Z" fill="${hr}"${S}/><path d="M14,-12 Q31,-8 28,10 Q26,18 22,21 Q24,7 16,-2Z" fill="${shade(hr,.88)}"${S}/>`;
+  if(o.hs==='manbun')s+=`<path d="M10,-17 Q20,-18 22,-10 Q23,-4 20,1 Q19,-7 13,-11Z" fill="${shade(hr,.85)}"${S}/><circle cx="3" cy="-24.5" r="6.2" fill="${hr}"${S}/><path d="M-2.6,-20.6 Q3,-18.4 8.4,-20.8" stroke="#2a2420" stroke-width="2" fill="none" stroke-linecap="round"/>`;
   if(o.hs==='pony')s+=`<path d="M-15,-10 Q-30,-6 -24,10 Q-20,0 -12,-4Z" fill="${hr}"${S}/>`;
   const ex=o.tall?15.8:(o.wide?17.8:16),fw=o.tall?16.2:(o.wide?19:17);
   s+=`<circle cx="${-ex}" cy="1" r="4.3" fill="${shade(sk,.92)}"${S}/><circle cx="${ex}" cy="1" r="4.3" fill="${shade(sk,.92)}"${S}/>`;
@@ -1586,6 +1590,7 @@ function headParts(C,o){
   if(o.beard==='full')s+=`<path d="M-16,2 Q-17,21 0,23 Q17,21 16,2 Q12,11 0,11 Q-12,11 -16,2Z" fill="${bh}"${S}/>`;
   if(o.beard==='stub')s+=`<path d="M-16,2 Q-17,19 0,21 Q17,19 16,2 Q12,11 0,11 Q-12,11 -16,2Z" fill="${bh}" opacity=".${o.beardc?45:3}"${N}/>`;
   if(o.beard==='chin')s+=`<path d="M-18.6,-4 Q-20,15 -7,22 Q0,26.5 7,22 Q20,15 18.6,-4 L16.6,-4 Q16.4,7 10.5,10.5 Q5,8.5 0,9.5 Q-5,8.5 -10.5,10.5 Q-16.4,7 -16.6,-4Z" fill="${bh}"${N}/><g stroke="${shade(bh,1.5)}" stroke-width=".6" stroke-linecap="round" opacity=".28">${[[-14,12],[-10,16],[-5,19.5],[0,21],[5,19.5],[10,16],[14,12]].map(p=>`<path d="M${p[0]},${p[1]} l${p[0]>0?-.6:.6},2"/>`).join('')}</g>`;
+  if(o.beard==='long')s+=`<path d="M-17,-1 Q-18.5,14 -12.5,23 Q-10,31 -5.5,30 Q-4,36 0,34 Q4,36 5.5,30 Q10,31 12.5,23 Q18.5,14 17,-1 L15.2,-1 Q14.6,9 9,11 Q4.5,8.6 0,9.6 Q-4.5,8.6 -9,11 Q-14.6,9 -15.2,-1Z" fill="${bh}"${N}/><g stroke="${shade(bh,1.45)}" stroke-width=".8" stroke-linecap="round" fill="none" opacity=".55"><path d="M-11,16 q1,4 -.5,7 M-6,20 q1,4 0,7 M0,22 q1,4 0,8 M6,20 q-1,4 0,7 M11,16 q-1,4 .5,7"/></g>`;
   if(o.stubdots){const P=[[-14.5,3.5],[-13,7],[-11.5,9.8],[-9,12],[-6.5,14],[-3.5,15.2],[0,15.6],[3.5,15.2],[6.5,14],[9,12],[11.5,9.8],[13,7],[14.5,3.5],[-7,11.5],[-4.5,13.2],[-1.8,14],[1.8,14],[4.5,13.2],[7,11.5],[-5,8.3],[-2.2,8.7],[2.2,8.7],[5,8.3]];let d='';P.forEach(p=>d+=`<circle cx="${f1(p[0]+lx*.5)}" cy="${f1(p[1])}" r=".6"/>`);s+=`<g fill="${o.stubdots}" opacity=".75"${N}>${d}</g>`}
   // Frisur oben
   const hs=o.hs||'short';
@@ -1606,6 +1611,8 @@ function headParts(C,o){
   if(hs==='quiff')s+=`<path d="M-17,0 Q-18,-16 -8,-17 L8,-17 Q18,-16 17,0 Q16,-9 8,-11 L-8,-11 Q-16,-9 -17,0Z" fill="${hr}"${S}/><path d="M-11,-12 Q-10,-27 4,-27 Q15,-26 13,-12Z" fill="${hr}"${S}/>`;
   if(hs==='curlytop'||hs==='mop'){s+=`<path d="M-17,0 Q-19,-14 -12,-15 L12,-15 Q19,-14 17,0 Q15,-8 10,-10 L-10,-10 Q-15,-8 -17,0Z" fill="${hr}"${S}/><g fill="${hr}"${S}>${[[-13,-14,6],[-5,-20,7],[5,-21,7],[13,-15,6],[0,-25,5.5],[-10,-23,5],[11,-23,5]].map(c=>`<circle cx="${c[0]}" cy="${c[1]}" r="${c[2]}"/>`).join('')}</g><g fill="none" stroke="${shade(hr,.72)}" stroke-width="1.1">${[[-6,-21],[5,-22],[-12,-15],[12,-16]].map(c=>`<path d="M${c[0]-2},${c[1]} q2,-3 4,0"/>`).join('')}</g>`;
     if(hs==='mop')s+=`<g fill="${hr}"><circle cx="-6" cy="-12" r="4.6"/><circle cx="3" cy="-11" r="4"/><circle cx="10" cy="-12" r="3.6"/></g>`;}
+  if(hs==='longtail')s+=`<path d="M-18.5,12 Q-21.5,-21 0,-20.5 Q21.5,-21 18.5,12 Q17,0 13,-7 Q5,-12.5 0,-9.5 Q-5,-12.5 -13,-7 Q-17,0 -18.5,12Z" fill="${hr}"${S}/><path d="M-16.5,8 Q-15.5,0 -13,-5 M16.5,8 Q15.5,0 13,-5" stroke="${shade(hr,.75)}" stroke-width="1" fill="none"/>`;
+  if(hs==='manbun')s+=`<path d="M-17.6,3 Q-18.8,-9 -14.6,-14.5 L-12.6,-12.5 Q-15.6,-6 -15.6,3Z M17.6,3 Q18.8,-9 14.6,-14.5 L12.6,-12.5 Q15.6,-6 15.6,3Z" fill="${hr}" opacity=".42"/><path d="M-15.2,-11.5 Q-14.6,-21.6 0,-21.8 Q14.6,-21.6 15.2,-11.5 Q8,-15.6 0,-15.2 Q-8,-15.6 -15.2,-11.5Z" fill="${hr}"${S}/><g stroke="${shade(hr,1.5)}" stroke-width=".8" fill="none" stroke-linecap="round" opacity=".7"><path d="M-9,-15.3 Q-8,-19 -4.5,-21 M-3,-15.2 Q-2.5,-19 0,-21.4 M3,-15.2 Q3.5,-19 5,-21.2 M9,-15.3 Q9,-18.5 9.5,-20"/></g>`;
   if(hs==='crop')s+=`<path d="M${-fw+.6},-2 Q${-fw-.6},-16 -12,-20.5 Q0,-23.5 12,-20.5 Q${fw+.6},-16 ${fw-.6},-2 L${fw-2.2},-2 Q${fw-2.5},-10 13,-12.5 Q0,-15.2 -13,-12.5 Q${-fw+2.5},-10 ${-fw+2.2},-2Z" fill="${hr}"${S}/><path d="M-13,-12.5 Q-6,-16 0,-14.6 Q7,-16.4 13,-12.5 Q6,-14 0,-13.4 Q-6,-14 -13,-12.5Z" fill="${shade(hr,.7)}"/><g stroke="${shade(hr,1.6)}" stroke-width=".7" stroke-linecap="round" fill="none" opacity=".4"><path d="M-9,-19 l2,3 M-4,-21 l2,3.5 M1,-21.5 l2,3.5 M6,-20.8 l2,3.2 M11,-19 l1.4,2.6"/></g>`;
   if(o.capPatch==='vkf')s+=`<circle cx="0" cy="-18" r="6" fill="#f4f3ef"/><path d="M-3.6,-15.5 L0,-21.5 L3.6,-15.5Z" fill="#3a3358"/><path d="M-5.2,-15.8 l1.6,-2.6 1.4,2.4Z M5.2,-15.8 l-1.6,-2.6 -1.4,2.4Z" fill="#20a68a"/>`;
   if(o.capPatch==='text')s+=`<path d="M-9,-20 Q0,-24 9,-20" stroke="#f4f3ef" stroke-width="2.2" fill="none" stroke-dasharray="2 1"/>`;
@@ -1667,6 +1674,7 @@ function hatParts(o,S){let s='';
     s+=`<ellipse cx="0" cy="-13" rx="41" ry="10" fill="#e3b23c" stroke="#9a7424" stroke-width="1.2"/><ellipse cx="0" cy="-13" rx="33" ry="7" fill="none" stroke="#c9952c" stroke-width="1.6"/><ellipse cx="0" cy="-13" rx="25" ry="5" fill="none" stroke="#c9952c" stroke-width="1.2"/>`;
     s+=`<path d="M-15,-14 Q-15,-40 0,-40 Q15,-40 15,-14Z" fill="#ecc04a" stroke="#9a7424" stroke-width="1.1"/><path d="M-14.5,-19 Q0,-23 14.5,-19 L15,-14 Q0,-18 -15,-14Z" fill="#b8862a"/><path d="M-14,-20 Q0,-24 14,-20" stroke="#e0245e" stroke-width="1.2" fill="none" stroke-dasharray="2.5 2"/><g stroke="#c9952c" stroke-width=".9" fill="none"><path d="M-11,-28 Q0,-31 11,-28 M-8,-35 Q0,-37 8,-35"/></g>`;
     s+=`<g fill="#fff" stroke="#d8d0c0" stroke-width=".5">${pts.map(p=>`<circle cx="${f1(p[0])}" cy="${f1(p[1])}" r="2.4"/>`).join('')}</g>`;s+='</g>'}
+  if(o.hat==='bike'){const c=o.hatc||'#3a7bd5';s+=`<path d="M-15.5,-8 Q-16.5,0 -14.5,6 M15.5,-8 Q16.5,0 14.5,6 M-14.5,6 Q-8,19 0,19.5 Q8,19 14.5,6" fill="none" stroke="#2a2420" stroke-width="1"/><path d="M-20,-6 Q-22,-27 0,-28 Q20,-28 22,-14 Q24,-6 20,-5 Q0,-10 -20,-6Z" fill="${c}"${S}/><path d="M-20,-6 Q0,-10 20,-5 L20.5,-7.5 Q0,-12.5 -20.2,-8.5Z" fill="${shade(c,.65)}"/><g fill="#2a2a36" opacity=".75"><path d="M-12,-14 q2,-8 6,-10 q-1,6 -3,10Z"/><path d="M-3,-14 q1,-9 4,-11 q0,6 -1,11Z"/><path d="M6,-14 q3,-8 7,-8 q-2,5 -4,8Z"/></g><path d="M-18,-12 Q0,-24 20,-12" stroke="#fff" stroke-width="1.6" fill="none" opacity=".7"/>`}
   if(o.hat==='docker')s+=`<path d="M-18.5,-1 Q-20,-25 0,-25 Q20,-25 18.5,-1 Q0,-7 -18.5,-1Z" fill="${o.hatc||'#1c1c22'}"${S}/><path d="M-18,-6 Q0,-11 18,-6" stroke="${shade(o.hatc||'#1c1c22',1.6)}" stroke-width="1.1" fill="none"/>`;
   if(o.hat==='night')s+=`<path d="M-17,-6 Q-16,-24 2,-24 Q16,-22 26,-4 L18,-8 Q8,-14 -17,-6Z" fill="${o.hatc||'#3a7bd5'}"${S}/><circle cx="27" cy="-3" r="4" fill="#fff"/>`;
   if(o.patch&&!o.back)s+=`<path d="M-17,-8 L17,-10" stroke="#1c1c1c" stroke-width="1.6"/><ellipse cx="${(o.look||0)+6}" cy="-2" rx="4.4" ry="4" fill="#1c1c1c"/>`;
@@ -1680,6 +1688,7 @@ function F(st,o){
   if(C&&o.belly)D.tw=56;
   if(o.stout)D.tw=kid?D.tw:55;
   if(o.slim)D.tw=kid?D.tw:42;
+  if(o.lanky&&!kid){D.tw=37;D.th=64;D.ll=56;D.aw=9.5;D.al=46;D.lw=10.5}
   if(o.broad&&!kid){D.tw=60;D.aw=12.5}
   if(o.shortneck)D.nk=1.5;
   const sk=o.skin||SK.m,sh=o.shirt,pa=o.pants||(kid?'#2f8f7a':'#3a3358'),tw=D.tw,th=D.th,k=D.hr/17,hy=-(th+D.nk+D.hr*.92);
@@ -1697,6 +1706,8 @@ function F(st,o){
       g+=`<ellipse cx="${f1(sd*lx+sd*1.5)}" cy="${f1(L-1)}" rx="${f1(D.lw*.85)}" ry="${f1(D.lw*.42)}" fill="${o.sandals?'#8a5a2b':(o.shoes||(kid?'#ef3a62':'#5a3a22'))}"${S}/>`;
       if(o.sneakers)g+=`<path d="M${f1(sd*lx+sd*1.5-D.lw*.85)},${f1(L-1+D.lw*.1)} Q${f1(sd*lx+sd*1.5)},${f1(L-1+D.lw*.62)} ${f1(sd*lx+sd*1.5+D.lw*.85)},${f1(L-1+D.lw*.1)}" fill="none" stroke="#c9ccd2" stroke-width="2.2" stroke-linecap="round"/>`;
       legs+=o.pose==='run'?`<g class="${i?'legB':'legA'}">${g}</g>`:o.pose==='walk'?`<g class="${i?'walkB':'walkA'}">${g}</g>`:g});
+  } else if(o.pose==='lotus'){const W=tw*.95,fk=shade(sk,.94);
+    legs+=`<g transform="rotate(-9 0 6)">${rect(-W*.55,2,W*1.55,10.5,shade(pa,.86),5.25,S)}<ellipse cx="${f1(-W*.5)}" cy="7.2" rx="5.6" ry="3.8" fill="${fk}"${S}/></g><g transform="rotate(9 0 6)">${rect(-W,1,W*1.55,10.5,pa,5.25,S)}<ellipse cx="${f1(W*.5)}" cy="6.2" rx="5.6" ry="3.8" fill="${fk}"${S}/></g>`;
   } else if(o.pose==='sit'){
     const L=D.ll*.62;
     [-1,1].forEach(sd=>{const x=sd*lx-D.lw/2;
@@ -1767,6 +1778,8 @@ function F(st,o){
 
   if(A==='clip'){const l=[sL,[-tw/2-6,-th*.32],[-tw*.22,-th*.55]],r=[sR,[tw/2+11,-th*.72],[tw/2+13,-th-al*.45]];
     armsS=arm(C,l,o,aw,sk)+rect(-tw*.5,-th*.85,tw*.42,th*.55,'#8e5a2c',2)+rect(-tw*.46,-th*.8,tw*.34,th*.45,'#fff',1)+`<path d="M${f1(-tw*.42)},${f1(-th*.68)} h${f1(tw*.24)} M${f1(-tw*.42)},${f1(-th*.58)} h${f1(tw*.2)} M${f1(-tw*.42)},${f1(-th*.48)} h${f1(tw*.24)}" stroke="#b8b0c8" stroke-width="1.6"/>`+hand(C,l[2],hr,sk)+`<g class="gest">${arm(C,r,o,aw,sk)+hand(C,r[2],hr,sk)}</g>`}
+  if(A==='leash'){const r=[sR,[tw/2+7,-th*.45],[tw/2+10,-th*.04]];armsS=arm(C,down(-1),o,aw,sk)+hand(C,down(-1)[1],hr,sk)+arm(C,r,o,aw,sk)+hand(C,r[2],hr,sk)}
+  if(A==='mudra'){const W=tw*.95,l=[sL,[-tw/2-8,-th*.42],[-W*.82,1]],r=[sR,[tw/2+8,-th*.42],[W*.82,5]];armsS=both(l,r)+`<g fill="none" stroke="${shade(sk,.7)}" stroke-width="1.2"><circle cx="${f1(-W*.82)}" cy="0" r="2"/><circle cx="${f1(W*.82)}" cy="4" r="2"/></g>`}
   if(A==='clasp'){const l=[sL,[-tw/2-5,-th*.4],[-2.5,-th*.2]],r=[sR,[tw/2+5,-th*.4],[2.5,-th*.2]];armsS=both(l,r)}
   if(A==='hips'){const l=[sL,[-tw/2-15,-th*.5],[-tw/2+2,-th*.24]],r=l.map(p=>[-p[0],p[1]]);r[0]=sR;armsS=both(l,r)}
   if(A==='eyes'){const l=[sL,[-tw/2-7,-th*.55],[-6*k,hy-1*k]],r=[sR,[tw/2+7,-th*.55],[6*k,hy-1*k]];armsS=both(l,r)}
@@ -1787,8 +1800,10 @@ function F(st,o){
   if(o.hood)front+=`<path d="M-4,${f1(-th+3)} v${f1(th*.25)} M4,${f1(-th+3)} v${f1(th*.22)}" stroke="#f4f3ef" stroke-width="1.4" stroke-linecap="round"/>`;
   if(o.necklace)front+=`<path d="M${f1(-6.5*k)},${f1(-th+1)} Q0,${f1(-th*(o.necklace==='long'?.62:.8))} ${f1(6.5*k)},${f1(-th+1)}" stroke="#e6e1d6" stroke-width=".9" fill="none"/><circle cx="0" cy="${f1(-th*(o.necklace==='long'?.67:.83))}" r="${o.necklace==='long'?2.2:1.3}" fill="#e6e1d6"/>`;
   if(o.strap)front+=`<path d="M${f1(-tw*.3)},${f1(-th)} L${f1(tw*.48)},${f1(-th*.12)}" stroke="#1c1c22" stroke-width="4.2"/>${rect(-tw*.22,-th*.84,5,6,'#d9d4cc',1)}`;
+  if(o.dog){const G=D.ll,dc=o.dog,dl=shade(dc,1.7),hx=tw/2+10,hy2=-th*.04,x0=tw/2-3,ds=.85;front+=`<path d="M${f1(hx)},${f1(hy2)} Q${f1(hx+12)},${f1(G-6)} ${f1(x0+33*ds)},${f1(G-16*ds)}" stroke="#e0245e" stroke-width="1.6" fill="none"/><g transform="translate(${f1(x0*(1-ds))},${f1(G*(1-ds))}) scale(${ds})"><path d="M${f1(x0+2)},${f1(G-12)} l-7,-8" stroke="${dc}" stroke-width="3" stroke-linecap="round"/>`+rect(x0+5,G-7,3.6,7,dc,1.5)+rect(x0+11,G-7,3.6,7,dc,1.5)+rect(x0+25,G-7,3.6,7,dc,1.5)+rect(x0+31,G-7,3.6,7,dc,1.5)+rect(x0,G-17,38,12,dc,6)+`<g stroke="${dl}" stroke-width=".8" stroke-linecap="round" opacity=".7"><path d="M${f1(x0+6)},${f1(G-16)} l1,-2 M${f1(x0+12)},${f1(G-17)} l1,-2 M${f1(x0+18)},${f1(G-17)} l1,-2 M${f1(x0+24)},${f1(G-17)} l1,-2 M${f1(x0+30)},${f1(G-16)} l1,-2"/></g><circle cx="${f1(x0+38)}" cy="${f1(G-19)}" r="6.5" fill="${dc}"/><ellipse cx="${f1(x0+45)}" cy="${f1(G-17)}" rx="5.5" ry="3.6" fill="${dc}"/><circle cx="${f1(x0+50)}" cy="${f1(G-17.8)}" r="1.6" fill="#120d0c"/><path d="M${f1(x0+41)},${f1(G-15)} q4,5 9,1.5 q-3,1 -5,-1Z" fill="${dl}"/><path d="M${f1(x0+38.5)},${f1(G-23)} l4,-1.2" stroke="${dl}" stroke-width="1.4" stroke-linecap="round"/><circle cx="${f1(x0+40.5)}" cy="${f1(G-20.5)}" r="1.2" fill="#f6efe6"/><circle cx="${f1(x0+40.8)}" cy="${f1(G-20.5)}" r=".7" fill="#120d0c"/><ellipse cx="${f1(x0+35)}" cy="${f1(G-16)}" rx="2.8" ry="5" fill="${shade(dc,.75)}" transform="rotate(12 ${f1(x0+35)} ${f1(G-16)})"/>`+rect(x0+31.5,G-15.5,3,6,'#e0245e',1.2)+`</g>`}
   if(o.scarf){const c=o.scarf,c2=shade(c,1.28),c3=shade(c,.78),end=(x,w,b)=>{const y0=-th+1,y1=-th*b;return rect(x,y0,w,y1-y0,c,3)+rect(x,y1-9,w,2.2,c2,0)+rect(x,y1-5.5,w,1.2,c3,0)+rect(x,y1-14,w,1.3,c2,0)+`<path d="M${x+1.5},${f1(y1-.5)} v3 M${x+w/2},${f1(y1-.5)} v3 M${x+w-1.5},${f1(y1-.5)} v3" stroke="${c}" stroke-width="1.2" stroke-linecap="round"/>`};front+=`<path d="M-12,${f1(-th-3)} Q0,${f1(-th+8)} 12,${f1(-th-3)}" stroke="${c}" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M-11,${f1(-th-1)} Q0,${f1(-th+6)} 11,${f1(-th-1)}" stroke="${c3}" stroke-width="1" fill="none" opacity=".6"/>`+end(-11,9,.5)+end(1,9.5,.36)}
   if(o.deco==='shopping')body+=`<g font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" text-anchor="middle" fill="#fff" stroke="none"><text x="-${f1(tw*.2)}" y="${f1(-th*.5)}" font-size="${f1(th*.2)}">I</text><path transform="translate(${f1(tw*.1)},${f1(-th*.55)}) scale(${f1(th/60)})" d="M0,5 C-9,-1 -7,-8 -3,-8 C-1,-8 0,-6 0,-5 C0,-6 1,-8 3,-8 C7,-8 9,-1 0,5Z" fill="#fff"/><text x="0" y="${f1(-th*.3)}" font-size="${f1(th*.15)}" letter-spacing=".4">SHPPNG</text></g>`;
+  if(o.deco==='text')body+=`<text x="0" y="${f1(-th*.45)}" text-anchor="middle" font-family="'Baloo 2',system-ui,sans-serif" font-weight="800" font-size="${f1(th*.22)}" letter-spacing="1" fill="${o.decoc||'#fff'}">${o.txt||''}</text>`;
   if(o.deco==='knit')body+=`<g stroke="${shade(sh,.88)}" stroke-width=".8" opacity=".45">${[-.3,-.1,.1,.3].map(k=>`<path d="M${f1(tw*k)},${f1(-th*.92)} V${f1(-th*.08)}" stroke-dasharray="2 2"/>`).join('')}</g>`+rect(-tw/2+1,-6,tw-2,5,shade(sh,.92),2);
   if(o.ntowel)front+=`<path d="M-13,${f1(-th-2)} Q0,${f1(-th+9)} 13,${f1(-th-2)}" stroke="${o.ntowel}" stroke-width="7" fill="none" stroke-linecap="round"/>`+rect(-tw*.34,-th-1,10,th*.72,o.ntowel,3)+rect(tw*.34-10,-th-1,10,th*.72,o.ntowel,3)+rect(-tw*.34,-th*.42,10,5,'#6fb6d8',0)+rect(tw*.34-10,-th*.42,10,5,'#6fb6d8',0)+`<g fill="${shade(o.ntowel,.8)}">${rect(-tw*.34+2,-th*.97,1.5,th*.5,shade(o.ntowel,.8),1)}${rect(tw*.34-4,-th*.97,1.5,th*.5,shade(o.ntowel,.8),1)}</g>`;
   if(o.cord&&o.cordc)front+=`<circle cx="1" cy="${f1(-th*.6)}" r="2.4" fill="${o.cordc}"/>`+(o.cordc2?`<path d="M1,${f1(-th*.6)} L1,${f1(-th*.3)}" stroke="#c9a86a" stroke-width="1.1"/><circle cx="1" cy="${f1(-th*.27)}" r="3.6" fill="${o.cordc2}"/>`:'');
@@ -1797,6 +1812,8 @@ function F(st,o){
   let out=legs+body+neck+head+armsS+front;
   if(C)out=`<g stroke="${OUT}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">${out}</g>`;
   if(standing)out=`<g transform="translate(0,${-D.ll})">${out}</g>`;
+  else if(o.pose==='lotus'){const fl=o.float||0,sp=(x,y,r)=>`<path d="M${f1(x)},${f1(y-r)} Q${f1(x)},${f1(y)} ${f1(x+r)},${f1(y)} Q${f1(x)},${f1(y)} ${f1(x)},${f1(y+r)} Q${f1(x)},${f1(y)} ${f1(x-r)},${f1(y)} Q${f1(x)},${f1(y)} ${f1(x)},${f1(y-r)}Z"/>`;
+    out=`<g transform="translate(0,${f1(-15-fl)})"><g class="levit">${out}<g fill="#ffd23a" opacity=".9">${sp(-tw-4,-th*.75,4)+sp(tw+6,-th*1.05,3)+sp(tw+2,-th*.35,2.6)}</g></g>${fl>8?`<g stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" opacity=".55" fill="none"><path d="M${f1(-tw*.5)},${f1(18)} q4,4 0,8 M0,${f1(20)} q4,4 0,8 M${f1(tw*.5)},${f1(18)} q4,4 0,8"/></g>`:''}</g>`}
   return out}
 
 function place(st,o,x,y,s,flip,cls){
@@ -1815,14 +1832,19 @@ const T=[
  {n:'Dirk',t:'Nasse Locken, Handtuch um den Hals, rote Backen',o:{arms:'hips',hs:'curlytop',hair:'#4a3220',beard:'stub',beardc:'#7a5236',ruddy:1,ntowel:'#3fa59a',shirt:'#2a2340',stout:1,skin:'#f0b494',m:'smile',eyes:'happy',pants:'#33354a'}},
  {n:'Hadl',t:'Glatze, hoher runder Kopf, breites Lachen, breite Schultern, weißes Shirt',o:{arms:'wave',hs:'shaved',tall:1,hair:'#8a6a52',nose:'pointy',broad:1,shortneck:1,eyes:'happy',m:'big',skin:'#f2bf9e',shirt:'#f6f5f1',deco:'finzza',sleeve:'short',pants:'#2e3346'}},
  {n:'Hanna',t:'Zopf mit Mittelscheitel, runde Brille, Kette',o:{arms:'wave',hs:'tail',hair:'#3a2418',glasses:'round',slim:1,shirt:'#1e1e24',sleeve:'short',necklace:'long',skin:'#f5d4b8',m:'grin',pants:'#3a4f7a'}},
+ {n:'Helena',t:'Dunkler Zopf, Tanktop, Kette, Rauhaardackel an der Leine',o:{arms:'leash',hs:'tail',hair:'#3a2418',tank:1,sleeve:'none',shirt:'#2f8f7a',necklace:'short',slim:1,skin:'#f3c8aa',m:'grin',eyes:'happy',pants:'#3a4f7a',dog:'#3a2c26'}},
  {n:'Henri',t:'Rotblonde Wuschellocken, Sommersprossen, schiefes Grinsen',o:{hs:'mop',hair:'#c98a3e',slim:1,shirt:'#1e1a22',sleeve:'short',freckles:1,skin:'#f5d0b5',m:'smirk',pants:'#2f3f5a'}},
  {n:'JPO',t:'Schwarze Docker-Mütze, roter Vollbart, „Moin Liebe“-Shirt',o:{arms:'down',hat:'docker',hs:'short',hair:'#7a4a2a',beard:'full',beardc:'#a35e2e',shirt:'#7f9fcf',deco:'moin',sleeve:'short',skin:'#f2bfa0',glasses:'round',glassc:'#1c1c22',m:'grin',eyes:'happy',pants:'#d8c3a0',shorts:1,shoes:'#fbfbf8',sneakers:1}},
  {n:'Jan',t:'Schwarze Locken, runde Sonnenbrille, Astronauten-Shirt',o:{arms:'wave',hs:'curlytop',hair:'#17110e',glasses:'sunround',beard:'stub',beardc:'#2a1c14',shirt:'#262c5a',deco:'astro',sleeve:'short',skin:'#d6a07a',m:'grin',pants:'#c9b48e'}},
  {n:'Kalle',t:'Sombrero mit Kinnband, runde Brille, rotblonder Bart, Lanyard, Klemmbrett',o:{arms:'clip',hat:'sombrero',hs:'short',hair:'#7a4a2a',glasses:'round',beard:'stub',mous:1,beardc:'#b8794a',shirt:'#1e1e24',lanyard:1,lanyardc:'#c9ccd2',cord:1,cordc:'#ffc93a',cordc2:'#e0245e',sleeve:'short',skin:'#f3c6a6',m:'grin',pants:'#3a3358'}},
  {n:'Katha',t:'Lange dunkle Haare, Mittelscheitel, gelber Pulli',o:{arms:'wave',hs:'longmid',hair:'#5a3426',slim:1,shirt:'#f2b630',necklinec:'#2a3fa0',skin:'#f3c0a6',m:'grin',pants:'#3a4f7a'}},
+ {n:'Klingi',t:'Cap nach vorne, langer Wuschelbart, orangefarbenes „SKA“-Shirt',o:{hs:'cap',capc:'#1f2a3a',hair:'#6b4a2a',beard:'long',mous:1,beardc:'#6b4a2a',shirt:'#f07a1a',deco:'text',txt:'SKA',sleeve:'short',skin:'#f0c0a0',m:'grin',eyes:'happy',pants:'#2e3346'}},
  {n:'Luca',t:'Runde Brille, rotbrauner Bart, salbeigrünes Polo',o:{hs:'short',hair:'#5a3622',glasses:'round',beard:'full',beardc:'#b8662e',shirt:'#8fa08c',collar:'polo',sleeve:'short',skin:'#f3c6a8',m:'grin',pants:'#3a3358'}},
+ {n:'Marc',t:'Groß und sehr dünn, schwarze Haare, dunkle Brauen, Fahrradhelm',o:{arms:'wave',lanky:1,hat:'bike',hatc:'#3a7bd5',hs:'short',hair:'#16110f',shirt:'#7fa82a',sleeve:'short',skin:'#f2c4a4',m:'smile',pants:'#2e3346'}},
  {n:'Mu',t:'Cap mit VKF-Patch, Klarbrille, Dreitagebart, rotes Shirt',o:{hs:'cap',capc:'#1f2540',capPatch:'vkf',hair:'#6b4a2a',glasses:'clear',stubdots:'#6b4326',shirt:'#e2342f',deco:'shopping',sleeve:'short',skin:'#f0c0a0',m:'smile',pants:'#2e3346'}},
  {n:'Niklas',t:'Kupferrote Locken, breites Lachen, sandfarbenes Shirt',o:{arms:'up',hs:'curlytop',hair:'#9a4a22',shirt:'#d9b98a',sleeve:'short',skin:'#f3c4a0',m:'grin',eyes:'happy',pants:'#3a4a6a'}},
+ {n:'Noah',t:'Man Bun mit kurzen Seiten, sehr dünn, schwebt meditierend im Schneidersitz',o:{pose:'lotus',arms:'mudra',float:22,hs:'manbun',hair:'#5a3622',lanky:1,eyes:'sleep',m:'smile',shirt:'#2f6f9f',sleeve:'short',skin:'#f3c8aa',pants:'#3a3358'}},
+ {n:'Pascal',t:'Runder, breiter Kopf, dunkle Haare, Dreitagebart, Kochmütze',o:{arms:'ladle',hat:'chef',hs:'short',hair:'#3a2418',wide:1,stubdots:'#2a1c14',apron:1,shirt:'#3a4a6a',sleeve:'short',skin:'#f0c0a0',m:'grin',eyes:'happy',pants:'#2e3346'}},
  {n:'Paula',t:'Sonnenbrille im Haar, Zopf, Tanktop, Kette',o:{arms:'wave',hs:'tail',hair:'#b8894a',headshades:1,tank:1,sleeve:'none',shirt:'#3a3a40',necklace:'short',slim:1,skin:'#f3c8aa',m:'grin',eyes:'happy',pants:'#5a6a8a'}},
  {n:'Simon',t:'Helle Cap verkehrt herum, Dreitagebart, blaues Shirt',o:{hs:'capback',capc:'#e6dcc0',hair:'#2b2019',beard:'stub',shirt:'#5b86c6',sleeve:'short',skin:'#f3c6a6',m:'smirk',pants:'#3a3358'}},
  {n:'Timbo',t:'Flache Cap, Jakobsmuschel-Shirt, Hände in den Hüften',o:{arms:'hips',hs:'cap',capc:'#2a2c3a',capPatch:'text',hair:'#8a5a2b',slim:1,shirt:'#4a4a7a',deco:'shell',sleeve:'short',skin:'#f3c6a6',m:'grin',pants:'#2e3346'}},
@@ -1833,20 +1855,21 @@ const T=[
 
 const byName=n=>T.find(x=>x.n===n);
 const ROWS=[
- {y:300,s:.95,x0:225,dx:125,names:['Tommy','Henri','Tyler','Andrea','Niklas','Luca','Timbo']},
- {y:362,s:1.05,x0:150,dx:150,names:['Simon','Katha','Hanna','Alex','Jan','Paula','JPO']},
- {y:432,s:1.15,x0:225,dx:150,names:['Timo','Dirk','Kalle','Hadl','Claudi','Mu']}
+ {y:300,s:.95,x0:162.5,dx:125,names:['Tommy','Henri','Tyler','Andrea','Marc','Niklas','Luca','Timbo']},
+ {y:362,s:1.05,x0:180,dx:140,names:['Simon','Katha','Hanna','Alex','Jan','Pascal','Paula','JPO']},
+ {y:432,s:1.15,x0:110,dx:140,names:['Klingi','Timo','Dirk','Kalle','Hadl','Claudi','Mu','Helena']},
+ {y:300,s:.95,x0:850,dx:0,names:['Noah']}
 ];
-const over={Timo:{arms:'down'}};
+const over={Timo:{arms:'down'},Noah:{float:85}};
 function tentS(x,y,s){return `<g transform="translate(${x},${y}) scale(${s})"><rect x="-40" y="-34" width="80" height="34" fill="var(--tentA)"/><path d="M-47,-30 L-30,-60 H30 L47,-30Z" fill="var(--tentB)"/><path d="M-11,0 L0,-27 L11,0Z" fill="var(--tentD)"/></g>`}
 function treeS(x,y,s){return `<g transform="translate(${x},${y}) scale(${s})"><rect x="-6" y="-60" width="12" height="62" rx="4" fill="#8e5a2c"/><circle cx="0" cy="-78" r="40" fill="var(--tree)"/><circle cx="-26" cy="-58" r="26" fill="var(--tree)"/><circle cx="26" cy="-58" r="26" fill="var(--tree)"/><circle cx="-10" cy="-92" r="16" fill="var(--tree2)"/></g>`}
 function build(){
   seed=11;
   let s='';
-  s+=`<path d="M0,470 V250 C160,214 300,226 460,240 C640,256 760,214 940,222 C1060,228 1140,246 1200,238 V470Z" fill="var(--m1)"/>`;
-  s+=treeS(36,272,1)+treeS(1168,268,.9)+tentS(118,288,.8)+tentS(1080,286,.78);
-  s+=`<path d="M0,470 V318 C200,298 380,320 600,312 C820,304 980,296 1200,312 V470Z" fill="var(--m2)"/>`;
-  s+=`<path d="M0,470 V398 C240,382 420,404 640,396 C860,388 1000,380 1200,394 V470Z" fill="var(--m3)"/>`;
+  s+=`<path d="M-100,470 V246 C40,226 160,214 300,226 C460,240 640,256 760,214 C940,222 1060,228 1140,246 C1200,240 1260,234 1300,238 V470Z" fill="var(--m1)"/>`;
+  s+=treeS(-22,272,1)+treeS(1226,268,.9)+tentS(30,292,.75)+tentS(1175,290,.72);
+  s+=`<path d="M-100,470 V320 C100,300 380,320 600,312 C820,304 980,296 1300,314 V470Z" fill="var(--m2)"/>`;
+  s+=`<path d="M-100,470 V400 C140,380 420,404 640,396 C860,388 1000,380 1300,396 V470Z" fill="var(--m3)"/>`;
   ROWS.forEach(r=>{r.names.forEach((n,i)=>{const p=byName(n);if(!p)return;const x=r.x0+i*r.dx,o={pose:'stand',...p.o,...(over[n]||{})};
     const flip=1;
     s+=`<ellipse cx="${x}" cy="${r.y}" rx="${(o.stout||o.broad?30:25)*r.s}" ry="${6*r.s}" fill="var(--shadow)" opacity=".18"/>`;
