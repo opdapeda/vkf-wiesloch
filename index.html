@@ -1549,7 +1549,8 @@ function arm(C,pts,o,w,sk){
   if(o.sleeve==='none')return limb(C,pts,sk,w*.9);
   if(o.sleeve!=='short')return limb(C,pts,o.shirt,w);
   const a=pts[0],b=pts[1],m=[a[0]+(b[0]-a[0])*.42,a[1]+(b[1]-a[1])*.42];
-  return limb(C,pts,sk,w*.9)+limb(C,[a,m],o.shirt,w*1.05)}
+  let st='';if(o.sleevestripe){const dx=m[0]-a[0],dy=m[1]-a[1],L=Math.hypot(dx,dy)||1,nx=-dy/L,ny=dx/L;[-.24,.24].forEach(k=>{const ox=nx*w*k,oy=ny*w*k;st+=`<path d="M${f1(a[0]+ox+dx*.15)},${f1(a[1]+oy+dy*.15)} L${f1(m[0]+ox)},${f1(m[1]+oy)}" stroke="${o.sleevestripe}" stroke-width="${f1(w*.16)}" stroke-linecap="round"/>`})}
+  return limb(C,pts,sk,w*.9)+limb(C,[a,m],o.shirt,w*1.05)+st}
 const hand=(C,p,r,sk)=>`<circle cx="${f1(p[0])}" cy="${f1(p[1])}" r="${f1(r)}" fill="${sk}"${C?` stroke="${OUT}" stroke-width="2"`:''}/>`;
 
 function stickItem(C,x,y,t){
@@ -1578,7 +1579,7 @@ function headParts(C,o){
   if(o.hs==='pony')s+=`<path d="M-15,-10 Q-30,-6 -24,10 Q-20,0 -12,-4Z" fill="${hr}"${S}/>`;
   const ex=o.tall?15.8:(o.wide?17.8:16),fw=o.tall?16.2:(o.wide?19:17);
   s+=`<circle cx="${-ex}" cy="1" r="4.3" fill="${shade(sk,.92)}"${S}/><circle cx="${ex}" cy="1" r="4.3" fill="${shade(sk,.92)}"${S}/>`;
-  s+=o.tall?`<path d="M0,-21 C10.8,-21 16.2,-13 16.2,-3 C16.2,9 10.8,18 0,18.4 C-10.8,18 -16.2,9 -16.2,-3 C-16.2,-13 -10.8,-21 0,-21Z" fill="${sk}"${S}/>`:C?`<ellipse rx="${fw}" ry="18" fill="${sk}"${S}/>`:`<ellipse rx="${fw}" ry="17" fill="${sk}"/>`;
+  s+=o.square?`<rect x="-17" y="-19" width="34" height="37" rx="11" fill="${sk}"${S}/>`:o.tall?`<path d="M0,-21 C10.8,-21 16.2,-13 16.2,-3 C16.2,9 10.8,18 0,18.4 C-10.8,18 -16.2,9 -16.2,-3 C-16.2,-13 -10.8,-21 0,-21Z" fill="${sk}"${S}/>`:C?`<ellipse rx="${fw}" ry="18" fill="${sk}"${S}/>`:`<ellipse rx="${fw}" ry="17" fill="${sk}"/>`;
   if(o.back){
     if(o.hs==='bald')s+=`<path d="M-17,-5 q-4,4 -1,11 q2,-6 3,-9Z M17,-5 q4,4 1,11 q-2,-6 -3,-9Z M-15,6 Q0,14 15,6 Q14,2 12,1 Q0,6 -12,1Z" fill="${hr}"${S}/>`;
     else if(o.hs==='cap')s+=`<path d="M-17.5,4 Q-19,-19 0,-19.5 Q19,-19 17.5,4 Q0,12 -17.5,4Z" fill="${hr}"${S}/><path d="M-17,-2 Q-18,-22 0,-22 Q18,-22 17,-2Z" fill="${o.capc||'#20a68a'}"${S}/>`;
@@ -1688,6 +1689,7 @@ function F(st,o){
   if(C&&o.belly)D.tw=56;
   if(o.stout)D.tw=kid?D.tw:55;
   if(o.slim)D.tw=kid?D.tw:42;
+  if(o.block&&!kid){D.tw=49;D.th=62;D.ll=52;D.aw=11.5;D.al=44;D.lw=12.5;D.tr=7}
   if(o.lanky&&!kid){D.tw=37;D.th=64;D.ll=56;D.aw=9.5;D.al=46;D.lw=10.5}
   if(o.broad&&!kid){D.tw=60;D.aw=12.5}
   if(o.shortneck)D.nk=1.5;
@@ -1702,6 +1704,7 @@ function F(st,o){
       if(kid){g+=rect(x+.5,L*.3,D.lw-1,L*.66,sk,null,S)+rect(x-1,-4,D.lw+2,L*.42,pa,4,S)}
       else if(o.shorts){const pc=shade(pa,.86),px=sd<0?x-D.lw*.1:x+D.lw*.72;g+=rect(x+.5,L*.36,D.lw-1,L*.6,sk,0,S)+rect(x,-4,D.lw,L*.5,pa,4,S)+rect(px,L*.12,D.lw*.38,L*.24,pc,2,S)+rect(px+D.lw*.04,L*.12,D.lw*.3,L*.07,shade(pa,.7),1,N)}
       else if(o.sandals){g+=rect(x+.5,L*.36,D.lw-1,L*.3,sk,0,S)+rect(x+.5,L*.62,D.lw-1,L*.34,'#fff',2,S)+rect(x,-4,D.lw,L*.44,pa,4,S)}
+      else if(o.shorts){g+=rect(x+.6,L*.3,D.lw-1.2,L*.7,sk,null,S)+(o.socks?rect(x+.3,L*.7,D.lw-.6,L*.24,o.socks,2,S):'')+rect(x-1.5,-4,D.lw+3,L*.42,pa,4,S)}
       else g+=rect(x,-4,D.lw,L,pa,null,S);
       g+=`<ellipse cx="${f1(sd*lx+sd*1.5)}" cy="${f1(L-1)}" rx="${f1(D.lw*.85)}" ry="${f1(D.lw*.42)}" fill="${o.sandals?'#8a5a2b':(o.shoes||(kid?'#ef3a62':'#5a3a22'))}"${S}/>`;
       if(o.sneakers)g+=`<path d="M${f1(sd*lx+sd*1.5-D.lw*.85)},${f1(L-1+D.lw*.1)} Q${f1(sd*lx+sd*1.5)},${f1(L-1+D.lw*.62)} ${f1(sd*lx+sd*1.5+D.lw*.85)},${f1(L-1+D.lw*.1)}" fill="none" stroke="#c9ccd2" stroke-width="2.2" stroke-linecap="round"/>`;
@@ -1753,6 +1756,8 @@ function F(st,o){
   const both=(l,r)=>arm(C,l,o,aw,sk)+hand(C,l[l.length-1],hr,sk)+arm(C,r,o,aw,sk)+hand(C,r[r.length-1],hr,sk);
   if(A==='down')armsS=both(down(-1),down(1));
   if(A==='up'){const l=[sL,[-tw/2-8,-th-al*.35],[-tw/2-4,-th-al*.85]],r=l.map(p=>[-p[0],p[1]]);r[0]=sR;armsS=both(l,r)}
+  if(A==='ballup'){const r=[sR,[tw/2+9,-th-al*.3],[tw/2+6,-th-al*.82]],cx=r[2][0]+2,cy=r[2][1]-5*k,R=10*k,P=(a,rr)=>[cx+Math.cos(a*Math.PI/180)*rr,cy+Math.sin(a*Math.PI/180)*rr],pt=q=>f1(q[0])+','+f1(q[1]),pent=(c,rr,rot)=>'M'+[0,1,2,3,4].map(i=>pt([c[0]+Math.cos((rot+72*i)*Math.PI/180)*rr,c[1]+Math.sin((rot+72*i)*Math.PI/180)*rr])).join(' L')+'Z';let net='',pat='';[0,1,2,3,4].forEach(i=>{const a=-90+72*i,v=P(a,R*.34),m=P(a,R*.66);net+=`M${pt(v)} L${pt(m)} M${pt(m)} L${pt(P(a-26,R*1.02))} M${pt(m)} L${pt(P(a+26,R*1.02))} `;const oc=P(a+36,R*1.02);pat+=`<path d="${pent(oc,R*.36,a+36+180)}"/>`});
+    armsS=both(down(-1),r)+`<g><clipPath id="hbclip"><circle cx="${f1(cx)}" cy="${f1(cy)}" r="${f1(R)}"/></clipPath><circle cx="${f1(cx)}" cy="${f1(cy)}" r="${f1(R)}" fill="#f6f5f0"/><g clip-path="url(#hbclip)"><g fill="#1f5fbf">${pat}<path d="${pent([cx,cy],R*.36,-90)}"/></g><path d="${net}" stroke="#2a2f44" stroke-width="${f1(.7*k)}" fill="none"/></g><circle cx="${f1(cx)}" cy="${f1(cy)}" r="${f1(R)}" fill="none" stroke="#2a2f44" stroke-width="${f1(.8*k)}"/><ellipse cx="${f1(cx-3.5*k)}" cy="${f1(cy-4*k)}" rx="${f1(2.6*k)}" ry="${f1(1.6*k)}" fill="#fff" opacity=".6"/></g>`}
   if(A==='wave'){const r=[sR,[tw/2+9,-th-al*.3],[tw/2+6,-th-al*.82]];armsS=both(down(-1),r)}
   if(A==='guitar'){
     const g=[tw*.1,-th*.3],n=[-tw*1.0,-th*.98],GS=C?` stroke="${OUT}" stroke-width="2"`:'';
@@ -1836,6 +1841,7 @@ const T=[
  {n:'Henri',t:'Rotblonde Wuschellocken, Sommersprossen, schiefes Grinsen',o:{hs:'mop',hair:'#c98a3e',slim:1,shirt:'#1e1a22',sleeve:'short',freckles:1,skin:'#f5d0b5',m:'smirk',pants:'#2f3f5a'}},
  {n:'JPO',t:'Schwarze Docker-Mütze, roter Vollbart, „Moin Liebe“-Shirt',o:{arms:'down',hat:'docker',hs:'short',hair:'#7a4a2a',beard:'full',beardc:'#a35e2e',shirt:'#7f9fcf',deco:'moin',sleeve:'short',skin:'#f2bfa0',glasses:'round',glassc:'#1c1c22',m:'grin',eyes:'happy',pants:'#d8c3a0',shorts:1,shoes:'#fbfbf8',sneakers:1}},
  {n:'Jan',t:'Schwarze Locken, runde Sonnenbrille, Astronauten-Shirt',o:{arms:'wave',hs:'curlytop',hair:'#17110e',glasses:'sunround',beard:'stub',beardc:'#2a1c14',shirt:'#262c5a',deco:'astro',sleeve:'short',skin:'#d6a07a',m:'grin',pants:'#c9b48e'}},
+ {n:'Julian',t:'Groß und kantig, Handballer: blaues TSG-Trikot mit weißen Ärmelstreifen, weiße Shorts, Hallenschuhe',o:{arms:'ballup',block:1,square:1,hs:'short',hair:'#141010',shirt:'#1f5fbf',deco:'text',txt:'TSG',decoc:'#ffffff',sleeve:'short',sleevestripe:'#ffffff',shorts:1,socks:'#ffffff',pants:'#f4f3ef',shoes:'#f4f3ef',skin:'#f2c4a4',m:'big',eyes:'happy'}},
  {n:'Kalle',t:'Sombrero mit Kinnband, runde Brille, rotblonder Bart, Lanyard, Klemmbrett',o:{arms:'clip',hat:'sombrero',hs:'short',hair:'#7a4a2a',glasses:'round',beard:'stub',mous:1,beardc:'#b8794a',shirt:'#1e1e24',lanyard:1,lanyardc:'#c9ccd2',cord:1,cordc:'#ffc93a',cordc2:'#e0245e',sleeve:'short',skin:'#f3c6a6',m:'grin',pants:'#3a3358'}},
  {n:'Katha',t:'Lange dunkle Haare, Mittelscheitel, gelber Pulli',o:{arms:'wave',hs:'longmid',hair:'#5a3426',slim:1,shirt:'#f2b630',necklinec:'#2a3fa0',skin:'#f3c0a6',m:'grin',pants:'#3a4f7a'}},
  {n:'Klingi',t:'Cap nach vorne, langer Wuschelbart, orangefarbenes „SKA“-Shirt',o:{hs:'cap',capc:'#1f2a3a',hair:'#6b4a2a',beard:'long',mous:1,beardc:'#6b4a2a',shirt:'#f07a1a',deco:'text',txt:'SKA',sleeve:'short',skin:'#f0c0a0',m:'grin',eyes:'happy',pants:'#2e3346'}},
@@ -1855,7 +1861,7 @@ const T=[
 
 const byName=n=>T.find(x=>x.n===n);
 const ROWS=[
- {y:285,s:.88,x0:112,dx:175,names:['Tommy','Henri','Tyler','Andrea','Marc','Niklas']},
+ {y:285,s:.88,x0:112,dx:175,names:['Tommy','Henri','Tyler','Andrea','Marc','Niklas','Julian']},
  {y:365,s:.98,x0:212,dx:175,names:['Luca','Timbo','Simon','Katha','Hanna','Alex']},
  {y:445,s:1.08,x0:112,dx:175,names:['Jan','Pascal','Paula','JPO','Klingi','Timo']},
  {y:525,s:1.18,x0:212,dx:175,names:['Dirk','Kalle','Hadl','Claudi','Mu','Helena']},
