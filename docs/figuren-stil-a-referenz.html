@@ -537,14 +537,14 @@ function sCircle(){seed=404;
   const C0=[400,350],rx=300,ry=64,N=16,items=[];
   const shirts=['#3a7bd5','#ef3a62','#20a68a','#ffc93a','#ff8a2a','#9b5bd4','#7fa82a'],hairs=['#2b2019','#6b4a2a','#d6a24a','#8a5a2b','#c06a2a','#4a3526'],hss=['short','curly','spiky','long','pig','bald','pony','cap'];
   for(let i=0;i<N;i++){const t=i/N*Math.PI*2+.2,x=C0[0]+rx*Math.cos(t),y=C0[1]+ry*Math.sin(t),kid=i%2==0,back=Math.sin(t)>.15;
-    if(Math.abs(t-Math.PI/2)<.45)continue; /* vorne offen, damit Kalle und Hadl frei stehen */
+    if(Math.abs(t-Math.PI/2)<.45)continue; /* vorne offen, damit Kalle und HTL frei stehen */
     let hs=hss[Math.floor(rnd()*hss.length)];if(kid&&hs==='bald')hs='spiky';if(!kid&&(hs==='pig'))hs='short';
     const o={pose:'stand',kid,back,hs,hair:hairs[Math.floor(rnd()*hairs.length)],skin:Object.values(SK)[Math.floor(rnd()*5)],shirt:shirts[i%7],sleeve:'short',look:-Math.cos(t)*4,arms:'down',m:rnd()<.5?'smile':'grin',beard:!kid&&rnd()<.5?(rnd()<.5?'full':'mous'):undefined,capc:shirts[(i+3)%7]};
     const sc=.62+.3*(y-(C0[1]-ry))/(2*ry);
     items.push({y,h:sh(x.toFixed(0),y.toFixed(0),(kid?14:22)*sc)+P(o,x,y,sc,0,kid&&!back?'hop':'')})}
   /* Kalle, Lagerleiter: Kappe verkehrt herum, runde Brille, rotblonder Schnurrbart, weinrotes Shirt, Band um den Hals */
   items.push({y:C0[1]+4,h:sh(368,354,20)+P({pose:'stand',arms:'clip',hs:'capback',capc:'#1c1c22',hair:'#8a6a48',beard:'stub',mous:1,beardc:'#b8794a',glasses:'round',skin:'#f3c6a6',shirt:'#7a1f35',lanyard:1,sleeve:'short',m:'grin'},368,354,.86,0,'')});
-  /* Hadl, zweiter Lagerleiter: großer Strohhut mit Kinnband, grauer Dreitagebart, weißes Shirt mit kleinem Brustlogo, kräftig */
+  /* HTL, zweiter Lagerleiter: großer Strohhut mit Kinnband, grauer Dreitagebart, weißes Shirt mit kleinem Brustlogo, kräftig */
   items.push({y:C0[1]+5,h:sh(440,356,22)+P({pose:'stand',arms:'wave',hs:'short',hair:'#6b5a4a',hat:'straw',cord:1,beard:'stub',beardc:'#8a8580',skin:'#f0bfa0',shirt:'#f4f3ef',deco:'logo',stout:1,pants:'#2e3346',sleeve:'short',m:'grin',eyes:'happy',look:-1},440,356,.86,1,'')});
   items.sort((a,b)=>a.y-b.y).forEach(q=>s+=q.h);
   s+=`<g transform="translate(250,196)"><path d="M-6,0 h96 q10,0 10,10 v22 q0,10 -10,10 h-80 l-14,10 l2,-10 h-4 q-10,0 -10,-10 v-22 q0,-10 10,-10Z" fill="#fff"/>${txt(42,27,'Guten Morgen!',15,'#2a1f3d')}</g>`;
