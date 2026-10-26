@@ -6,7 +6,7 @@ Lies zuerst `docs/VKF-Projektbriefing.md`. Dort stehen die Inhalte, die Anmelde-
 
 - **VKF = Väter-Kinder-Freizeit Wiesloch.** Ein Zeltlager für Papas mit Kindern von 4 bis 12 Jahren, eine Woche in der 3. Woche der Sommerferien in Baden-Württemberg, Samstag bis Samstag.
 - Rund 95 Teilnehmende und rund 30 Ehrenamtliche. Träger ist die KjG Wiesloch (Katholische junge Gemeinde).
-- Kontakt: info@vkf-wiesloch.de. Förderverein: „Freunde der VKF Wiesloch“, seit 2023.
+- Kontakt: lagerleitung@vkf-wiesloch.de. Förderverein: „Freunde der VKF Wiesloch“, seit 2023.
 - Auftraggeber und Designer ist Jan (JPO), Kommunikationsdesigner und Teil des VKF-Teams. Er arbeitet auf Deutsch.
 
 ## Stand (Oktober 2026)

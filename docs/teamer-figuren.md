@@ -28,16 +28,16 @@ Hinweis: In `index.html` ist `big` schon als Skalierungsfaktor belegt, deshalb h
  shirt:'#7a1f35', lanyard:1, sleeve:'short', m:'grin'}
 ```
 
-## Hadl (Lagerleiter)
+## HTL (Lagerleiter)
 
 ```js
 {pose:'stand', arms:'wave', hs:'short', hair:'#6b5a4a', hat:'straw', cord:1,
  beard:'stub', beardc:'#8a8580', skin:'#f0bfa0', shirt:'#f4f3ef', deco:'logo',
  stout:1, pants:'#2e3346', sleeve:'short', m:'grin', eyes:'happy', look:-1}
 ```
-Hadl wird gespiegelt platziert (schaut zu Kalle).
+HTL wird gespiegelt platziert (schaut zu Kalle).
 
 ## Einsatz
 
-- Morgenkreis: Kalle und Hadl stehen nebeneinander in der Mitte, der Kreis ist vorne offen,
+- Morgenkreis: Kalle und HTL stehen nebeneinander in der Mitte, der Kreis ist vorne offen,
   damit beide frei sichtbar sind. Kalle hat die Sprechblase.

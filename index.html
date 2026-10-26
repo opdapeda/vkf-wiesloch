@@ -457,7 +457,7 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
       <h2>Rund 30 Ehrenamtliche machen die VKF möglich</h2>
       <p class="lead">Damit Papas und Kinder eine unbeschwerte Woche haben, packt ein ganzer Betreuerstab mit an. Jede und jeder hat eine eigene Aufgabe.</p>
       <div class="roles" id="roles"></div>
-      <p class="join">Lust, Teil des Teams zu werden? Schreib uns an <b>info@vkf-wiesloch.de</b></p>
+      <p class="join">Lust, Teil des Teams zu werden? Schreib uns an <b>lagerleitung@vkf-wiesloch.de</b></p>
     </div>
     <div class="crew">
       <svg class="hills" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path d="M0,90 V48 C160,24 300,30 460,46 C620,62 760,22 940,28 C1100,34 1240,62 1440,40 V90Z" opacity=".55"/><path d="M0,90 V66 C220,52 380,70 600,64 C820,58 960,46 1140,58 C1280,66 1380,62 1440,58 V90Z"/></svg>
@@ -486,7 +486,7 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
         <h3>Was eure Chancen erhöht</h3>
         <ul><li>ein kurzer Einblick, wer ihr seid und warum ihr dabei sein möchtet</li><li>eure Motivation und was ihr euch von der VKF wünscht</li><li>eine Empfehlung durch eine teilnehmende Familie oder jemanden aus dem Team, falls vorhanden</li></ul>
       </div>
-      <div class="mail"><span>Anfrage per E-Mail an</span><code id="mailaddr">info@vkf-wiesloch.de</code><button class="pill" id="copyMail" type="button">Adresse kopieren</button></div>
+      <div class="mail"><span>Anfrage per E-Mail an</span><code id="mailaddr">lagerleitung@vkf-wiesloch.de</code><button class="pill" id="copyMail" type="button">Adresse kopieren</button></div>
     </div>
   </section>
 
@@ -582,7 +582,7 @@ footer .proto{margin-top:32px;font-size:15px;opacity:.7;border-top:1px solid rgb
       <div class="cols">
         <span class="logo foot-logo" role="img" aria-label="Logo VKF Wiesloch"></span>
         <div><h3>Förderverein „Freunde der VKF Wiesloch“</h3><p>Seit 2023 unterstützt der Förderverein die VKF, zum Beispiel mit zusätzlichen Mitteln für Material und Programm. <a class="ext-link" href="/foerderverein" target="_blank" rel="noopener">Zum Förderverein<svg class="ext" viewBox="0 0 16 16" aria-hidden="true"><path d="M9 2h5v5M14 2 7.5 8.5M12 9.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr">(öffnet in neuem Tab)</span></a></p></div>
-        <div><h3>Kontakt</h3><p>info@vkf-wiesloch.de</p></div>
+        <div><h3>Kontakt</h3><p>lagerleitung@vkf-wiesloch.de</p></div>
         <nav aria-label="Rechtliches"><a href="#">Impressum</a><a href="#">Datenschutz</a></nav>
       </div>
       <div class="proto">Entwurf für den Relaunch von vkf-wiesloch.de. Illustrationen, Uhrzeiten und Teamtexte sind Platzhalter.</div>
@@ -922,16 +922,16 @@ const RUNS=[
 const runHTML=L=>RUNS.map((r,i)=>{if(r.L!==L)return '';const k=(r.kid?.64:1)*(r.s||1)*BIG;
   return `<g id="run${i}"><ellipse cx="0" cy="1" rx="${(15*k).toFixed(1)}" ry="${(4*k).toFixed(1)}" fill="#1a1030" opacity=".18"/><g class="in">${P(0,0,{kid:r.kid,c:r.c,s:r.s,nosh:1,run:1,...(r.skin?{skin:(pick(SK),r.skin)}:{})})}</g>`+
    (r.roll?`<g class="rl"><circle r="11" fill="#e6b36a"/><path d="M-4,-2 Q0,-6 4,-2" stroke="#c8913e" stroke-width="2" fill="none" stroke-linecap="round"/></g>`:'')+`</g>`}).join('');
-/* Lagerleiter Kalle und Hadl (docs/teamer-figuren.md) */
+/* Lagerleiter Kalle und HTL (docs/teamer-figuren.md) */
 const KALLE={c:'#7a1f35',arms:'clip',hs:'capback',capc:'#1c1c22',hair:'#8a6a48',beard:'stub',mous:1,beardc:'#b8794a',glasses:'round',skin:'#f3c6a6',lanyard:1,sleeve:'short',m:'grin',eyes:'dot',deco:''};
-const HADL={c:'#f4f3ef',arms:'wave',hs:'short',hair:'#6b5a4a',hat:'straw',cord:1,beard:'stub',beardc:'#8a8580',skin:'#f0bfa0',deco:'logo',stout:1,pants:'#2f4a7a',shorts:1,shoes:'#fbfbf8',sneakers:1,sleeve:'short',m:'grin',eyes:'happy',glasses:false,f:1};
+const HTL={c:'#f4f3ef',arms:'wave',hs:'short',hair:'#6b5a4a',hat:'straw',cord:1,beard:'stub',beardc:'#8a8580',skin:'#f0bfa0',deco:'logo',stout:1,pants:'#2f4a7a',shorts:1,shoes:'#fbfbf8',sneakers:1,sleeve:'short',m:'grin',eyes:'happy',glasses:false,f:1};
 /* Gruppenkreis: Ring aus Papas und Kindern, die beiden Lagerleiter stehen in der Mitte */
 (function(){const s0=seed,n0=figN,C=[800,774],RX=430,RY=84,N=16,items=[];
   for(let i=0;i<N;i++){const t=(i+.5)/N*Math.PI*2,sn=Math.sin(t),k=.84+.16*(sn+1)/2,x=C[0]+RX*Math.cos(t),y=C[1]+RY*sn;
     const h=PA(x,y,{kid:i%3==1,s:k,arms:i%4==1?'wave':'down'},i%2?'hop':'sway',(i*.37)%1,i%2?(.8+(i%3)*.17).toFixed(2):(2.2+(i%3)*.5).toFixed(2));
-    if(Math.abs(t-Math.PI/2)>=.45)items.push({y,h})}   /* vorne offen, damit Kalle und Hadl frei stehen */
+    if(Math.abs(t-Math.PI/2)>=.45)items.push({y,h})}   /* vorne offen, damit Kalle und HTL frei stehen */
   items.push({y:C[1]+2,h:PA(745,C[1]+2,{...KALLE,s:1.2},'sway',0,1.7)});
-  items.push({y:C[1]+10,h:PA(855,C[1]+8,{...HADL,s:1.2},'sway',.6,1.5)});
+  items.push({y:C[1]+10,h:PA(855,C[1]+8,{...HTL,s:1.2},'sway',.6,1.5)});
   items.sort((a,b)=>a.y-b.y);
   vig('gruppe',.09,.128,`<ellipse cx="${C[0]}" cy="${C[1]+4}" rx="${RX+34}" ry="${RY+22}" fill="#fff" opacity=".1"/>`+items.map(o=>o.h).join('')+
    `<g transform="translate(745,575)"><rect x="-8" y="-74" width="282" height="72" rx="18" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
@@ -1010,9 +1010,9 @@ vig('fruehstueck',.13,.20, runHTML('b')+table(560,1040,700,
 
 (function(){const C=[800,770],items=[];
   for(let i=0;i<16;i++){const t=i/16*Math.PI*2+.2,h=PA(C[0]+215*Math.cos(t),C[1]+66*Math.sin(t),{kid:i%2==0},i%2==0?'hop':'sway',(i*.37)%1,i%2==0?(.78+(i%3)*.17).toFixed(2):(2.2+(i%3)*.5).toFixed(2));
-    if(Math.abs(t-Math.PI/2)>=.45)items.push({y:C[1]+66*Math.sin(t),h})}   /* vorne offen, damit Kalle und Hadl frei stehen */
+    if(Math.abs(t-Math.PI/2)>=.45)items.push({y:C[1]+66*Math.sin(t),h})}   /* vorne offen, damit Kalle und HTL frei stehen */
   PA(800,770,{c:'#d9124a'},'sway',0,1.6);   /* verbraucht Zufallswerte und Figurennummer wie die frühere Figur, damit alle späteren Figuren gleich bleiben */
-  const n1=figN;items.push({y:C[1],h:PA(765,770,KALLE,'sway',0,1.6)+PA(840,771,HADL,'sway',.5,1.4)});figN=n1;
+  const n1=figN;items.push({y:C[1],h:PA(765,770,KALLE,'sway',0,1.6)+PA(840,771,HTL,'sway',.5,1.4)});figN=n1;
   items.sort((a,b)=>a.y-b.y);
   vig('kreis',.20,.29, items.map(o=>o.h).join('')+
    `<g transform="translate(772,566)"><rect id="bubR" x="-8" y="-46" width="330" height="44" rx="14" fill="#fff" stroke="#0f2a4a" stroke-width="2"/><path d="M12,-3 L0,14 L28,-3Z" fill="#fff" stroke="#0f2a4a" stroke-width="2" stroke-linejoin="round"/><rect x="10" y="-6" width="20" height="5" fill="#fff"/>
@@ -1084,9 +1084,9 @@ R.innerHTML=`<ellipse cx="${C[0]}" cy="${C[1]}" rx="560" ry="220" fill="url(#fir
  </g>
  ${sparks}<g id="gFront"></g><g>${front}</g>${notes}`;
 
-/* Hanna mit Gitarre, Hadl und Kalle ohne Gitarre (Looks aus docs/teamer-figuren.md) */
+/* Hanna mit Gitarre, HTL und Kalle ohne Gitarre (Looks aus docs/teamer-figuren.md) */
 const HANNA={c:'#1e1e24',arms:'guitar',hs:'pony',hair:'#3a2418',glasses:'round',beard:'',sleeve:'short',skin:'#f5d4b8',m:'sing',eyes:'happy'};
-const guitars=[HANNA,{...HADL,f:0,arms:'wave',m:'sing'},{...KALLE,m:'sing'}].map((o,i)=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','sitter');
+const guitars=[HANNA,{...HTL,f:0,arms:'wave',m:'sing'},{...KALLE,m:'sing'}].map((o,i)=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','sitter');
   g.innerHTML=`<g class="gflip">${P(0,0,{big:1.5,...o})}</g>`;
   return {g,off:i*Math.PI*2/3}});
 
@@ -1117,7 +1117,7 @@ const S=[
    {x:1090,y:546,d:'Die ersten Reißverschlüsse ratschen, und aus dem Küchenzelt riecht es schon nach Kaffee.'},
    {x:515,y:512,photo:'zelte'},{x:1030,y:604,photo:'kueche'}]},
  {a:.09,b:.12,stop:.108,l:'Begrüßung',h:'Begrüßung',d:'Alle stellen sich zu einem großen Kreis auf. In der Mitte stehen die beiden Lagerleiter.',info:[
-   {x:800,y:668,d:'Hier seht ihr die beiden Lagerleiter, Kalle und HDL. Die beiden begrüßen die Kinder und Papas jeden Morgen vor dem Frühstück.'},
+   {x:800,y:668,d:'Hier seht ihr die beiden Lagerleiter, Kalle und HTL. Die beiden begrüßen die Kinder und Papas jeden Morgen vor dem Frühstück.'},
    {x:1195,y:800,d:'Alle stellen sich zu einem großen Kreis auf.'},
    {x:560,y:800,photo:'gruppenkreis'}]},
  {a:.12,b:.20,stop:.177,l:'Frühstück',h:'Frühstück',d:'Papas und Kinder sitzen zusammen an den Bierbänken. Kakao, Brötchen und die ersten Pläne für den Tag.',info:[
@@ -1144,9 +1144,9 @@ const S=[
    {f:'sun',d:'Die Sonne steht schon tief.'},
    {x:800,y:630,d:'Beim Essen wird erzählt, wer heute das Tor des Tages geschossen hat.'},
    {x:1000,y:690,photo:'laternen'},{x:1190,y:470,photo:'landschaft'}]},
- {a:.68,b:.87,stop:.83,l:'Lagerrunde',h:'Lagerrunde',d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer. Hanna zieht mit der Gitarre ihre Runden ums Feuer, Hadl und Kalle laufen mit, und alle singen mit.',info:[
+ {a:.68,b:.87,stop:.83,l:'Lagerrunde',h:'Lagerrunde',d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer. Hanna zieht mit der Gitarre ihre Runden ums Feuer, HTL und Kalle laufen mit, und alle singen mit.',info:[
    {x:800,y:596,d:'Die Bierbänke stehen im Kreis, in der Mitte knistert das Lagerfeuer.'},
-   {x:1190,y:730,d:'Hanna zieht mit der Gitarre ihre Runden ums Feuer, Hadl und Kalle laufen mit, und alle singen mit.'},
+   {x:1190,y:730,d:'Hanna zieht mit der Gitarre ihre Runden ums Feuer, HTL und Kalle laufen mit, und alle singen mit.'},
    {x:915,y:700,photo:'lagerfeuer'}]},
  {a:.87,b:1.01,stop:.96,l:'Gute Nacht',h:'Gute Nacht, VKF',d:'Mond und Sterne stehen über den Zelten. Nur im Küchenzelt flackert noch Licht, dort wird schon der nächste Tag vorbereitet.',info:[
    {f:'moon',d:'Mond und Sterne stehen über den Zelten.'},
@@ -1512,7 +1512,7 @@ const ROLES=[
 $('roles').innerHTML=ROLES.map(([h,p,[c1,c2],ic],i)=>`<div class="role"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="rg${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><circle cx="32" cy="32" r="31" fill="url(#rg${i})"/>${ic}</svg><h3>${h}</h3><p>${p}</p></div>`).join('');
 
 /* copy mail */
-$('copyMail').addEventListener('click',e=>{const btn=e.currentTarget,addr='info@vkf-wiesloch.de';
+$('copyMail').addEventListener('click',e=>{const btn=e.currentTarget,addr='lagerleitung@vkf-wiesloch.de';
   const sel=()=>{const r=document.createRange();r.selectNodeContents($('mailaddr'));const s=getSelection();s.removeAllRanges();s.addRange(r)};
   try{navigator.clipboard.writeText(addr).then(()=>{btn.textContent='Kopiert';setTimeout(()=>btn.textContent='Adresse kopieren',1800)},()=>{sel();btn.textContent='Markiert, jetzt kopieren'})}catch(_){sel()}});
 
@@ -1870,7 +1870,7 @@ const T=[
  {n:'Andrea',t:'Zurückgebundene braune Haare, Brille, Strickpulli, karierter Schal',o:{arms:'clasp',hs:'tail',hair:'#6b4430',glasses:'round',slim:1,shirt:'#e9e3d8',deco:'knit',scarf:'#8f7f74',skin:'#f3c8ae',m:'grin',pants:'#2a2a36'}},
  {n:'Claudi',t:'Blonder Bob mit Seitenscheitel, Kette, Taschengurt',o:{hs:'bob',hair:'#d9c49a',slim:1,shirt:'#232a45',sleeve:'short',necklace:'long',strap:1,skin:'#f3c4a8',m:'smile',eyes:'happy',pants:'#4a5a7a'}},
  {n:'Dirk',t:'Nasse Locken, Handtuch um den Hals, rote Backen',o:{arms:'hips',hs:'curlytop',hair:'#4a3220',beard:'stub',beardc:'#7a5236',ruddy:1,ntowel:'#3fa59a',shirt:'#2a2340',stout:1,skin:'#f0b494',m:'smile',eyes:'happy',pants:'#33354a'}},
- {n:'Hadl',t:'Strohhut, Dreitagebart, breites Lachen, weißes Shirt mit Logo, kurze Sporthose, Turnschuhe',o:{arms:'wave',hs:'short',hair:'#6b5a4a',hat:'straw',cord:1,beard:'stub',beardc:'#8a8580',skin:'#f0bfa0',deco:'logo',stout:1,pants:'#2f4a7a',shorts:1,shoes:'#fbfbf8',sneakers:1,sleeve:'short',m:'grin',eyes:'happy',glasses:false,shirt:'#f4f3ef'}},
+ {n:'HTL',t:'Strohhut, Dreitagebart, breites Lachen, weißes Shirt mit Logo, kurze Sporthose, Turnschuhe',o:{arms:'wave',hs:'short',hair:'#6b5a4a',hat:'straw',cord:1,beard:'stub',beardc:'#8a8580',skin:'#f0bfa0',deco:'logo',stout:1,pants:'#2f4a7a',shorts:1,shoes:'#fbfbf8',sneakers:1,sleeve:'short',m:'grin',eyes:'happy',glasses:false,shirt:'#f4f3ef'}},
  {n:'Hanna',t:'Zopf mit Mittelscheitel, runde Brille, Kette',o:{arms:'wave',hs:'tail',hair:'#3a2418',glasses:'round',slim:1,shirt:'#1e1e24',sleeve:'short',necklace:'long',skin:'#f5d4b8',m:'grin',pants:'#3a4f7a'}},
  {n:'Helena',t:'Dunkler Zopf, Tanktop, Kette, Rauhaardackel an der Leine',o:{arms:'leash',hs:'tail',hair:'#3a2418',tank:1,sleeve:'none',shirt:'#2f8f7a',necklace:'short',slim:1,skin:'#f3c8aa',m:'grin',eyes:'happy',pants:'#3a4f7a',dog:'#3a2c26'}},
  {n:'Henri',t:'Rotblonde Wuschellocken, Sommersprossen, schiefes Grinsen',o:{hs:'mop',hair:'#c98a3e',slim:1,shirt:'#1e1a22',sleeve:'short',freckles:1,skin:'#f5d0b5',m:'smirk',pants:'#2f3f5a'}},
@@ -1901,7 +1901,7 @@ const ROWS=[
  {y:285,s:.88,x0:112,dx:175,names:['Tommy','Henri','Tyler','Andrea','Marc','Niklas','Julian']},
  {y:365,s:.98,x0:212,dx:175,names:['Luca','Timbo','Simon','Katha','Hanna','Alex']},
  {y:445,s:1.08,x0:112,dx:175,names:['Jan','Pascal','Paula','JPO','Klingi','Timo','Jules']},
- {y:525,s:1.18,x0:212,dx:175,names:['Dirk','Kalle','Hadl','Claudi','Mu','Helena']}
+ {y:525,s:1.18,x0:212,dx:175,names:['Dirk','Kalle','HTL','Claudi','Mu','Helena']}
 ];
 const over={Timo:{arms:'down'},Noah:{float:85}};
 function tentS(x,y,s){return `<g transform="translate(${x},${y}) scale(${s})"><rect x="-40" y="-34" width="80" height="34" fill="var(--tentA)"/><path d="M-47,-30 L-30,-60 H30 L47,-30Z" fill="var(--tentB)"/><path d="M-11,0 L0,-27 L11,0Z" fill="var(--tentD)"/></g>`}

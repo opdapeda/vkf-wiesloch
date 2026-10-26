@@ -9,7 +9,7 @@
 - **Träger:** Die VKF gehört zur KjG Wiesloch (offizieller Name: Katholische junge Gemeinde. Auf der alten Seite steht fälschlich „Junge Katholische Gemeinde“).
 - **Teilnehmende:** rund 95 Personen, Väter und Kinder zusammen.
 - **Team:** rund 30 Ehrenamtliche im Betreuerstab, zum Beispiel Lagerleitung, Programmkoordination, Küche, Einkauf und Technik. Ich (JPO) gehöre zum Team.
-- **Kontakt:** info@vkf-wiesloch.de
+- **Kontakt:** lagerleitung@vkf-wiesloch.de
 - **Förderverein:** „Freunde der VKF Wiesloch“, gegründet 2023.
 - **Gründungsjahr:** offen. Auf der alten Seite steht 2000, ich hatte 2001 im Kopf. Das muss noch geklärt werden.
 
